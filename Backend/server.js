@@ -34,7 +34,7 @@ app.get('/', (req, res)=> {
      host: 'localhost',
      user: 'root',
      password: 'root',
-     database: 'e-motion'
+     database: 'e_motion'
  });
 
  // connect to database
