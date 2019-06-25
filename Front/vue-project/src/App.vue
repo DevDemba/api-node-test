@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-link :to="{ name:'Home' }">Home</router-link>
-    <router-link :to="{ name:'Users' }">Users</router-link>
-    <router-link :to="{ name:'Login' }">Login</router-link>
-    <router-link :to="{ name:'Register' }">Register</router-link>
-    <router-view/>
+    <div>
+       <img src="./assets/logo.png">
+    </div>
+    <div>
+      <router-link :to="{ name:'HelloWorld' }"><b-button variant="primary">Home</b-button></router-link>
+      <router-link :to="{ name:'Users' }"><b-button variant="primary">Users</b-button></router-link>
+      <router-link :to="{ name:'Login' }"><b-button variant="primary">Login</b-button></router-link>
+      <router-link :to="{ name:'Register' }"><b-button variant="primary">Register</b-button></router-link>
+      <router-view/>
+    </div>
   </div>
 </template>
 

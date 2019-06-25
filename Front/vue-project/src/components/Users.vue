@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="users">
     <button @click="getUsers">Get Users</button>
     <ul v-for="user in users" :key="user.id">
        <li> {{ user.name }} - {{ user.password }} </li> 
@@ -41,6 +41,9 @@ export default {
 </script>
 
 <style scoped>
+.users {
+  margin-top: 100px;
+}
 .error {
   color: red;
 }

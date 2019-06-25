@@ -1,5 +1,5 @@
 <template>
-    <div id="login">
+    <div class="login">
         <h1>Login</h1>
         <input type="text" name="username" v-model="input.username" placeholder="Username" />
         <input type="password" name="password" v-model="input.password" placeholder="Password" />
@@ -36,13 +36,17 @@ data() {
 </script>
 
 <style scoped>
-    #login {
+    .login {
         width: 500px;
         border: 1px solid #CCCCCC;
         background-color: #FFFFFF;
         margin: auto;
-        margin-top: 200px;
+        margin-top: 100px;
         padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     #app {
