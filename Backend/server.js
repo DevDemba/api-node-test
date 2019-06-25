@@ -23,14 +23,14 @@ app.use((req, res, next)=>{
 
   // Pass to next layer of middleware
   next()
-})
+});
 
 app.get('/', (req, res)=> {
     return res.send({ error: true, message: 'hello world' })
 });
 
 // connection configurations
- var dbConn = mysql.createConnection({
+const dbConn = mysql.createConnection({
      host: 'localhost',
      user: 'root',
      password: 'root',
@@ -57,7 +57,7 @@ app.get('/user/:id', (req, res)=> {
         return res.status(400).send({ error: true, message: 'Please provide user_id' });
     }
   
-    dbConnect.query('SELECT * FROM users where id=?', user_id, function (error, results, fields) {
+    dbConn.query('SELECT * FROM users where id=?', user_id, function (error, results, fields) {
         if (error) throw error;
         return res.json({ error: false, data: results[0], message: 'users list.' });
     });
@@ -76,7 +76,7 @@ app.post('/user', (req, res) => {
   
     dbConn.query("INSERT INTO users SET ? ", { user: user }, function (error, results, fields) {
         if (error) throw error;
-        return res.send({ error: false, data: results, message: 'New user has been created successfully.' });
+        return res.json({ error: false, data: results, message: 'New user has been created successfully.' });
     });
 });
  
