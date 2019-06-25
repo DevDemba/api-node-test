@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <h1> Login </h1>
+  <div class="Login">
+    <h1> Register </h1>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
   <div>
     <button @click="getUsers">Get Users</button>
     <ul v-for="user in users" :key="user.id">
-       <li>{{ user.name }} - {{ user.password }}</li> 
+       <li> {{ user.name }} - {{ user.password }} </li> 
     </ul>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
         })
         .catch(e => {
           this.errors = e
-        })
+        });
     },
     updateUsers: function () {
         HTTP.post('/users:id')
@@ -34,7 +34,7 @@ export default {
          })
          .catch(e => {
              this.errors = e
-         })
+         });
     }
   }
 }
