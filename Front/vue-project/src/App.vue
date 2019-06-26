@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-       <img src="./assets/logo.png">
+      <img src="./assets/logo.png">
     </div>
     <div>
       <router-link :to="{ name:'HelloWorld' }"><b-button variant="primary">Home</b-button></router-link>

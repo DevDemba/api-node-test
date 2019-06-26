@@ -1,9 +1,9 @@
 <template>
     <div class="login">
         <h1>Login</h1>
-        <input type="text" name="username" v-model="input.username" placeholder="Username" />
-        <input type="password" name="password" v-model="input.password" placeholder="Password" />
-        <button type="button" v-on:click="login()">Login</button>
+        <b-form-input type="text" name="username" v-model="input.username" placeholder="Username" />
+        <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
+        <b-button type="button" v-on:click="login()">Login</b-button>
     </div>
 </template>
 

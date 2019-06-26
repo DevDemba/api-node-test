@@ -1,9 +1,9 @@
 <template>
   <div class="users">
-    <button @click="getUsers">Get Users</button>
-    <ul v-for="user in users" :key="user.id">
-       <li> {{ user.name }} - {{ user.password }} </li> 
-    </ul>
+    <b-button @click="getUsers">Get Users</b-button><br>
+    <b-list-group v-for="user in users" :key="user.id">
+       <b-list-group-item  style="width: 300px;" variant="info"> {{ user.name }} - {{ user.password }} </b-list-group-item> 
+    </b-list-group>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
         });
     },
     updateUsers: function () {
-        HTTP.post('/users:id')
+        HTTP.post('/user:id')
          .then(response => {
              this.users = response.data.data
          })
@@ -42,7 +42,11 @@ export default {
 
 <style scoped>
 .users {
-  margin-top: 100px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .error {
   color: red;
