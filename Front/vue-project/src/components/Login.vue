@@ -7,7 +7,8 @@
         <form v-on:submit="login">
             <b-form-input type="text" name="email" placeholder="Email" />    
             <b-form-input type="password" name="password" placeholder="Password" />    
-            <b-button type="submit" value="login">Login</b-button>    
+            <b-button type="submit" value="login">Login</b-button>  
+              
         </form>
     </div>
 </template>
@@ -26,15 +27,24 @@
                 let login = () => {    
                     let data = {    
                         email: email,    
-                        password: password    
+                        password: password,
+                        errorMessage: {
+                            type: String,
+                            default: ""
+                        }
+
                     }    
                     axios.post("/api/login", data)    
                         .then((response) => {    
                             console.log("Logged in")    
-                            router.push("/dashboard")    
+                            router.push("/dashboard")   
+                            alert("You are connected !")  
                         })    
                         .catch((errors) => {    
-                            console.log("Cannot log in")    
+                            console.log("Cannot log in") 
+                            alert("Error - Log in")  
+
+
                         })    
                 }    
                 login()    
@@ -77,7 +87,7 @@ data() {
         border: 1px solid #CCCCCC;
         background-color: #FFFFFF;
         margin: auto;
-        margin-top: 100px;
+        margin-top: 20  px;
         padding: 20px;
         display: flex;
         flex-direction: column;
