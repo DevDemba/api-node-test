@@ -1,7 +1,15 @@
 const express = require('express');
 const app = express();
+require('dotenv').config()
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+
+const HOST = process.env.HOST;
+const USER = process.env.USER;
+const PASSWORD = process.env.PASSWORD;
+const DATABASE = process.env.DATABASE;
+
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -31,10 +39,10 @@ app.get('/', (req, res)=> {
 
 // connection configurations
 const dbConn = mysql.createConnection({
-     host: 'localhost',
-     user: 'root',
-     password: 'root',
-     database: 'e_motion'
+     host: HOST,
+     user: USER,
+     password: PASSWORD,
+     database: DATABASE
  });
 
  // connect to database
@@ -112,8 +120,10 @@ app.delete('/user', (req, res) => {
     });
 }); 
 
-app.listen(3000, ()=> {
-    console.log('Node app is running on port 3000')
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, ()=> {
+    console.log(`Node app is running on port: ${PORT}`)
 });
 
 module.exports = app;
