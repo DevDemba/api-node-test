@@ -1,7 +1,22 @@
 <template>
   <div class="register">
-    <h1> Register </h1>
-  </div>
+      <h1>Register</h1>
+        <form v-on:submit="login">
+
+            <input type="radio" name="gender" value="Male" checked/> Male
+            <input type="radio" name="gender" value="Female"/> Female
+            <b-form-input type="text" name="lastname" placeholder="Lastname" />    
+            <b-form-input type="text" name="firstname" placeholder="Firstname" />    
+            <b-form-input type="date" name="birthday" placeholder="Birthday" />    
+            <b-form-input type="text" name="address" placeholder="Address" />    
+            <b-form-input type="text" name="phone" placeholder="Phone" />    
+            <b-form-input type="text" name="license_driver" placeholder="License driver " />    
+            <b-form-input type="text" name="address" placeholder="Address" />    
+            <b-form-input type="text" name="email" placeholder="Email" />    
+            <b-form-input type="password" name="password" placeholder="Password" />   
+            <b-button type="submit" value="login">Login</b-button>  
+              
+        </form>  </div>
 </template>
 
 <script>
@@ -38,8 +53,8 @@ data() {
         border: 1px solid #CCCCCC;
         background-color: #FFFFFF;
         margin: auto;
-        margin-top: 100px;
-        padding: 20px;
+        margin-top: 30px;
+        padding: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
