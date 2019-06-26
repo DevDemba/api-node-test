@@ -10,8 +10,8 @@ const LocalStrategy = require('passport-local').Strategy
 const mysql = require('mysql');
 
 const HOST = process.env.HOST;
-const USER = process.env.USER;
-const PASSWORD = process.env.PASSWORD;
+const MYSQL_USER = process.env.MYSQL_USER;
+const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
 const DATABASE = process.env.DATABASE;
 
 const authMiddleware = (req, res, next) => {
@@ -47,7 +47,7 @@ let users = [
   },
   {
     id: 2,
-    name: "Emma",
+    name: "demba",
     email: "emma@email.com",
     password: "password2"
   }
@@ -77,8 +77,8 @@ app.get('/', (req, res)=> {
 // connection configurations
 const dbConn = mysql.createConnection({
      host: HOST,
-     user: USER,
-     password: PASSWORD,
+     user: MYSQL_USER,
+     password: MYSQL_PASSWORD,
      database: DATABASE
  });
 
