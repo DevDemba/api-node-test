@@ -4,11 +4,11 @@
        <!--<b-form-input type="text" name="username" v-model="input.username" placeholder="Username" />
         <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
         <b-button type="button" v-on:click="login()">Login</b-button> -->
-        <form v-on:submit="login">    
-            <b-form-input type="text" name="email" /><br>    
-            <b-form-input type="password" name="password" /><br>    
-            <b-button type="submit" v-on:click="Login()">Login</b-button>    
-        </form> 
+        <form v-on:submit="login">
+            <b-form-input type="text" name="email" placeholder="Email" />    
+            <b-form-input type="password" name="password" placeholder="Password" />    
+            <b-button type="submit" value="login">Login</b-button>    
+        </form>
     </div>
 </template>
 
