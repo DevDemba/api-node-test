@@ -8,36 +8,37 @@
 </template>
 
 <script>
-import {HTTP} from '../http'
-export default {
-  name: 'Users',
-  data () {
-    return {
-     users: ''
-    }
-  },
-  methods: {
-    getUsers: function () {
-      HTTP.get('/users')
-        .then(response => {
-          this.users = response.data.data
-          console.log(this.users)
-        })
-        .catch(e => {
-          this.errors = e
-        });
+  import router from "../router" 
+  import axios from "axios"
+  export default {
+    name: 'Users',
+    data () {
+      return {
+      users: ''
+      }
     },
-    updateUsers: function () {
-        HTTP.post('/user:id')
-         .then(response => {
-             this.users = response.data.data
-         })
-         .catch(e => {
-             this.errors = e
-         });
+    methods: {
+      getUsers: function () {
+        axios.get('/api/users')
+          .then(response => {
+            this.users = response.data.data
+            console.log(this.users)
+          })
+          .catch(e => {
+            this.errors = e
+          });
+      },
+      updateUsers: function () {
+          axios.post('/api/user:id')
+          .then(response => {
+              this.users = response.data.data
+          })
+          .catch(e => {
+              this.errors = e
+          });
+      }
     }
   }
-}
 </script>
 
 <style scoped>

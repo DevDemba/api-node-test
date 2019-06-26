@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 require('dotenv').config()
 const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
+const passport = require('passport')
+// getting the local authentication type
+const LocalStrategy = require('passport-local').Strategy
+
 const mysql = require('mysql');
 
 const HOST = process.env.HOST;
@@ -9,12 +14,44 @@ const USER = process.env.USER;
 const PASSWORD = process.env.PASSWORD;
 const DATABASE = process.env.DATABASE;
 
+const authMiddleware = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).send('You are not authenticated')
+  } else {
+    return next()
+  }
+}
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
 }));
+
+app.use(cookieSession({
+    name: 'mysession',
+    keys: ['vueauthrandomkey'],
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+
+app.use(passport.initialize());
+
+app.use(passport.session());
+
+let users = [
+  {
+    id: 1,
+    name: "admin",
+    email: "admin@gmail.com",
+    password: "admin"
+  },
+  {
+    id: 2,
+    name: "Emma",
+    email: "emma@email.com",
+    password: "password2"
+  }
+]
 
 app.use((req, res, next)=>{
     
@@ -48,8 +85,43 @@ const dbConn = mysql.createConnection({
  // connect to database
  dbConn.connect(); 
 
+ app.post("/api/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.status(400).send([user, "Cannot log in", info]);
+    }
+
+    req.login(user, err => {
+      res.send("Logged in");
+    });
+  })(req, res, next);
+});
+
+app.get("/api/logout", function(req, res) {
+  req.logout();
+
+  console.log("logged out")
+
+  return res.send();
+});
+
+app.get("/api/user", authMiddleware, (req, res) => {
+  let user = users.find(user => {
+    return user.id === req.session.passport.user
+  })
+
+  console.log([user, req.session])
+
+  res.send({ user: user })
+});
+
+
  // Retrieve all users 
- app.get('/users', (req, res)=> {
+ app.get('/api/users', (req, res)=> {
      dbConn.query('SELECT * FROM users', function (error, results, fields) {
          if (error) throw error;
          return res.json({ error: false, data: results, message: 'users list.'});
@@ -57,7 +129,7 @@ const dbConn = mysql.createConnection({
  });
  
 // Retrieve user with id 
-app.get('/user/:id', (req, res)=> {
+app.get('/api/user/:id', (req, res)=> {
   
     let user_id = req.params.id;
   
@@ -74,7 +146,7 @@ app.get('/user/:id', (req, res)=> {
 
 
 // Add a new user  
-app.post('/user', (req, res) => {
+app.post('/api/user', (req, res) => {
   
     let user = req.body.user;
   
@@ -90,7 +162,7 @@ app.post('/user', (req, res) => {
  
  
 //  Update user with id
-app.put('/user', (req, res) => {
+app.put('/api/user', (req, res) => {
   
     let user_id = req.body.user_id;
     let user = req.body.user;
@@ -119,6 +191,40 @@ app.delete('/user', (req, res) => {
         return res.send({ error: false, data: results, message: 'User has been updated successfully.' });
     });
 }); 
+
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password"
+    },
+
+    (username, password, done) => {
+      let user = users.find((user) => {
+        return user.email === username && user.password === password
+      })
+
+      if (user) {
+        done(null, user)
+      } else {
+        done(null, false, { message: 'Incorrect username or password'})
+      }
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+});
+
+passport.deserializeUser((id, done) => {
+  let user = users.find((user) => {
+    return user.id === id
+  })
+
+  done(null, user)
+});
+
 
 const PORT = process.env.PORT || 3000;
 

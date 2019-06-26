@@ -14,9 +14,19 @@
 </template>
 
 <script>
+
 export default {
   
-  name: 'App'
+  name: 'App',
+  methods: {
+    logout: function (e) {
+      axios
+        .get("/api/logout")
+        .then(() => {
+          router.push("/")
+      })
+    }
+  }
 }
 </script>
 

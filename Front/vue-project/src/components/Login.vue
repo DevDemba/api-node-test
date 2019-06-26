@@ -1,13 +1,49 @@
 <template>
     <div class="login">
         <h1>Login</h1>
-        <b-form-input type="text" name="username" v-model="input.username" placeholder="Username" />
+       <!--<b-form-input type="text" name="username" v-model="input.username" placeholder="Username" />
         <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
-        <b-button type="button" v-on:click="login()">Login</b-button>
+        <b-button type="button" v-on:click="login()">Login</b-button> -->
+        <form v-on:submit="login">    
+            <b-form-input type="text" name="email" /><br>    
+            <b-form-input type="password" name="password" /><br>    
+            <b-button type="submit" v-on:click="Login()">Login</b-button>    
+        </form> 
     </div>
 </template>
 
 <script>
+    import axios from "axios"  
+    import router from "../router"    
+    export default {    
+        name: "Login",    
+        methods: {    
+            login: (e) => {    
+                e.preventDefault()    
+                let email = e.target.elements.email.value
+                let password = e.target.elements.password.value
+                
+                let login = () => {    
+                    let data = {    
+                        email: email,    
+                        password: password    
+                    }    
+                    axios.post("/api/login", data)    
+                        .then((response) => {    
+                            console.log("Logged in")    
+                            router.push("/dashboard")    
+                        })    
+                        .catch((errors) => {    
+                            console.log("Cannot log in")    
+                        })    
+                }    
+                login()    
+            }    
+        }    
+    }
+</script>
+
+<!--<script>
 export default {
   name: 'Login',
 data() {
@@ -33,7 +69,7 @@ data() {
             }
         }
     }
-</script>
+</script> -->
 
 <style scoped>
     .login {
