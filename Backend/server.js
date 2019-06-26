@@ -22,6 +22,9 @@ const authMiddleware = (req, res, next) => {
   }
 }
 
+const publicRoot = '../Front/vue-project/dist'
+
+app.use(express.static(publicRoot))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -70,8 +73,12 @@ app.use((req, res, next)=>{
   next()
 });
 
-app.get('/', (req, res)=> {
-    return res.send({ error: true, message: 'hello world' })
+app.get("/", (req, res, next) => {
+  res.sendFile("index.html", { root: publicRoot })
+})
+
+app.get('/', (req, res, next)=> {
+    return res.sendFile("index.html", { error: true, message: 'hello world', root: publicRoot })
 });
 
 // connection configurations
