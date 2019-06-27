@@ -26,10 +26,18 @@ const authMiddleware = (req, res, next) => {
   }
 }
 
+// connection configurations
+const dbConn = mysql.createConnection({
+     host: HOST,
+     user: MYSQL_USER,
+     password: MYSQL_PASSWORD,
+     database: DATABASE
+ });
+
 const publicRoot = '../Front/vue-project/dist'
 
-app.use(express.static(publicRoot));
 
+app.use(express.static(publicRoot));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
@@ -42,7 +50,6 @@ app.use(cookieSession({
 }));
 
 app.use(passport.initialize());
-
 app.use(passport.session());
 
 let users = [
@@ -58,7 +65,23 @@ let users = [
     email: "emma@email.com",
     password: "password2"
   }
-]
+] 
+
+/*
+let users ;
+
+
+function test () {
+    dbConn.query('SELECT * FROM users', function (error, results, fields) {
+        if (error) throw error;
+        return res.json({ error: false, data: results,  });
+    })
+}
+
+test()
+*/ 
+
+
 
 app.use((req, res, next)=>{
     
@@ -85,20 +108,13 @@ app.get('/', (req, res, next)=> {
     return res.sendFile("index.html", { error: true, message: 'hello world', root: publicRoot })
 });
 
-// connection configurations
-const dbConn = mysql.createConnection({
-     host: HOST,
-     user: MYSQL_USER,
-     password: MYSQL_PASSWORD,
-     database: DATABASE
- });
 
  // connect to database
  dbConn.connect(); 
 
  app.post("/api/login", (req, res, next) => {
 
-    dbConn.query('SELECT * FROM users WHERE email = ?', function (err, user) {
+    /*dbConn.query('SELECT * FROM users WHERE email = ?', function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
         let passwordIsValid = bcrypt.compareSync(req.body.password, user.user_pass);
@@ -108,9 +124,9 @@ const dbConn = mysql.createConnection({
         });
         res.status(200).send({ auth: true, token: token, user: user });
         
-    });
+    }); */
     
-    /*passport.authenticate("local", (err, user, info) => {
+    passport.authenticate("local", (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -122,7 +138,7 @@ const dbConn = mysql.createConnection({
     req.login(user, err => {
       res.send("Logged in");
     });
-  })(req, res, next); */
+  })(req, res, next); 
 });
 
 
@@ -135,16 +151,16 @@ app.get("/api/logout", function(req, res) {
 });
 
 router.post('/api/register', function(req, res) {
-    dbConn.query('INSERT INTO user(name, email, user_pass) VALUES(?,?,?)', [
+    dbConn.query('INSERT INTO users (firstname, email, password) VALUES(?,?,?)', [
         req.body.name,
         req.body.email,
         bcrypt.hashSync(req.body.password, 8)
     ],
     function (err) {
         if (err) return res.status(500).send("There was a problem registering the user.")
-        dbConn.selectByEmail(req.body.email, (err,user) => {
+        dbConn.query('SELECT * FROM user WHERE email = ?', req.body.email, (err,user) => {
             if (err) return res.status(500).send("There was a problem getting user")
-            let token = jwt.sign({ id: user.id }, config.secret, {expiresIn: 86400 // expires in 24 hours
+            let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
             });
             res.status(200).send({ auth: true, token: token, user: user });
         }); 
@@ -240,7 +256,7 @@ app.put('/api/user', (req, res) => {
  
  
 //  Delete user
-app.delete('/user', (req, res) => {
+app.delete('/api/user', (req, res) => {
   
     let user_id = req.body.user_id;
   
