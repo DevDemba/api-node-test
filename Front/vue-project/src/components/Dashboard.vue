@@ -28,10 +28,10 @@
                         console.log(errors)    
                         router.push("/")    
                     })    
+                }    
+            },    
+            mounted() {    
+                this.getUserData()    
             }    
-        },    
-        mounted() {    
-            this.getUserData()    
-        }    
     }
 </script>

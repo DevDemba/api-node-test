@@ -6,7 +6,7 @@
     <div>
       <router-link :to="{ name:'HelloWorld' }"><b-button variant="primary">Home</b-button></router-link>
       <router-link :to="{ name:'Users' }"><b-button variant="primary">Users</b-button></router-link>
-      <router-link :to="{ name: 'Dashboard'}"><b-button variant="primary">Dashboard</b-button></router-link> 
+      <router-link :to="{ name:'Dashboard'}"><b-button variant="primary">Dashboard</b-button></router-link> 
       <router-link :to="{ name:'Login' }"><b-button variant="primary">Login</b-button></router-link>
       <router-link :to="{ name:'Register' }"><b-button variant="primary">Register</b-button></router-link>
       <b-button variant="danger"><a href="#" v-on:click="logout">Logout</a></b-button> 

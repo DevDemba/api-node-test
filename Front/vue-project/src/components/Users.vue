@@ -2,7 +2,7 @@
   <div class="users">
     <b-button @click="getUsers">Get Users</b-button><br>
     <b-list-group v-for="user in users" :key="user.id">
-       <b-list-group-item  style="width: 300px;" variant="info"> {{ user.name }} - {{ user.password }} </b-list-group-item> 
+       <b-list-group-item  style="width: 300px;" variant="info"> {{ user.firstname }} - {{ user.password }} </b-list-group-item> 
     </b-list-group>
   </div>
 </template>

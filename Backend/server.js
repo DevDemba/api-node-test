@@ -1,13 +1,17 @@
 const express = require('express');
 const app = express();
 require('dotenv').config()
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-const passport = require('passport')
+const passport = require('passport');
 // getting the local authentication type
 const LocalStrategy = require('passport-local').Strategy
 
 const mysql = require('mysql');
+
+const router = express.Router();
 
 const HOST = process.env.HOST;
 const MYSQL_USER = process.env.MYSQL_USER;
@@ -16,7 +20,7 @@ const DATABASE = process.env.DATABASE;
 
 const authMiddleware = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    res.status(401).send('You are not authenticated')
+    res.status(401).send('You are not authenticated');
   } else {
     return next()
   }
@@ -24,7 +28,7 @@ const authMiddleware = (req, res, next) => {
 
 const publicRoot = '../Front/vue-project/dist'
 
-app.use(express.static(publicRoot))
+app.use(express.static(publicRoot));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -75,7 +79,7 @@ app.use((req, res, next)=>{
 
 app.get("/", (req, res, next) => {
   res.sendFile("index.html", { root: publicRoot })
-})
+});
 
 app.get('/', (req, res, next)=> {
     return res.sendFile("index.html", { error: true, message: 'hello world', root: publicRoot })
@@ -93,7 +97,20 @@ const dbConn = mysql.createConnection({
  dbConn.connect(); 
 
  app.post("/api/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
+
+    dbConn.query('SELECT * FROM users WHERE email = ?', function (err, user) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!user) return res.status(404).send('No user found.');
+        let passwordIsValid = bcrypt.compareSync(req.body.password, user.user_pass);
+        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+
+        let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
+        });
+        res.status(200).send({ auth: true, token: token, user: user });
+        
+    });
+    
+    /*passport.authenticate("local", (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -105,8 +122,9 @@ const dbConn = mysql.createConnection({
     req.login(user, err => {
       res.send("Logged in");
     });
-  })(req, res, next);
+  })(req, res, next); */
 });
+
 
 app.get("/api/logout", function(req, res) {
   req.logout();
@@ -116,10 +134,46 @@ app.get("/api/logout", function(req, res) {
   return res.send();
 });
 
+router.post('/api/register', function(req, res) {
+    dbConn.query('INSERT INTO user(name, email, user_pass) VALUES(?,?,?)', [
+        req.body.name,
+        req.body.email,
+        bcrypt.hashSync(req.body.password, 8)
+    ],
+    function (err) {
+        if (err) return res.status(500).send("There was a problem registering the user.")
+        dbConn.selectByEmail(req.body.email, (err,user) => {
+            if (err) return res.status(500).send("There was a problem getting user")
+            let token = jwt.sign({ id: user.id }, config.secret, {expiresIn: 86400 // expires in 24 hours
+            });
+            res.status(200).send({ auth: true, token: token, user: user });
+        }); 
+    }); 
+});
+
+router.post('/register-admin', function(req, res) {
+    dbConn.query('INSERT INTO users (firstname,email,is_admin) VALUES (?,?,?,?)', [
+        req.body.name,
+        req.body.email,
+        bcrypt.hashSync(req.body.password, 8),
+        1
+    ],
+    function (err) {
+        if (err) return res.status(500).send("There was a problem registering the user.")
+        dbConn.selectByEmail(req.body.email, (err,user) => {
+            if (err) return res.status(500).send("There was a problem getting user")
+            let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
+            });
+            res.status(200).send({ auth: true, token: token, user: user });
+        }); 
+    }); 
+});
+
+
 app.get("/api/user", authMiddleware, (req, res) => {
   let user = users.find(user => {
     return user.id === req.session.passport.user
-  })
+  });
 
   console.log([user, req.session])
 
@@ -128,7 +182,7 @@ app.get("/api/user", authMiddleware, (req, res) => {
 
 
  // Retrieve all users 
- app.get('/api/users', (req, res)=> {
+ app.get('/api/users', (req, res) => {
      dbConn.query('SELECT * FROM users', function (error, results, fields) {
          if (error) throw error;
          return res.json({ error: false, data: results, message: 'users list.'});
@@ -232,6 +286,7 @@ passport.deserializeUser((id, done) => {
   done(null, user)
 });
 
+app.use(router);
 
 const PORT = process.env.PORT || 3000;
 

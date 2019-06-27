@@ -13,7 +13,13 @@
             <b-form-input type="text" name="license_driver" placeholder="License driver " />    
             <b-form-input type="text" name="address" placeholder="Address" />    
             <b-form-input type="text" name="email" placeholder="Email" />    
-            <b-form-input type="password" name="password" placeholder="Password" />   
+            <b-form-input type="password" name="password" placeholder="Password" />  
+            <div>
+                <select v-model="is_admin">
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+                </select>
+            </div> 
             <b-button type="submit" value="login">Login</b-button>  
               
         </form>  </div>
@@ -22,7 +28,60 @@
 <script>
 export default {
   name: 'Register',
-data() {
+        props : ["nextUrl"],
+        data(){
+            return {
+                lastname : "",
+                firstname: "",
+                email : "",
+                password : "",
+                password_confirmation : "",
+                is_admin : null
+            }
+        },
+        methods : {
+            handleSubmit(e) {
+                e.preventDefault()
+
+                if (this.password === this.password_confirmation && this.password.length > 0)
+                {
+                    let url = "http://localhost:3000/register"
+                    if(this.is_admin != null || this.is_admin == 1) url = "http://localhost:3000/register-admin"
+                    this.$http.post(url, {
+                        lastname: this.lastname,
+                        firstname: this.firstname,
+                        email: this.email,
+                        password: this.password,
+                        is_admin: this.is_admin
+                    })
+                    .then(response => {
+                        localStorage.setItem('user',JSON.stringify(response.data.user))
+                        localStorage.setItem('jwt',response.data.token)
+
+                        if (localStorage.getItem('jwt') != null){
+                            this.$emit('loggedIn')
+                            if(this.$route.params.nextUrl != null){
+                                this.$router.push(this.$route.params.nextUrl)
+                            }
+                            else{
+                                this.$router.push('/')
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+                } else {
+                    this.password = ""
+                    this.passwordConfirm = ""
+
+                    return alert("Passwords do not match")
+                }
+            }
+        }
+    }
+
+/*data() {
             return {
                 input: {
                     username: "",
@@ -44,7 +103,7 @@ data() {
                 }
             }
         }
-    }
+    }*/
 </script>
 
 <style scoped>
