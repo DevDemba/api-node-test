@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import router from "../router" 
 
 export default {
@@ -58,7 +59,7 @@ export default {
                     let url = "http://localhost:3000/api/register"
                     if(this.is_admin != null || this.is_admin == 1) url = "http://localhost:3000/api/register-admin"
                     
-                    this.$http.post(url, {
+                    axios.post(url, {
                         gender: this.gender,
                         lastname: this.lastname,
                         firstname: this.firstname,

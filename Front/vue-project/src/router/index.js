@@ -6,6 +6,8 @@ import Register from '@/components/Register'
 import Login from '@/components/Login'
 import Dashboard from '@/components/Dashboard'
 import Admin from '@/components/Admin'
+import Offer from '@/components/Offer'
+import OfferDetail from '@/components/OfferDetail'
 
 Vue.use(Router)
 
@@ -58,6 +60,22 @@ export default new Router({
       meta: { 
           requiresAuth: true,
           is_admin : true
+      }
+    },
+    {
+      path: '/offer',
+      name: 'Offer',
+      component: Offer,
+      meta: {
+        guest: true
+      }
+    },
+    {
+      path: '/Offer-detail',
+      name: 'Offer-detail',
+      component: OfferDetail,
+      meta:{
+        guest: true
       }
     }
   ]
