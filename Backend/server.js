@@ -150,15 +150,21 @@ app.get("/api/logout", function(req, res) {
   return res.send();
 });
 
-router.post('/api/register', function(req, res) {
-    dbConn.query('INSERT INTO users (firstname, email, password) VALUES(?,?,?)', [
-        req.body.name,
+app.post('/api/register', function(req, res) {
+    dbConn.query('INSERT INTO users (lastname,firstname,birthday, address, phone, license_driver, gender, email, password) VALUES(?,?,?,?,?,?,?,?,?)', [
+        req.body.lastname,
+        req.body.firstname,
+        req.body.birthday,
+        req.body.address,
+        req.body.phone,
+        req.body.license_driver,
+        req.body.gender,
         req.body.email,
         bcrypt.hashSync(req.body.password, 8)
     ],
     function (err) {
         if (err) return res.status(500).send("There was a problem registering the user.")
-        dbConn.query('SELECT * FROM user WHERE email = ?', req.body.email, (err,user) => {
+        dbConn.query('SELECT * FROM users WHERE email = ?', req.body.email, (err,user) => {
             if (err) return res.status(500).send("There was a problem getting user")
             let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
             });
