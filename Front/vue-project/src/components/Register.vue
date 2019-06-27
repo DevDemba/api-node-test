@@ -1,7 +1,7 @@
 <template>
   <div class="register">
       <h1>Register</h1>
-        <form v-on:submit="login">
+        <form>
 
             <input type="radio" name="gender" value="Male" checked/> Male
             <input type="radio" name="gender" value="Female"/> Female
@@ -11,32 +11,42 @@
             <b-form-input type="text" name="address" placeholder="Address" />    
             <b-form-input type="text" name="phone" placeholder="Phone" />    
             <b-form-input type="text" name="license_driver" placeholder="License driver " />    
-            <b-form-input type="text" name="address" placeholder="Address" />    
             <b-form-input type="text" name="email" placeholder="Email" />    
-            <b-form-input type="password" name="password" placeholder="Password" />  
+            <b-form-input type="password" name="password" v-model="password" placeholder="Password" required />  
+            <b-form-input type="password" name="password_confirmation" v_model="password_confirmation" placeholder="Password confirmation" required />  
+
             <div>
                 <select v-model="is_admin">
                     <option value=1>Yes</option>
                     <option value=0>No</option>
                 </select>
             </div> 
-            <b-button type="submit" value="login">Login</b-button>  
+            <b-button type="submit" @click="handleSubmit">Register</b-button>  
               
-        </form>  </div>
+        </form>  
+        </div>
 </template>
 
 <script>
+import router from "../router" 
+
 export default {
+
   name: 'Register',
         props : ["nextUrl"],
         data(){
             return {
+                gender: "",
                 lastname : "",
                 firstname: "",
+                birthday: "",
+                address:"",
+                phone:"",
+                license_driver:"",
                 email : "",
                 password : "",
                 password_confirmation : "",
-                is_admin : null
+               is_admin : null
             }
         },
         methods : {
@@ -45,14 +55,19 @@ export default {
 
                 if (this.password === this.password_confirmation && this.password.length > 0)
                 {
-                    let url = "http://localhost:3000/register"
-                    if(this.is_admin != null || this.is_admin == 1) url = "http://localhost:3000/register-admin"
+                    let url = "http://localhost:3000/api/register"
+                    if(this.is_admin != null || this.is_admin == 1) url = "http://localhost:3000/api/register-admin"
+                    
                     this.$http.post(url, {
+                        gender: this.gender,
                         lastname: this.lastname,
                         firstname: this.firstname,
+                        birthday: this.birthday,
+                        address: this.address,
+                        phone: this.phone,
+                        license_driver: this.license_driver,
                         email: this.email,
                         password: this.password,
-                        is_admin: this.is_admin
                     })
                     .then(response => {
                         localStorage.setItem('user',JSON.stringify(response.data.user))
@@ -73,10 +88,11 @@ export default {
                     });
                 } else {
                     this.password = ""
-                    this.passwordConfirm = ""
+                    this.password_confirmation = ""
 
                     return alert("Passwords do not match")
                 }
+                
             }
         }
     }
