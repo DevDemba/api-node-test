@@ -4,10 +4,15 @@
        <!--<b-form-input type="text" name="username" v-model="input.username" placeholder="Username" />
         <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
         <b-button type="button" v-on:click="login()">Login</b-button> -->
-        <form v-on:submit="login">
-            <b-form-input type="text" name="email" placeholder="Email" />    
-            <b-form-input type="password" name="password" placeholder="Password" />    
-            <b-button type="submit" value="login">Login</b-button>  
+        <form >
+            <label for="email" >E-Mail Address</label>
+            <b-form-input type="text" v_model="email" placeholder="Email" required/>  
+
+
+            <label for="password" >Password </label>
+            <b-form-input type="password" v_model="password" placeholder="Password" required/>  
+
+            <b-button type="submit" @click="handleSubmit">Login</b-button>  
               
         </form>
     </div>
@@ -19,7 +24,45 @@
     export default {    
         name: "Login",    
         methods: {    
-            login: (e) => {    
+            handleSubmit(e){
+                e.preventDefault()
+                if (this.password.length > 0) {
+                    this.$http.post('http://localhost:3000/api/login', {
+                        email: this.email,
+                        password: this.password
+                    })
+                    .then(response => {
+                        let is_admin = response.data.user.is_admin
+                        localStorage.setItem('user',JSON.stringify(response.data.user))
+                        localStorage.setItem('jwt',response.data.token)
+
+                        if (localStorage.getItem('jwt') != null){
+                            this.$emit('loggedIn')
+                            if(this.$route.params.nextUrl != null){
+                                this.$router.push(this.$route.params.nextUrl)
+                            }
+                            else {
+                                if(is_admin== 1){
+                                    this.$router.push('admin')
+                                }
+                                else {
+                                    this.$router.push('dashboard')
+                                }
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error(error.response);
+                    });
+                }
+
+                
+            }
+        }    
+    }
+
+
+    /*login: (e) => {    
                 e.preventDefault()    
                 let email = e.target.elements.email.value
                 let password = e.target.elements.password.value
@@ -48,38 +91,12 @@
                         })    
                 }    
                 login()    
-            }    
-        }    
-    }
+            }*/
+
 </script>
 
-<!--<script>
-export default {
-  name: 'Login',
-data() {
-            return {
-                input: {
-                    username: "",
-                    password: ""
-                }
-            }
-        },
-        methods: {
-            login() {
-                if(this.input.username != "" && this.input.password != "") {
-                    if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
-                        this.$emit("authenticated", true);
-                        this.$router.replace({ name: "secure" });
-                    } else {
-                        console.log("The username and / or password is incorrect");
-                    }
-                } else {
-                    console.log("A username and password must be present");
-                }
-            }
-        }
-    }
-</script> -->
+
+
 
 <style scoped>
     .login {
