@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const router = express.Router();
 const dbConn = require('../database/db').dbConn;
 const bcrypt = require('bcrypt');
@@ -210,8 +211,8 @@ router.delete('/api/user', (req, res) => {
     });
 }); 
 
-router.use(passport.initialize());
-router.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 passport.use(
