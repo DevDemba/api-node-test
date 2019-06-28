@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
---
--- Client :  127.0.0.1
--- Généré le :  Mer 26 Juin 2019 à 15:23
--- Version du serveur :  5.7.14
--- Version de PHP :  7.2.15
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -22,11 +13,16 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `admin`
---
+-- DROP DATABASE IF EXISTS e_motion;
+-- CREATE DATABASE IF NOT EXISTS e_motion;
 
-CREATE TABLE `admin` (
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `admins`
+--
+DROP TABLE IF EXISTS admins;
+CREATE TABLE `admins` (
   `id_admin` int(11) NOT NULL,
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
@@ -35,10 +31,10 @@ CREATE TABLE `admin` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `car`
+-- Structure de la table `cars`
 --
-
-CREATE TABLE `car` (
+DROP TABLE IF EXISTS cars;
+CREATE TABLE `cars` (
   `id_car` int(11) NOT NULL,
   `modele` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -46,10 +42,10 @@ CREATE TABLE `car` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `moto`
+-- Structure de la table `motos`
 --
-
-CREATE TABLE `moto` (
+DROP TABLE IF EXISTS motos;
+CREATE TABLE `motos` (
   `id_moto` int(11) NOT NULL,
   `modele` varchar(255) NOT NULL,
   `nb_tire` int(11) NOT NULL
@@ -58,10 +54,10 @@ CREATE TABLE `moto` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `offer`
+-- Structure de la table `offers`
 --
-
-CREATE TABLE `offer` (
+DROP TABLE IF EXISTS offers;
+CREATE TABLE `offers` (
   `id_offer` int(11) NOT NULL,
   `id_vehicle` int(11) NOT NULL,
   `date_online_offer` date NOT NULL,
@@ -73,10 +69,10 @@ CREATE TABLE `offer` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `rental`
+-- Structure de la table `rentals`
 --
-
-CREATE TABLE `rental` (
+DROP TABLE IF EXISTS rentals;
+CREATE TABLE `rentals` (
   `id_rental` int(11) NOT NULL,
   `id_users` int(11) NOT NULL,
   `id_offer` int(11) NOT NULL,
@@ -90,7 +86,7 @@ CREATE TABLE `rental` (
 --
 -- Structure de la table `users`
 --
-
+DROP TABLE IF EXISTS users;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `lastname` varchar(255) NOT NULL,
@@ -111,7 +107,7 @@ CREATE TABLE `users` (
 --
 -- Structure de la table `vehicles`
 --
-
+DROP TABLE IF EXISTS vehicles;
 CREATE TABLE `vehicles` (
   `id_vehicle` int(11) NOT NULL,
   `marque` varchar(255) NOT NULL,
@@ -129,33 +125,33 @@ CREATE TABLE `vehicles` (
 --
 
 --
--- Index pour la table `admin`
+-- Index pour la table `admins`
 --
-ALTER TABLE `admin`
+ALTER TABLE `admins`
   ADD PRIMARY KEY (`id_admin`);
 
 --
--- Index pour la table `car`
+-- Index pour la table `cars`
 --
-ALTER TABLE `car`
+ALTER TABLE `cars`
   ADD PRIMARY KEY (`id_car`);
 
 --
 -- Index pour la table `moto`
 --
-ALTER TABLE `moto`
+ALTER TABLE `motos`
   ADD PRIMARY KEY (`id_moto`);
 
 --
--- Index pour la table `offer`
+-- Index pour la table `offers`
 --
-ALTER TABLE `offer`
+ALTER TABLE `offers`
   ADD PRIMARY KEY (`id_offer`);
 
 --
--- Index pour la table `rental`
+-- Index pour la table `rentals`
 --
-ALTER TABLE `rental`
+ALTER TABLE `rentals`
   ADD PRIMARY KEY (`id_rental`);
 
 --
@@ -175,29 +171,29 @@ ALTER TABLE `vehicles`
 --
 
 --
--- AUTO_INCREMENT pour la table `admin`
+-- AUTO_INCREMENT pour la table `admins`
 --
-ALTER TABLE `admin`
+ALTER TABLE `admins`
   MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `car`
+-- AUTO_INCREMENT pour la table `cars`
 --
-ALTER TABLE `car`
+ALTER TABLE `cars`
   MODIFY `id_car` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `moto`
+-- AUTO_INCREMENT pour la table `motos`
 --
-ALTER TABLE `moto`
+ALTER TABLE `motos`
   MODIFY `id_moto` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `offer`
+-- AUTO_INCREMENT pour la table `offers`
 --
-ALTER TABLE `offer`
+ALTER TABLE `offers`
   MODIFY `id_offer` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `rental`
+-- AUTO_INCREMENT pour la table `rentals`
 --
-ALTER TABLE `rental`
+ALTER TABLE `rentals`
   MODIFY `id_rental` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `users`
@@ -212,4 +208,3 @@ ALTER TABLE `vehicles`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-e_motione_motione_motione_motion
