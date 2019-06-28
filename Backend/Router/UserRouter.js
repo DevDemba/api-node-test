@@ -3,6 +3,9 @@ const router = express.Router();
 const dbConn = require('../database/db').dbConn;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+// getting the local authentication type
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy
 const authMiddleware = (req, res, next) => {
   if (!req.isAuthenticated()) {
     res.status(401).send('You are not authenticated');
@@ -10,6 +13,35 @@ const authMiddleware = (req, res, next) => {
     return next()
   }
 }
+
+let users = [
+  {
+    id: 1,
+    name: "admin",
+    email: "admin@gmail.com",
+    password: "admin"
+  },
+  {
+    id: 2,
+    name: "emma",
+    email: "emma@gmail.com",
+    password: "password2"
+  }
+] 
+
+/*
+let users ;
+
+function test () {
+    dbConn.query('SELECT * FROM users', function (error, results, fields) {
+        if (error) throw error;
+        return res.json({ error: false, data: results,  });
+    })
+}
+
+test()
+*/ 
+
 
  // connect to database
  dbConn.connect(); 
@@ -177,5 +209,44 @@ router.delete('/api/user', (req, res) => {
         return res.send({ error: false, data: results, message: 'User has been updated successfully.' });
     });
 }); 
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password"
+    },
+
+    (username, password, done) => {
+      let user = users.find((user) => {
+        return user.email === username && user.password === password
+      })
+
+      if (user) {
+        done(null, user)
+      } else {
+        done(null, false, { message: 'Incorrect username or password'})
+      }
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+});
+
+passport.deserializeUser((id, done) => {
+  let user = users.find((user) => {
+    return user.id === id
+  })
+
+  done(null, user)
+});
+
+
  
  module.exports = router;

@@ -4,10 +4,6 @@ require('dotenv').config()
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 
-// getting the local authentication type
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy
-
 const router = express.Router();
 
 const indexRoutes = require('./Router/IndexRouter');
@@ -27,36 +23,6 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-let users = [
-  {
-    id: 1,
-    name: "admin",
-    email: "admin@gmail.com",
-    password: "admin"
-  },
-  {
-    id: 2,
-    name: "emma",
-    email: "emma@gmail.com",
-    password: "password2"
-  }
-] 
-
-/*
-let users ;
-
-function test () {
-    dbConn.query('SELECT * FROM users', function (error, results, fields) {
-        if (error) throw error;
-        return res.json({ error: false, data: results,  });
-    })
-}
-
-test()
-*/ 
 
 app.use((req, res, next)=>{
     
@@ -81,40 +47,6 @@ router.get("/", (req, res, next) => {
 
 
 app.use('/', userRoutes);
-
-
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: "email",
-      passwordField: "password"
-    },
-
-    (username, password, done) => {
-      let user = users.find((user) => {
-        return user.email === username && user.password === password
-      })
-
-      if (user) {
-        done(null, user)
-      } else {
-        done(null, false, { message: 'Incorrect username or password'})
-      }
-    }
-  )
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.id)
-});
-
-passport.deserializeUser((id, done) => {
-  let user = users.find((user) => {
-    return user.id === id
-  })
-
-  done(null, user)
-});
 
 
 const PORT = process.env.PORT || 3000;
