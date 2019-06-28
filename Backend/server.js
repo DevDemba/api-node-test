@@ -6,7 +6,7 @@ const cookieSession = require('cookie-session');
 const router = express.Router();
 const indexRoutes = require('./Router/IndexRouter');
 const userRoutes = require('./Router/UserRouter');
-
+    
 const publicRoot = '../Front/vue-project/dist'
 
 app.use(express.static(publicRoot));
