@@ -1,10 +1,9 @@
 # api-node-test
 
+#### Comment dÃ©marrer le projet ?
 
-comment démarrer le projet
+Dossier 'Backend'  
+Taper : npm start
 
-cmd => npm start 
-
-Front
-
-cmd => npm run dev
+Dossier Front/vue-project  
+Taper : npm run dev
