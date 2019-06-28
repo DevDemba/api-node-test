@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
 const dbConn = require('../database/db').dbConn;
 const bcrypt = require('bcrypt');
@@ -47,6 +46,8 @@ test()
  // connect to database
  dbConn.connect(); 
 
+router.use(passport.initialize());
+router.use(passport.session());
 
 // Retrieve all users 
 router.get('/api/users', (req, res) => {
@@ -210,9 +211,6 @@ router.delete('/api/user', (req, res) => {
         return res.send({ error: false, data: results, message: 'User has been updated successfully.' });
     });
 }); 
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 passport.use(
