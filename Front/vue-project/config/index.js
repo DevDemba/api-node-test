@@ -10,8 +10,9 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+
+    // Proxy backend api with front
     proxyTable: {
-      // proxy backend api with front
        "/api": "http://localhost:3000"
     },
 

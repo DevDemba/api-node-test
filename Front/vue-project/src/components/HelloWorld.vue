@@ -2,12 +2,17 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
+    <welcome></welcome>
   </div>
 </template>
 
 <script>
+import Welcome from './Welcome'
 export default {
   name: 'HelloWorld',
+  components: {
+    Welcome
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

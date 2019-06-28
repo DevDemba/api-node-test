@@ -87,7 +87,7 @@ data() {
         border: 1px solid #CCCCCC;
         background-color: #FFFFFF;
         margin: auto;
-        margin-top: 20  px;
+        margin-top: 30px;
         padding: 20px;
         display: flex;
         flex-direction: column;

@@ -20,13 +20,13 @@
     methods: {
       getUsers: function () {
         axios.get('/api/users')
-          .then(response => {
-            this.users = response.data.data
-            console.log(this.users)
-          })
-          .catch(e => {
-            this.errors = e
-          });
+              .then(response => {
+                this.users = response.data.data
+                console.log(this.users)
+              })
+              .catch(e => {
+                this.errors = e
+              });
       },
       updateUsers: function () {
           axios.post('/api/user:id')

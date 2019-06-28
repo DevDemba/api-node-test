@@ -2,7 +2,6 @@
   <div class="register">
       <h1>Register</h1>
         <form>
-
             <input type="radio" name="gender" value="Male" checked/> Male
             <input type="radio" name="gender" value="Female"/> Female
             <b-form-input type="text" name="lastname" placeholder="Lastname" />    
@@ -14,7 +13,6 @@
             <b-form-input type="text" name="email" placeholder="Email" />    
             <b-form-input type="password" name="password" v-model="password" placeholder="Password" required />  
             <b-form-input type="password" name="password_confirmation" v_model="password_confirmation" placeholder="Password confirmation" required />  
-
             <div>
                 <select v-model="is_admin">
                     <option value=1>Yes</option>
@@ -22,7 +20,6 @@
                 </select>
             </div> 
             <b-button type="submit" @click="handleSubmit">Register</b-button>  
-              
         </form>  
         </div>
 </template>
@@ -97,30 +94,6 @@ export default {
             }
         }
     }
-
-/*data() {
-            return {
-                input: {
-                    username: "",
-                    password: ""
-                }
-            }
-        },
-        methods: {
-            login() {
-                if(this.input.username != "" && this.input.password != "") {
-                    if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
-                        this.$emit("authenticated", true);
-                        this.$router.replace({ name: "secure" });
-                    } else {
-                        console.log("The username and / or password is incorrect");
-                    }
-                } else {
-                    console.log("A username and password must be present");
-                }
-            }
-        }
-    }*/
 </script>
 
 <style scoped>
