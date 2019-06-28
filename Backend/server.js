@@ -3,9 +3,7 @@ const app = express();
 require('dotenv').config()
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-
 const router = express.Router();
-
 const indexRoutes = require('./Router/IndexRouter');
 const userRoutes = require('./Router/UserRouter');
 
@@ -22,7 +20,6 @@ app.use(cookieSession({
     keys: ['vueauthrandomkey'],
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
-
 
 app.use((req, res, next)=>{
     
@@ -45,9 +42,7 @@ router.get("/", (req, res, next) => {
     res.sendFile("index.html", { root: publicRoot })
 });
 
-
 app.use('/', userRoutes);
-
 
 const PORT = process.env.PORT || 3000;
 

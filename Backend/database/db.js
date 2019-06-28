@@ -8,11 +8,11 @@ const DATABASE = process.env.DATABASE;
 // connection configurations
 const connection = { 
     dbConn: mysql.createConnection({
-    host: HOST,
-    user: MYSQL_USER,
-    password: MYSQL_PASSWORD,
-    database: DATABASE
-})
+        host: HOST,
+        user: MYSQL_USER,
+        password: MYSQL_PASSWORD,
+        database: DATABASE
+    })
 }
  
 module.exports = connection;
