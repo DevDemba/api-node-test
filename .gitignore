@@ -1,4 +1,12 @@
-
+.DS_Store
 Backend/node_modules/yallist/iterator.js
 Backend/node_modules/xdg-basedir/license
 Backend/.env
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
