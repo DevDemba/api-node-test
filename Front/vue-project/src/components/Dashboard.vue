@@ -1,25 +1,25 @@
 <template>
     <div>    
         <h2>Dashboard</h2>    
-        <p>Name: {{ user.name }}</p>    
+        <p>Name: {{user.firstname}}</p>    
     </div>
 </template>
 <script>
     import axios from "axios"    
     import router from "../router"    
     export default {    
-        name: "Login",    
+        name: "Login", 
         data() {    
             return {    
                 user: {    
-                    name: 'demba' 
+                    firstname: this.firstname[0]  
                 }    
             }    
         },    
         methods: {    
             getUserData: function() {    
                 let self = this    
-                axios.get("/api/user")    
+                this.$http.get("/api/user")    
                     .then((response) => {    
                         console.log(response)    
                         self.$set(this, "user", response.data.user)    
@@ -32,6 +32,6 @@
             },    
             mounted() {    
                 this.getUserData()    
-            }    
+            } 
     }
 </script>

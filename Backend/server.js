@@ -6,8 +6,12 @@ const cookieSession = require('cookie-session');
 const router = express.Router();
 const indexRoutes = require('./Router/IndexRouter');
 const userRoutes = require('./Router/UserRouter');
+const cors = require('cors');
     
 const publicRoot = '../Front/vue-project/dist'
+
+
+app.use(cors());
 
 app.use(express.static(publicRoot));
 app.use(bodyParser.json());
@@ -30,8 +34,9 @@ app.use((req, res, next)=>{
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
   // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
+  //res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
 
+  res.header('Access-Control-Allow-Headers', '*');
 //  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
   // Pass to next layer of middleware

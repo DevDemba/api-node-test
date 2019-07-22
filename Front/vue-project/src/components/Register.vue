@@ -31,8 +31,8 @@
         <form>
             <label for="gender">Gender</label>
             <div>
-                <input id ="gender" type="radio" v-model="gender" value="Male" checked/> Male
-                <input id = "gender" type="radio" v-model="gender" value="Female"/> Female
+                <input id="gender" type="radio" v-model="gender" value="Male" checked /> Male
+                <input id= "gender" type="radio" v-model="gender" value="Female" checked /> Female
             </div>
 
             <label for="lastname" >Lastname </label>
@@ -55,9 +55,14 @@
                 <input id="address" type="text" v-model="address" required>
             </div>
 
+            <label for="phone" >Phone</label>
+            <div>
+                <input id="phone" type="text" v-model="phone" required>
+            </div>
+
             <label for="license_driver" >License driver</label>
             <div>
-                <input id="license_driver" type="text" v-model="text" required>
+                <input id="license_driver" type="text" v-model="license_driver" required>
             </div>
             
             <label for="email" >E-Mail Address</label>
@@ -75,9 +80,8 @@
                 <input id="password-confirm" type="password" v-model="password_confirmation" required>
             </div>
 
-            <label for="password-confirm">Is this an administrator account?</label>
-            
             <!--
+            <label for="password-confirm">Is this an administrator account?</label>
             <div>
                 <select v-model="is_admin">
                     <option value=1>Yes</option>
@@ -115,7 +119,7 @@ export default {
                 email : "",
                 password : "",
                 password_confirmation : "",
-                /*is_admin : null*/
+                is_admin : null
             }
         },
         methods : {
@@ -124,10 +128,9 @@ export default {
 
                 if (this.password === this.password_confirmation && this.password.length > 0)
                 {
-                    let url = "http://localhost:3000/api/register"
-                    /*if(this.is_admin != null || this.is_admin == 1) url = "http://localhost:3000/api/register-admin"*/
-                    
-                    this.$http.post(url, {
+                    let url = "http://localhost:3000/api/register";
+
+                    let user =  {
                         gender: this.gender,
                         lastname: this.lastname,
                         firstname: this.firstname,
@@ -137,13 +140,16 @@ export default {
                         license_driver: this.license_driver,
                         email: this.email,
                         password: this.password,
-                       /* is_admin: this.is_admin*/
+                        is_admin: this.is_admin
+                    };
 
-                    })
-                    .then(response => {
+                    if(this.is_admin != null || this.is_admin == 1) url = "http://localhost:3000/api/register-admin"
+                    
+                    axios.post(url, user)
+                    .then((response) => {
                         localStorage.setItem('user',JSON.stringify(response.data.user))
                         localStorage.setItem('jwt',response.data.token)
-
+                        console.log(response.data.user)
                         if (localStorage.getItem('jwt') != null){
                             this.$emit('loggedIn')
                             if(this.$route.params.nextUrl != null){

@@ -14,6 +14,9 @@ const authMiddleware = (req, res, next) => {
   }
 }
 
+const config = require('./config');
+
+
 let users = [
   {
     id: 1,
@@ -28,19 +31,6 @@ let users = [
     password: "password2"
   }
 ] 
-
-/*
-let users ;
-
-function test () {
-    dbConn.query('SELECT * FROM users', function (error, results, fields) {
-        if (error) throw error;
-        return res.json({ error: false, data: results,  });
-    })
-}
-
-test()
-*/ 
 
 
  // connect to database
@@ -57,21 +47,21 @@ router.get('/api/users', (req, res) => {
     });
 });
 
-router.post("/api/login", (req, res, next) => {
+/*router.post("/api/login", (req, res, next) => {
 
-    /*dbConn.query('SELECT * FROM users WHERE email = ?', function (err, user) {
+    dbConn.query('SELECT * FROM users WHERE email = ?', [req.body.email], function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
-        let passwordIsValid = bcrypt.compareSync(req.body.password, user.user_pass);
+        let passwordIsValid = bcrypt.compareSync(req.body.password, user.user_password, hash);
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
-        let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
+       // let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
         });
         res.status(200).send({ auth: true, token: token, user: user });
         
-    }); */
+    }); 
     
-    passport.authenticate("local", (err, user, info) => {
+   /* passport.authenticate("local", (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -84,8 +74,37 @@ router.post("/api/login", (req, res, next) => {
       res.send("Logged in");
     });
   })(req, res, next); 
-});
+});*/
 
+
+router.post('/api/login', (req, res, next) => {
+
+    dbConn.query('SELECT * FROM users WHERE email = ?', [req.body.email, req.body.password], 
+    
+    (err, user) => {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!user) return res.status(404).send('No user found.');
+        let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+        let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
+        });
+        res.status(200).send({ auth: true, token: token, user: user });
+    });
+
+   /* passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.status(400).send([user, "Cannot log in", info]);
+    }
+
+    req.login(user, err => {
+      res.send("Logged in");
+    });
+  })(req, res, next);*/
+})
 
 router.get("/api/logout", function(req, res) {
   req.logout();
@@ -95,39 +114,44 @@ router.get("/api/logout", function(req, res) {
   return res.send();
 });
 
+
+
 router.post('/api/register', function(req, res) {
-    dbConn.query('INSERT INTO users (lastname,firstname,birthday, address, phone, license_driver, gender, email, password) VALUES(?,?,?,?,?,?,?,?,?)', [
+    user =  [
+        req.body.gender,
         req.body.lastname,
         req.body.firstname,
         req.body.birthday,
         req.body.address,
         req.body.phone,
         req.body.license_driver,
-        req.body.gender,
         req.body.email,
         bcrypt.hashSync(req.body.password, 8)
-    ],
-    function (err) {
+    ];
+    
+    dbConn.query('INSERT INTO users (gender, lastname, firstname, birthday, address, phone, license_driver, email, password) VALUES (?,?,?,?,?,?,?,?,?)', user,
+
+    (err, results) => {
         if (err) return res.status(500).send("There was a problem registering the user.")
-        dbConn.query('SELECT * FROM users WHERE email = ?', req.body.email, (err,user) => {
+        dbConn.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, user) => {
             if (err) return res.status(500).send("There was a problem getting user")
             let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
             });
             res.status(200).send({ auth: true, token: token, user: user });
         }); 
-    }); 
+    });
 });
 
 router.post('/register-admin', function(req, res) {
     dbConn.query('INSERT INTO users (firstname,email,is_admin) VALUES (?,?,?,?)', [
-        req.body.name,
+        req.body.firstname,
         req.body.email,
         bcrypt.hashSync(req.body.password, 8),
         1
     ],
     function (err) {
         if (err) return res.status(500).send("There was a problem registering the user.")
-        dbConn.selectByEmail(req.body.email, (err,user) => {
+        dbConn.query('SELECT * FROM users WHERE email = ?', req.body.email, (err,user) => {
             if (err) return res.status(500).send("There was a problem getting user")
             let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
             });
@@ -157,7 +181,7 @@ router.get('/api/user/:id', (req, res)=> {
         return res.status(400).send({ error: true, message: 'Please provide user_id' });
     }
   
-    dbConn.query('SELECT * FROM users where id=?', user_id, function (error, results, fields) {
+    dbConn.query('SELECT * FROM users where id = ?', user_id, function (error, results, fields) {
         if (error) throw error;
         return res.json({ error: false, data: results[0], message: 'users list.' });
     });

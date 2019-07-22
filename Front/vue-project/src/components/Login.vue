@@ -1,20 +1,14 @@
 <template>
     <div class="login">
         <h1>Login</h1>
-       <!--<b-form-input type="text" name="username" v-model="input.username" placeholder="Username" />
-        <b-form-input type="password" name="password" v-model="input.password" placeholder="Password" />
-        <b-button type="button" v-on:click="login()">Login</b-button> -->
-        <form >
-            <label for="email" >E-Mail Address</label>
-            <b-form-input type="text" v_model="email" placeholder="Email" required/>  
-
-
-            <label for="password" >Password </label>
-            <b-form-input type="password" v_model="password" placeholder="Password" required/>  
-
-            <b-button type="submit" @click="handleSubmit">Login</b-button>  
-              
-        </form>
+        <b-form-input type="email"  v-model="email" placeholder="Email" />
+        <b-form-input type="password" v-model="password" placeholder="Password" />
+        <b-button type="button" @click="handleSubmit">Login</b-button>
+       <!--<form>
+            <b-form-input type="email" id="email" v-model="email" required autofocus />
+            <b-form-input type="password" id="password" v-model="password" required />
+            <b-button type="submit" v-on:click="handleSubmit()">Login</b-button>
+        </form>-->
     </div>
 </template>
 
@@ -22,14 +16,21 @@
     import axios from "axios"  
     import router from "../router"    
     export default {    
-        name: "Login",    
+        name: "Login",  
+        props: ["nextUrl"],
+        data() {
+            return {
+                email : "",
+                password : ""
+            }
+        }, 
         methods: {    
             handleSubmit(e){
                 e.preventDefault()
                 if (this.password.length > 0) {
-                    this.$http.post('http://localhost:3000/api/login', {
+                  axios.post('http://localhost:3000/api/login', {
                         email: this.email,
-                        password: this.password
+                        password: this.password,
                     })
                     .then(response => {
                         let is_admin = response.data.user.is_admin
@@ -43,10 +44,10 @@
                             }
                             else {
                                 if(is_admin== 1){
-                                    this.$router.push('admin')
+                                    router.push('/admin')
                                 }
                                 else {
-                                    this.$router.push('dashboard')
+                                    router.push('/dashboard')
                                 }
                             }
                         }
