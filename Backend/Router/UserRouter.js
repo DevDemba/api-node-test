@@ -79,31 +79,32 @@ router.get('/api/users', (req, res) => {
 
 router.post('/api/login', (req, res, next) => {
 
-    dbConn.query('SELECT * FROM users WHERE email = ?', [req.body.email, req.body.password], 
+    passport.authenticate("local", (err, user, info) => {
+        if (err) {
+        return next(err);
+        }
+
+        if (!user) {
+        return res.status(400).send([user, "Cannot log in", info]);
+        }
+
+        req.login(user, err => {
+        res.send("Logged in");
+        });
+    })(req, res, next);
+
+    dbConn.query(`SELECT * FROM users WHERE email = ?`, [req.body.email, req.body.password], 
     
     (err, user) => {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
-        let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+        //let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        //if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
         let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
         });
         res.status(200).send({ auth: true, token: token, user: user });
     });
 
-   /* passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-
-    if (!user) {
-      return res.status(400).send([user, "Cannot log in", info]);
-    }
-
-    req.login(user, err => {
-      res.send("Logged in");
-    });
-  })(req, res, next);*/
 })
 
 router.get("/api/logout", function(req, res) {
@@ -129,7 +130,7 @@ router.post('/api/register', function(req, res) {
         bcrypt.hashSync(req.body.password, 8)
     ];
     
-    dbConn.query('INSERT INTO users (gender, lastname, firstname, birthday, address, phone, license_driver, email, password) VALUES (?,?,?,?,?,?,?,?,?)', user,
+    dbConn.query(`INSERT INTO users (gender, lastname, firstname, birthday, address, phone, license_driver, email, password) VALUES (?,?,?,?,?,?,?,?,?)`, user,
 
     (err, results) => {
         if (err) return res.status(500).send("There was a problem registering the user.")
