@@ -142,6 +142,29 @@ router.post('/api/register', function(req, res) {
     });
 });
 
+
+router.post('/api/vehicle', (req, res) => {
+  user =  [
+      req.body.marque,
+      req.body.serial_number,
+      req.body.color,
+      req.body.nb_plate,
+      req.body.nb_kilometer,
+      req.body.purchase_date,
+      req.body.price
+
+     
+  ]; console.log(req.body.color); 
+  
+  dbConn.query('INSERT INTO vehicles (marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?)', user,
+
+  (err, results) => {
+      if (err) return res.status(500).send("There was a problem registering the vehicles.")
+          res.status(200).send({ auth: true, token: token, user: user });
+  }); 
+});
+
+
 router.post('/register-admin', function(req, res) {
     dbConn.query('INSERT INTO users (firstname,email,is_admin) VALUES (?,?,?,?)', [
         req.body.firstname,
