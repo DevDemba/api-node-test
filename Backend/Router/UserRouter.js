@@ -79,7 +79,7 @@ router.get('/api/users', (req, res) => {
 
 router.post('/api/login', (req, res, next) => {
 
-    passport.authenticate("local", (err, user, info) => {
+   /* passport.authenticate("local", (err, user, info) => {
         if (err) {
         return next(err);
         }
@@ -91,15 +91,16 @@ router.post('/api/login', (req, res, next) => {
         req.login(user, err => {
         res.send("Logged in");
         });
-    })(req, res, next);
+    })(req, res, next); */
+    user = [req.body.email, req.body.password];
 
-    dbConn.query(`SELECT * FROM users WHERE email = ?`, [req.body.email, req.body.password], 
+    dbConn.query(`SELECT * FROM users WHERE email = ?`, user, 
     
     (err, user) => {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
-        //let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-        //if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+        let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
         let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
         });
         res.status(200).send({ auth: true, token: token, user: user });

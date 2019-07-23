@@ -12,14 +12,14 @@
         data() {    
             return {    
                 user: {    
-                    firstname: this.firstname[0]  
+                    firstname: 'demba'  
                 }    
             }    
         },    
         methods: {    
             getUserData: function() {    
                 let self = this    
-                this.$http.get("/api/user")    
+                axios.get("/api/user")    
                     .then((response) => {    
                         console.log(response)    
                         self.$set(this, "user", response.data.user)    

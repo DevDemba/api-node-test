@@ -1,103 +1,29 @@
-<!--
 <template>
   <div class="register">
       <h1>Register</h1>
         <form>
-            <input type="radio" name="gender" value="Male" checked/> Male
-            <input type="radio" name="gender" value="Female"/> Female
-            <b-form-input type="text" name="lastname" placeholder="Lastname" />    
-            <b-form-input type="text" name="firstname" placeholder="Firstname" />    
-            <b-form-input type="date" name="birthday" placeholder="Birthday" />    
-            <b-form-input type="text" name="address" placeholder="Address" />    
-            <b-form-input type="text" name="phone" placeholder="Phone" />    
-            <b-form-input type="text" name="license_driver" placeholder="License driver " />    
-            <b-form-input type="text" name="email" placeholder="Email" />    
-            <b-form-input type="password" name="password" v-model="password" placeholder="Password" required />  
-            <b-form-input type="password" name="password_confirmation" v_model="password_confirmation" placeholder="Password confirmation" required />  
-            <div>
+
+            <input type="radio" v-model="gender" value="Male" checked required/> Male
+            <input type="radio" v-model="gender" value="Female" required/> Female
+            <b-form-input type="text" v-model="lastname" placeholder="Lastname" required />    
+            <b-form-input type="text" v-model="firstname" placeholder="Firstname" required />    
+            <b-form-input type="date" v-model="birthday" placeholder="Birthday" required />    
+            <b-form-input type="text" v-model="address" placeholder="Address" required />    
+            <b-form-input type="text" v-model="phone" placeholder="Phone" />    
+            <b-form-input type="text" v-model="license_driver" placeholder="License driver " />    
+            <b-form-input type="email" v-model="email" placeholder="Email" required />    
+            <b-form-input type="password" v-model="password" placeholder="Password" required />  
+            <b-form-input type="password" v-model="password_confirmation" placeholder="Password confirmation" required />  
+           <!-- <div>
                 <select v-model="is_admin">
                     <option value=1>Yes</option>
                     <option value=0>No</option>
                 </select>
-            </div> 
+            </div> -->
             <b-button type="submit" @click="handleSubmit">Register</b-button>  
         </form>  
         </div>
-</template> -->
-
-<template>
-    <div>
-        <h4>Register</h4>
-        <form>
-            <label for="gender">Gender</label>
-            <div>
-                <input id="gender" type="radio" v-model="gender" value="Male" checked /> Male
-                <input id= "gender" type="radio" v-model="gender" value="Female" checked /> Female
-            </div>
-
-            <label for="lastname" >Lastname </label>
-            <div>
-                <input id="lastname" type="text" v-model="lastname" required>
-            </div>
-
-            <label for="firstname" > Firstname </label>
-            <div>
-                <input id="firstname" type="text" v-model="firstname" required>
-            </div>
-
-            <label for="birthday" >Birthday</label>
-            <div>
-                <input id="birthday" type="date" v-model="birthday" required>
-            </div>
-
-            <label for="address" >Address</label>
-            <div>
-                <input id="address" type="text" v-model="address" required>
-            </div>
-
-            <label for="phone" >Phone</label>
-            <div>
-                <input id="phone" type="text" v-model="phone" required>
-            </div>
-
-            <label for="license_driver" >License driver</label>
-            <div>
-                <input id="license_driver" type="text" v-model="license_driver" required>
-            </div>
-            
-            <label for="email" >E-Mail Address</label>
-            <div>
-                <input id="email" type="email" v-model="email" required>
-            </div>
-
-            <label for="password">Password</label>
-            <div>
-                <input id="password" type="password" v-model="password" required>
-            </div>
-
-            <label for="password-confirm">Confirm Password</label>
-            <div>
-                <input id="password-confirm" type="password" v-model="password_confirmation" required>
-            </div>
-
-            <!--
-            <label for="password-confirm">Is this an administrator account?</label>
-            <div>
-                <select v-model="is_admin">
-                    <option value=1>Yes</option>
-                    <option value=0>No</option>
-                </select>
-            </div>
-            -->
-
-            <div>
-                <button type="submit" @click="handleSubmit">
-                    Register
-                </button>
-            </div>
-        </form>
-    </div>
-</template>
+</template> 
 
 <script>
 import axios from "axios"
