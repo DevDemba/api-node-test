@@ -13,91 +13,82 @@
 </template>
 
 <script>
-    import axios from "axios"  
-    import router from "../router"    
-    export default {    
-        name: "Login",  
-        props: ["nextUrl"],
-        data() {
-            return {
-                email : "",
-                password : ""
-            }
-        }, 
-        methods: {    
-            handleSubmit(e){
-                e.preventDefault()
-                if (this.password.length > 0) {
-                  axios.post('http://localhost:3000/api/login', {
-                        email: this.email,
-                        password: this.password,
-                    })
-                    .then(response => {
-                        let is_admin = response.data.user.is_admin
-                        localStorage.setItem('user',JSON.stringify(response.data.user))
-                        localStorage.setItem('jwt',response.data.token)
-
-                        if (localStorage.getItem('jwt') != null){
-                            this.$emit('loggedIn')
-                            if(this.$route.params.nextUrl != null){
-                                this.$router.push(this.$route.params.nextUrl)
-                            }
-                            else {
-                                if(is_admin== 1){
-                                    router.push('/admin')
-                                }
-                                else {
-                                    router.push('/dashboard')
-                                }
-                            }
-                        }
-                    })
-                    .catch(function (error) {
-                        console.error(error.response);
-                    });
-                }
-
-                
-            }
-        }    
+import axios from 'axios'
+import router from '../router'
+export default {
+  name: 'Login',
+  props: ['nextUrl'],
+  data () {
+    return {
+      email: '',
+      password: ''
     }
+  },
+  methods: {
+    handleSubmit (e) {
+      e.preventDefault()
+      if (this.password.length > 0) {
+        axios.post('http://localhost:3000/api/login', {
+          email: this.email,
+          password: this.password
+        })
+          .then(response => {
+            let is_admin = response.data.user.is_admin
+            localStorage.setItem('user', JSON.stringify(response.data.user))
+            localStorage.setItem('jwt', response.data.token)
 
+            if (localStorage.getItem('jwt') != null) {
+              this.$emit('loggedIn')
+              if (this.$route.params.nextUrl != null) {
+                this.$router.push(this.$route.params.nextUrl)
+              } else {
+                if (is_admin == 1) {
+                  router.push('/admin')
+                } else {
+                  router.push('/dashboard')
+                }
+              }
+            }
+          })
+          .catch(function (error) {
+            console.error(error.response)
+          })
+      }
+    }
+  }
+}
 
-    /*login: (e) => {    
-                e.preventDefault()    
+/* login: (e) => {
+                e.preventDefault()
                 let email = e.target.elements.email.value
                 let password = e.target.elements.password.value
-                
-                let login = () => {    
-                    let data = {    
-                        email: email,    
+
+                let login = () => {
+                    let data = {
+                        email: email,
                         password: password,
                         errorMessage: {
                             type: String,
                             default: ""
                         }
 
-                    }    
-                    axios.post("/api/login", data)    
-                        .then((response) => {    
-                            console.log("Logged in")    
-                            router.push("/dashboard")   
-                            alert("You are connected !")  
-                        })    
-                        .catch((errors) => {    
-                            console.log("Cannot log in") 
-                            alert("Error - Log in")  
+                    }
+                    axios.post("/api/login", data)
+                        .then((response) => {
+                            console.log("Logged in")
+                            router.push("/dashboard")
+                            alert("You are connected !")
+                        })
+                        .catch((errors) => {
+                            console.log("Cannot log in")
+                            alert("Error - Log in")
 
-
-                        })    
-                }    
-                login()    
-            }*/
+                        })
+                }
+                login()
+            } */
 
 </script>
-
-
-
 
 <style scoped>
     .login {
@@ -122,4 +113,3 @@
   margin-top: 60px;
 }
 </style>
-
