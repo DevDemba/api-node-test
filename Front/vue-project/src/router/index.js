@@ -72,7 +72,7 @@ export default new Router({
       }
     },
     {
-      path: '/Offer-detail',
+      path: '/Offer-detail/:id',
       name: 'Offer-detail',
       component: OfferDetail,
       meta: {
