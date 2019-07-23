@@ -8,6 +8,7 @@ import Dashboard from '@/components/Dashboard'
 import Admin from '@/components/Admin'
 import Offer from '@/components/Offer'
 import OfferDetail from '@/components/OfferDetail'
+import RegisterVehicle from '@/components/RegisterVehicle'
 
 Vue.use(Router)
 
@@ -74,6 +75,14 @@ export default new Router({
       path: '/Offer-detail',
       name: 'Offer-detail',
       component: OfferDetail,
+      meta:{
+        guest: true
+      }
+    },
+    {
+      path: '/RegisterVehicle',
+      name: 'RegisterVehicle',
+      component: RegisterVehicle,
       meta:{
         guest: true
       }
