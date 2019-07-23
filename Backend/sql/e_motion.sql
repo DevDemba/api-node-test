@@ -1,13 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
---
--- Client :  127.0.0.1
--- Généré le :  Mar 23 Juillet 2019 à 12:47
--- Version du serveur :  5.7.14
--- Version de PHP :  7.2.15
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "TRADITIONAL";
 SET time_zone = "+00:00";
 
 
@@ -28,9 +19,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id_admin` int(11) NOT NULL,
-  `login` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `login` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -40,8 +31,8 @@ CREATE TABLE `admin` (
 
 CREATE TABLE `car` (
   `id_car` int(11) NOT NULL,
-  `modele` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `modele` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -51,9 +42,9 @@ CREATE TABLE `car` (
 
 CREATE TABLE `moto` (
   `id_moto` int(11) NOT NULL,
-  `modele` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modele` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nb_tire` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -68,7 +59,7 @@ CREATE TABLE `offer` (
   `date_end_offer` date NOT NULL,
   `date_update_offer` date NOT NULL,
   `price_offer` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -83,7 +74,7 @@ CREATE TABLE `rental` (
   `start_rental_date` date NOT NULL,
   `end_rental_date` date NOT NULL,
   `back_rental_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -93,19 +84,19 @@ CREATE TABLE `rental` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `lastname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
-  `address` varchar(255) NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` int(11) NOT NULL,
-  `license_driver` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `license_driver` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `point` int(11) DEFAULT '0',
   `register_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `gender` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_admin` tinyint(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Contenu de la table `users`
@@ -126,15 +117,15 @@ INSERT INTO `users` (`id`, `lastname`, `firstname`, `birthday`, `address`, `phon
 
 CREATE TABLE `vehicles` (
   `id_vehicle` int(11) NOT NULL,
-  `marque` varchar(255) NOT NULL,
-  `serial_number` varchar(255) NOT NULL,
-  `color` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nb_plate` varchar(255) NOT NULL,
+  `marque` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `serial_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nb_plate` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nb_kilometer` int(11) NOT NULL,
   `purchase_date` date NOT NULL,
   `price` int(11) NOT NULL,
   `available` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Contenu de la table `vehicles`
