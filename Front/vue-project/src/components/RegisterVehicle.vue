@@ -5,23 +5,23 @@
         <form>
             <input type="radio" name="gender" value="Male" checked/> Male
             <input type="radio" name="gender" value="Female"/> Female
-            <b-form-input type="text" name="lastname" placeholder="Lastname" />    
-            <b-form-input type="text" name="firstname" placeholder="Firstname" />    
-            <b-form-input type="date" name="birthday" placeholder="Birthday" />    
-            <b-form-input type="text" name="address" placeholder="Address" />    
-            <b-form-input type="text" name="phone" placeholder="Phone" />    
-            <b-form-input type="text" name="license_driver" placeholder="License driver " />    
-            <b-form-input type="text" name="email" placeholder="Email" />    
-            <b-form-input type="password" name="password" v-model="password" placeholder="Password" required />  
-            <b-form-input type="password" name="password_confirmation" v_model="password_confirmation" placeholder="Password confirmation" required />  
+            <b-form-input type="text" name="lastname" placeholder="Lastname" />
+            <b-form-input type="text" name="firstname" placeholder="Firstname" />
+            <b-form-input type="date" name="birthday" placeholder="Birthday" />
+            <b-form-input type="text" name="address" placeholder="Address" />
+            <b-form-input type="text" name="phone" placeholder="Phone" />
+            <b-form-input type="text" name="license_driver" placeholder="License driver " />
+            <b-form-input type="text" name="email" placeholder="Email" />
+            <b-form-input type="password" name="password" v-model="password" placeholder="Password" required />
+            <b-form-input type="password" name="password_confirmation" v_model="password_confirmation" placeholder="Password confirmation" required />
             <div>
                 <select v-model="is_admin">
                     <option value=1>Yes</option>
                     <option value=0>No</option>
                 </select>
-            </div> 
-            <b-button type="submit" @click="handleSubmit">Register</b-button>  
-        </form>  
+            </div>
+            <b-button type="submit" @click="handleSubmit">Register</b-button>
+        </form>
         </div>
 </template> -->
 
@@ -59,7 +59,7 @@
             <div>
                 <input id="purchase_date" type="date" v-model="purchase_date" required>
             </div>
-            
+
             <label for="price" >Price</label>
             <div>
                 <input id="price" type="text" v-model="price" required>
@@ -75,62 +75,60 @@
 </template>
 
 <script>
-import axios from "axios"
-import router from "../router" 
+import axios from 'axios'
+import router from '../router'
 
 export default {
 
   name: 'RegisterVehicle',
-        props : ["nextUrl"],
-        data(){
-            return {
-                marque: "",
-                serial_number : "",
-                color: "",
-                nb_plate: "",
-                nb_kilometer:"",
-                purchase_date:"",
-                price:""
-            }
-        },
-        methods : {
-            handleSubmit(e) {
-                e.preventDefault()
-
-                    let url = "http://localhost:3000/api/vehicle";
-
-                    let vehicle =  {
-                        marque: this.marque,
-                        serial_number: this.serial_number,
-                        color: this.color,
-                        nb_plate: this.nb_plate,
-                        nb_kilometer: this.nb_kilometer,
-                        purchase_date: this.purchase_date,
-                        price: this.price
-                    };
-
-                    
-                    axios.post(url, vehicle)
-                    .then((response) => {
-                        localStorage.setItem('vehicle',JSON.stringify(response.data.vehicle))
-                        localStorage.setItem('jwt',response.data.token)
-                        console.log(response.data.vehicle)
-                        if (localStorage.getItem('jwt') != null){
-                            this.$emit('loggedIn')
-                            if(this.$route.params.nextUrl != null){
-                                this.$router.push(this.$route.params.nextUrl)
-                            }
-                            else{
-                                this.$router.push('/')
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
-        }
+  props: ['nextUrl'],
+  data () {
+    return {
+      marque: '',
+      serial_number: '',
+      color: '',
+      nb_plate: '',
+      nb_kilometer: '',
+      purchase_date: '',
+      price: ''
     }
+  },
+  methods: {
+    handleSubmit (e) {
+      e.preventDefault()
+
+      let url = 'http://localhost:3000/api/vehicle'
+
+      let vehicle = {
+        marque: this.marque,
+        serial_number: this.serial_number,
+        color: this.color,
+        nb_plate: this.nb_plate,
+        nb_kilometer: this.nb_kilometer,
+        purchase_date: this.purchase_date,
+        price: this.price
+      }
+
+      axios.post(url, vehicle)
+        .then((response) => {
+          localStorage.setItem('vehicle', JSON.stringify(response.data.vehicle))
+          localStorage.setItem('jwt', response.data.token)
+          console.log(response.data.vehicle)
+          if (localStorage.getItem('jwt') != null) {
+            this.$emit('loggedIn')
+            if (this.$route.params.nextUrl != null) {
+              this.$router.push(this.$route.params.nextUrl)
+            } else {
+              this.$router.push('/')
+            }
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -156,4 +154,3 @@ export default {
   margin-top: 60px;
 }
 </style>
-
