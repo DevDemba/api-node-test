@@ -13,7 +13,6 @@ const connection = {
         password: MYSQL_PASSWORD,
         database: DATABASE
     })
-}
+};
  
 module.exports = connection;
-

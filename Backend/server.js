@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-require('dotenv').config()
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const router = express.Router();
@@ -8,7 +8,7 @@ const indexRoutes = require('./Router/IndexRouter');
 const userRoutes = require('./Router/UserRouter');
 const cors = require('cors');
     
-const publicRoot = '../Front/vue-project/dist'
+const publicRoot = '../Front/vue-project/dist';
 
 
 app.use(cors());
@@ -44,7 +44,7 @@ app.use((req, res, next)=>{
 });
 
 router.get("/", (req, res, next) => {
-    res.sendFile("index.html", { root: publicRoot })
+    res.sendFile('index.html', { root: publicRoot })
 });
 
 app.use('/', userRoutes);
