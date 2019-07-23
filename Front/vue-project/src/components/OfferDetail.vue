@@ -4,48 +4,59 @@
         <div>
             <h1>Offer detail</h1>
         </div>
-        <div>
-            <v-btn color="success">Success</v-btn>
-            <v-btn color="error">Error</v-btn>
-            <v-btn color="warning">Warning</v-btn>
-            <v-btn color="info">Info</v-btn>
+  
+       <div class="card" v-if="vehicles">
+            <b-card
+            title="Card Title"
+            img-src="https://picsum.photos/600/300/?image=25"
+            img-alt="Image"
+            img-top
+            tag="article"
+            style="max-width: 20rem;"
+            class="mb-2">
+            <b-card-text>
+                {{ vehicles.marques }}
+            </b-card-text>
+            </b-card>
+             <router-link :to="{ name:'Offer' }"><b-button variant="primary">Back To offer</b-button></router-link>
         </div>
-
-  <v-layout>
-    <v-flex xs12 sm6 offset-sm3>
-      <v-card>
-        <v-container grid-list-sm fluid>
-          <v-layout row wrap>
-            <v-flex
-              v-for="n in 9"
-              :key="n"
-              xs4
-              d-flex
-            >
-              <v-card flat tile class="d-flex">
-                <v-img
-                  :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                  :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                  aspect-ratio="1"
-                  class="grey lighten-2"
-                >
-                  <template v-slot:placeholder>
-                    <v-layout
-                      fill-height
-                      align-center
-                      justify-center
-                      ma-0
-                    >
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-layout>
-                  </template>
-                </v-img>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card>
-    </v-flex>
-  </v-layout>
-</div>
+    </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+    name: 'Offer-detail',
+    data() {
+        return {
+            vehicles: [],
+        }
+    },
+   BeforeCreate() {
+      axios.get('/api/vehicle:id')
+        .then(response => {
+          this.vehicles = response.data.data
+          console.log(this.vehicles)
+        })
+        .catch(e => {
+          this.errors = e
+        })
+    }
+    
+}
+</script>
+
+
+<style scoped>
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.error {
+  color: red;
+}
+</style>
+  
+
