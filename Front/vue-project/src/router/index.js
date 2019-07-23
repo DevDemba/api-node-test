@@ -42,7 +42,7 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login,
-      meta:{
+      meta: {
         guest: true
       }
     },
@@ -58,9 +58,9 @@ export default new Router({
       path: '/admin',
       name: 'Admin',
       component: Admin,
-      meta: { 
-          requiresAuth: true,
-          is_admin : true
+      meta: {
+        requiresAuth: true,
+        is_admin: true
       }
     },
     {
@@ -75,7 +75,7 @@ export default new Router({
       path: '/Offer-detail',
       name: 'Offer-detail',
       component: OfferDetail,
-      meta:{
+      meta: {
         guest: true
       }
     },
@@ -83,7 +83,7 @@ export default new Router({
       path: '/RegisterVehicle',
       name: 'RegisterVehicle',
       component: RegisterVehicle,
-      meta:{
+      meta: {
         guest: true
       }
     }
@@ -118,7 +118,7 @@ router.beforeEach((to, from, next) => {
             next({ name: 'Dashboard'})
         }
     }else {
-        next() 
+        next()
     }
 })
 */

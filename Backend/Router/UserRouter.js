@@ -10,9 +10,9 @@ const authMiddleware = (req, res, next) => {
   if (!req.isAuthenticated()) {
     res.status(401).send('You are not authenticated');
   } else {
-    return next()
+    return next();
   }
-}
+};
 
 const config = require('./config');
 
@@ -240,7 +240,7 @@ router.put('/api/user', (req, res) => {
   
     dbConn.query('UPDATE users SET user = ? WHERE id = ?', [user, user_id], function (error, results, fields) {
         if (error) throw error;
-        return res.send({ error: false, data: results, message: 'user has been updated successfully.' });
+        return res.send({ error: false, data: results, message: 'User has been updated successfully.' });
     });
 });
  

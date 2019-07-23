@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <h4>Register Vehicle</h4>
@@ -13,60 +12,59 @@
             <b-form-input type="price" v-model="price" placeholder="Price" required />
            
             <b-button type="submit" @click="handleSubmit">Validate !</b-button>
-
         </form>
     </div>
 </template>
 
 <script>
-import axios from "axios"
-import router from "../router" 
+import axios from 'axios'
+import router from '../router'
 
 export default {
 
   name: 'RegisterVehicle',
-        props : ["nextUrl"],
-        data(){
-            return {
-                marque: "",
-                serial_number : "",
-                color: "",
-                nb_plate: "",
-                nb_kilometer:"",
-                purchase_date:"",
-                price:""
-            }
-        },
-        methods : {
-            handleSubmit(e) {
-                e.preventDefault()
+    props : ["nextUrl"],
+    data(){
+        return {
+            marque: "",
+            serial_number : "",
+            color: "",
+            nb_plate: "",
+            nb_kilometer:"",
+            purchase_date:"",
+            price:""
+        }
+    },
+    methods : {
+        handleSubmit(e) {
+            e.preventDefault()
 
-                    let url = "http://localhost:3000/api/vehicle";
+                let url = "http://localhost:3000/api/vehicle";
 
-                    let vehicle =  {
-                        marque: this.marque,
-                        serial_number: this.serial_number,
-                        color: this.color,
-                        nb_plate: this.nb_plate,
-                        nb_kilometer: this.nb_kilometer,
-                        purchase_date: this.purchase_date,
-                        price: this.price
-                    };
+                let vehicle =  {
+                    marque: this.marque,
+                    serial_number: this.serial_number,
+                    color: this.color,
+                    nb_plate: this.nb_plate,
+                    nb_kilometer: this.nb_kilometer,
+                    purchase_date: this.purchase_date,
+                    price: this.price
+                };
 
-                    
-                    axios.post(url, vehicle)
-                    .then((response) => {
-                        localStorage.setItem('vehicle',JSON.stringify(response.data.vehicle))
-                        localStorage.setItem('jwt',response.data.token)
-                        console.log(response.data.vehicle)
-                        if (localStorage.getItem('jwt') != null){
-                                alert("Add car")
-                                this.$router.push('/offer')
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });              
+                
+                axios.post(url, vehicle)
+                .then((response) => {
+                    localStorage.setItem('vehicle',JSON.stringify(response.data.vehicle))
+                    localStorage.setItem('jwt',response.data.token)
+                    console.log(response.data.vehicle)
+                    if (localStorage.getItem('jwt') != null){
+                            alert("Add car")
+                            this.$router.push('/offer')
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });              
             }
         }
     }
@@ -95,4 +93,3 @@ export default {
   margin-top: 60px;
 }
 </style>
-
