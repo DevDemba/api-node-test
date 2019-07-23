@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Offer</h1>
-        <div class="card">
+        <div class="card" v-for="vehicle in vehicles" :key="vehicle.id">
             <b-card
             title="Card Title"
             img-src="https://picsum.photos/600/300/?image=25"
@@ -11,13 +11,46 @@
             style="max-width: 20rem;"
             class="mb-2">
             <b-card-text>
-            Some quick example text to build on the card title and make up the bulk of the card's content.
+                {{ vehicle.marque }}
             </b-card-text>
-            <router-link :to="{ name:'Offer-detail' }"><b-button variant="primary">View-detail</b-button></router-link>
+            <router-link :to="{ name:'Offer-detail', params: { id: vehicle.id } }"><b-button variant="primary">View-detail</b-button></router-link>
             </b-card>
         </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+    name: 'offer',
+    data() {
+        return {
+            vehicles: [],
+        }
+    },
+   beforeCreate() {
+      axios.get('/api/vehicle')
+        .then(response => {
+          this.vehicles = response.data.data
+        })
+        .catch(e => {
+          this.errors = e
+        })
+    },
+    created() {
+      axios.get('localhost:3000/api/vehicle/'+ this.id)
+        .then(response => {
+          this.vehicles = response.data.data
+        })
+        .catch(e => {
+          this.errors = e
+        })
+    }
+    
+}
+</script>
+
 
 <style scoped>
 .card {
