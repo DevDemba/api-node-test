@@ -7,16 +7,45 @@
   
        <div class="card">
             <b-card
-            title="Card Title"
+            :title="`${vehicles.marque}`"
             img-src="https://picsum.photos/600/300/?image=25"
             img-alt="Image"
             img-top
             tag="article"
             style="max-width: 20rem;"
             class="mb-2">
-            <b-card-text>
-                {{ vehicles.marque }}
+            <b-card-text>         
+                {{ vehicles.serial_number }}
             </b-card-text>
+
+            <b-card-text>         
+                {{ vehicles.color }}
+            </b-card-text>
+
+            <b-card-text>         
+                {{ vehicles.nb_plate }}
+            </b-card-text>
+
+            <b-card-text>         
+                {{ vehicles.mb_kilometer }}
+            </b-card-text>
+
+            <b-card-text>         
+                {{ vehicles.purchase_date }}
+            </b-card-text>
+
+            <b-card-text>         
+                {{ vehicles.price }}
+            </b-card-text>
+
+            <b-card-text>         
+                {{ vehicles.available }}
+            </b-card-text>    
+                
+                
+                
+                
+            
             </b-card>
              <router-link :to="{ name:'Offer' }"><b-button variant="primary">Back To offer</b-button></router-link>
         </div>
