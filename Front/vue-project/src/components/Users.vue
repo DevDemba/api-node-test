@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import router from '../router'
+
 import axios from 'axios'
 export default {
   name: 'Users',
@@ -21,20 +21,20 @@ export default {
     getUsers: function () {
       axios.get('/api/users')
         .then(response => {
-          this.users = response.data.data
+          this.users = response.data.data;
           console.log(this.users)
         })
         .catch(e => {
-          this.errors = e
+          this.errors = e;
         })
     },
     updateUsers: function () {
       axios.post('/api/user:id')
         .then(response => {
-          this.users = response.data.data
+          this.users = response.data.data;
         })
         .catch(e => {
-          this.errors = e
+          this.errors = e;
         })
     }
   }
