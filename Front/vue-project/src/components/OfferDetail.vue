@@ -5,7 +5,7 @@
             <h1>Offer detail</h1>
         </div>
   
-       <div class="card" v-if="vehicles">
+       <div class="card">
             <b-card
             title="Card Title"
             img-src="https://picsum.photos/600/300/?image=25"
@@ -15,7 +15,7 @@
             style="max-width: 20rem;"
             class="mb-2">
             <b-card-text>
-                {{ vehicles.marques }}
+                {{ vehicles.marque }}
             </b-card-text>
             </b-card>
              <router-link :to="{ name:'Offer' }"><b-button variant="primary">Back To offer</b-button></router-link>
@@ -33,14 +33,14 @@ export default {
             vehicles: [],
         }
     },
-   BeforeCreate() {
-      axios.get('/api/vehicle:id')
+    beforeCreate() {
+      axios.get('/api/vehicle/' + this.$route.params.id)
         .then(response => {
-          this.vehicles = response.data.data
-          console.log(this.vehicles)
+          this.vehicles = response.data.data;
+          //console.log(this.vehicles)
         })
         .catch(e => {
-          this.errors = e
+          this.errors = e;
         })
     }
     
