@@ -19,7 +19,7 @@
             </b-card-text>
 
             <b-card-text>         
-                {{ vehicles.color }}
+               <input type="color" :value="`${vehicles.color}`" disabled>
             </b-card-text>
 
             <b-card-text>         
