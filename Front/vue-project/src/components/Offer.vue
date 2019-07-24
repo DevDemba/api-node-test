@@ -13,7 +13,7 @@
             <b-card-text>
                 {{ vehicle.marque }}
             </b-card-text>
-            <router-link :to="{ name:'Offer-detail', params: { id: vehicle.id } }"><b-button variant="primary">View-detail</b-button></router-link>
+            <router-link :to="{ name:'Offer-detail', params: {id: vehicle.id_vehicle } }"><b-button variant="primary">View-detail</b-button></router-link>
             </b-card>
         </div>
     </div>
@@ -32,19 +32,19 @@ export default {
    beforeCreate() {
       axios.get('/api/vehicle')
         .then(response => {
-          this.vehicles = response.data.data
+          this.vehicles = response.data.data;
         })
         .catch(e => {
-          this.errors = e
+          this.errors = e;
         })
     },
     created() {
-      axios.get('localhost:3000/api/vehicle/'+ this.id)
+      axios.get('localhost:3000/api/vehicle/:id')
         .then(response => {
-          this.vehicles = response.data.data
+          this.vehicles = response.data.data;
         })
         .catch(e => {
-          this.errors = e
+          this.errors = e;
         })
     }
     
