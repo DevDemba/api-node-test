@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="register">
         <h4>Register Vehicle</h4>
         <form>
 
@@ -11,7 +11,7 @@
             <b-form-input type="date" v-model="purchase_date" placeholder="Purchase date " required />
             <b-form-input type="price" v-model="price" placeholder="Price" required />
            
-            <b-button type="submit" @click="handleSubmit">Validate !</b-button>
+            <b-button type="submit" @click="handleSubmit">Add Vehicle</b-button>
         </form>
     </div>
 </template>
@@ -22,7 +22,7 @@ import router from '../router'
 
 export default {
 
-  name: 'RegisterVehicle',
+    name: 'RegisterVehicle',
     props : ["nextUrl"],
     data(){
         return {
@@ -51,15 +51,14 @@ export default {
                     price: this.price
                 };
 
-                
                 axios.post(url, vehicle)
                 .then((response) => {
                     localStorage.setItem('vehicle',JSON.stringify(response.data.vehicle))
                     localStorage.setItem('jwt',response.data.token)
                     console.log(response.data.vehicle)
                     if (localStorage.getItem('jwt') != null){
-                            alert("Add car")
-                            this.$router.push('/offer')
+                            alert("Add vehicle");
+                            this.$router.push('/offer');
                     }
                 })
                 .catch(error => {
@@ -85,11 +84,11 @@ export default {
     }
 
     #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 60px;
+    }
 </style>
