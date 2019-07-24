@@ -1,14 +1,14 @@
 <template>
     <div class="login">
         <h1>Login</h1>
-        <b-form-input type="email"  v-model="email" placeholder="Email" />
-        <b-form-input type="password" v-model="password" placeholder="Password" />
-        <b-button type="button" @click="handleSubmit">Login</b-button>
-       <!--<form>
+        <!--<b-form-input type="email"  v-model="email" placeholder="Email"  required autofocus/>
+        <b-form-input type="password" v-model="password" placeholder="Password" required />
+        <b-button type="button" @click="handleSubmit">Login</b-button>-->
+       <form>
             <b-form-input type="email" id="email" v-model="email" required autofocus />
             <b-form-input type="password" id="password" v-model="password" required />
-            <b-button type="submit" v-on:click="handleSubmit()">Login</b-button>
-        </form>-->
+            <b-button type="submit" @click="handleSubmit">Login</b-button>
+        </form>
     </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
           email: this.email,
           password: this.password
         })
-          .then(response => {
+        .then(response => {
             let is_admin = response.data.user.is_admin
             localStorage.setItem('user', JSON.stringify(response.data.user))
             localStorage.setItem('jwt', response.data.token)
@@ -49,8 +49,8 @@ export default {
                 }
               }
             }
-          })
-          .catch(function (error) {
+        })
+        .catch(function (error) {
             console.error(error.response)
           })
       }

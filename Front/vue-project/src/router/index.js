@@ -89,8 +89,7 @@ export default new Router({
     }
   ]
 })
-/*
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {
         if (localStorage.getItem('jwt') == null) {
             next({
@@ -120,5 +119,4 @@ router.beforeEach((to, from, next) => {
     }else {
         next()
     }
-})
-*/
+});*/

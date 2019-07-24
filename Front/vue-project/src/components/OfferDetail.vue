@@ -19,7 +19,7 @@
             </b-card-text>
 
             <b-card-text>         
-               <input type="color" :value="`${vehicles.color}`" disabled>
+               <b-form-input type="color" :value="`${vehicles.color}`" disabled />
             </b-card-text>
 
             <b-card-text>         
@@ -82,6 +82,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 .error {
   color: red;
