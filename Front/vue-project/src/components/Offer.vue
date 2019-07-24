@@ -3,7 +3,7 @@
         <h1>Offer</h1>
         <div class="card" v-for="vehicle in vehicles" :key="vehicle.id">
             <b-card
-            title="Card Title"
+            :title="`${vehicle.marque}`"
             img-src="https://picsum.photos/600/300/?image=25"
             img-alt="Image"
             img-top
@@ -11,7 +11,7 @@
             style="max-width: 20rem;"
             class="mb-2">
             <b-card-text>
-                {{ vehicle.marque }}
+              
             </b-card-text>
             <router-link :to="{ name:'Offer-detail', params: {id: vehicle.id_vehicle } }"><b-button variant="primary">View-detail</b-button></router-link>
             </b-card>
