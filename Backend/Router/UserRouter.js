@@ -16,7 +16,6 @@ const authMiddleware = (req, res, next) => {
 
 const config = require('./config');
 
-
 let users = [
   {
     id: 1,
@@ -32,6 +31,19 @@ let users = [
   }
 ];
 
+/*let userData = [];
+ let sql = `select id, name, email, password from users where id = ?`;
+const usercheck = (req,res)=> {
+ 
+  dbConn.query(sql, (err, results) => {
+  if (err) throw err
+    return res.json(results);
+    
+    
+  });
+
+}
+*/
 
  // connect to database
  dbConn.connect(); 
@@ -46,35 +58,6 @@ router.get('/api/users', (req, res) => {
         return res.json({ error: false, data: results, message: 'users list.'});
     });
 });
-
-/*router.post("/api/login", (req, res, next) => {
-
-    dbConn.query('SELECT * FROM users WHERE email = ?', [req.body.email], function (err, user) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No user found.');
-        let passwordIsValid = bcrypt.compareSync(req.body.password, user.user_password, hash);
-        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
-
-       // let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
-        });
-        res.status(200).send({ auth: true, token: token, user: user });
-        
-    }); 
-    
-   /* passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-
-    if (!user) {
-      return res.status(400).send([user, "Cannot log in", info]);
-    }
-
-    req.login(user, err => {
-      res.send("Logged in");
-    });
-  })(req, res, next); 
-});*/
 
 
 router.post('/api/login', (req, res, next) => {
@@ -162,11 +145,11 @@ router.post('/api/vehicle', (req, res) => {
       req.body.price
 
      
-  ]; console.log(req.body.color); 
+  ]; 
   
   dbConn.query('INSERT INTO vehicles (marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?)', vehicle,
 
-  (err, results) => {
+  (err) => {
       if (err) return res.status(500).send("There was a problem registering the vehicles.")
           res.status(200).send({ auth: true, token: token, user: user });
   }); 
