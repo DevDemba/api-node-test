@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-import router from '../router'
+import axios from 'axios';
 
 export default {
 
