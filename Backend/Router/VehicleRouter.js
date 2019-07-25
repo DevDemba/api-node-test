@@ -21,24 +21,26 @@ router.get('/api/vehicle', (req, res) => {
     });
 });
 
-
 router.post('/api/vehicle', (req, res) => {
-    vehicle = [
-        req.body.marque,
-        req.body.serial_number,
-        req.body.color,
-        req.body.nb_plate,
-        req.body.nb_kilometer,
-        req.body.purchase_date,
-        req.body.price
-    ];
+      vehicle =  [
+          req.body.image,
+          req.body.marque,
+          req.body.serial_number,
+          req.body.color,
+          req.body.nb_plate,
+          req.body.nb_kilometer,
+          req.body.purchase_date,
+          req.body.price
 
-    dbConn.query('INSERT INTO vehicles (marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?)', vehicle,
+        
+      ]; 
+    
+    dbConn.query('INSERT INTO vehicles (image, marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?,?)', vehicle,
 
-        (err) => {
-            if (err) return res.status(500).send("There was a problem registering the vehicles.")
+    (err) => {
+        if (err) return res.status(500).send("There was a problem registering the vehicles.")
             res.status(200).send({ auth: true, token: token, user: user });
-        });
+    }); 
 });
 
 // Retrieve vehicle with id 
