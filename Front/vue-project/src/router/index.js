@@ -44,7 +44,8 @@ export default new Router({
       component: Login,
       meta: {
         guest: true
-      }
+      },
+      props: true
     },
     {
       path: '/dashboard',
