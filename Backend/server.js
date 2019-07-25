@@ -6,13 +6,12 @@ const cookieSession = require('cookie-session');
 const router = express.Router();
 const indexRoutes = require('./Router/IndexRouter');
 const userRoutes = require('./Router/UserRouter');
+const vehicleRoutes = require('./Router/VehicleRouter');
 const cors = require('cors');
     
 const publicRoot = '../Front/vue-project/dist';
 
-
 app.use(cors());
-
 app.use(express.static(publicRoot));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -28,16 +27,15 @@ app.use(cookieSession({
 app.use((req, res, next)=>{
     
    // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
   // Request headers you wish to allow
-  //res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
 
-  res.header('Access-Control-Allow-Headers', '*');
-//  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Credentials', true);
 
   // Pass to next layer of middleware
   next()
@@ -47,7 +45,7 @@ router.get("/", (req, res, next) => {
     res.sendFile('index.html', { root: publicRoot })
 });
 
-app.use('/', userRoutes);
+app.use('/', userRoutes, vehicleRoutes);
 
 const PORT = process.env.PORT || 3000;
 

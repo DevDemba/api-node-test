@@ -62,7 +62,7 @@ router.get('/api/users', (req, res) => {
 
 router.post('/api/login', (req, res, next) => {
 
-   /* passport.authenticate("local", (err, user, info) => {
+   passport.authenticate("local", (err, user, info) => {
         if (err) {
         return next(err);
         }
@@ -74,21 +74,20 @@ router.post('/api/login', (req, res, next) => {
         req.login(user, err => {
         res.send("Logged in");
         });
-    })(req, res, next); */
-    user = [req.body.email, req.body.password];
+    })(req, res, next); 
+   /* user = [req.body.email, req.body.password];
 
     dbConn.query(`SELECT * FROM users WHERE email = ?`, user, 
     
     (err, user) => {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
-        let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
         let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
         });
         res.status(200).send({ auth: true, token: token, user: user });
     });
-
+    */
 });
 
 router.get("/api/logout", function(req, res) {
@@ -114,7 +113,7 @@ router.post('/api/register', function(req, res) {
     
     dbConn.query(`INSERT INTO users (gender, lastname, firstname, birthday, address, phone, license_driver, email, password) VALUES (?,?,?,?,?,?,?,?,?)`, user,
 
-    (err, results) => {
+    (err) => {
         if (err) return res.status(500).send("There was a problem registering the user.");
         dbConn.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, user) => {
             if (err) return res.status(500).send("There was a problem getting user");
@@ -124,52 +123,6 @@ router.post('/api/register', function(req, res) {
         }); 
     });
 })
-
-// Retrieve all vehicles
-router.get('/api/vehicle', (req, res) => {
-  dbConn.query('SELECT * FROM vehicles', function (error, results, fields) {
-    if (error) throw error;
-    return res.json({ error: false, data: results, message: 'vehicles list.' });
-  });
-});
-
-
-router.post('/api/vehicle', (req, res) => {
-  vehicle =  [
-      req.body.marque,
-      req.body.serial_number,
-      req.body.color,
-      req.body.nb_plate,
-      req.body.nb_kilometer,
-      req.body.purchase_date,
-      req.body.price
-
-     
-  ]; 
-  
-  dbConn.query('INSERT INTO vehicles (marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?)', vehicle,
-
-  (err) => {
-      if (err) return res.status(500).send("There was a problem registering the vehicles.")
-          res.status(200).send({ auth: true, token: token, user: user });
-  }); 
-});
-
-// Retrieve vehicle with id 
-router.get('/api/vehicle/:id', (req, res)=> {
-  
-    let vehicle_id = req.params.id;
-  
-    if (!vehicle_id) {
-        return res.status(400).send({ error: true, message: 'Please provide vehicle_id' });
-    }
-  
-    dbConn.query('SELECT * FROM vehicles where id_vehicle = ?', vehicle_id, function (error, results, fields) {
-        if (error) throw error;
-        return res.json({ error: false, data: results[0], message: 'vehicle list.' });
-    });
-  
-});
 
 
 router.post('/register-admin', function(req, res) {
