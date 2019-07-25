@@ -7,36 +7,63 @@
        <form>
             <b-form-input type="email" id="email" v-model="email" required autofocus />
             <b-form-input type="password" id="password" v-model="password" required />
-            <b-button type="submit" @click="handleSubmit">Login</b-button>
+            <b-button type="submit" @click="login" >Login</b-button>
         </form>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
-import router from '../router'
+import axios from 'axios';
+import router from '../router';
+
 export default {
+
   name: 'Login',
-  props: ['nextUrl'],
   data () {
-    return {
-      email: '',
-      password: ''
-    }
+      return {
+            email: '',
+            password:''
+      }
   },
   methods: {
+    login (e) {
+        e.preventDefault()
+            axios.post("http://localhost:3000/api/login", {
+                email: this.email,
+                password: this.password
+            })
+            .then((response) => {
+                
+                localStorage.setItem('jwt', response.data.token)
+                console.log("Logged in")
+                router.push("/dashboard")
+                alert("You are connected !")
+            })
+            .catch((errors) => {
+                console.log("Cannot log in")
+                alert("Error - Log in")
+
+            })
+        }
+                
+  }
+  
+  /*
+  methods: {
     handleSubmit (e) {
-      e.preventDefault()
-      if (this.password.length > 0) {
-        axios.post('http://localhost:3000/api/login', {
-          email: this.email,
-          password: this.password
-        })
+        let data = {
+            email: this.email,
+            password: this.password
+        }
+        console.log(data)
+        e.preventDefault()
+        if (this.password.length > 0) {
+        axios.post('http://localhost:3000/api/login', data)
         .then(response => {
             let is_admin = response.data.user.is_admin
             localStorage.setItem('user', JSON.stringify(response.data.user))
             localStorage.setItem('jwt', response.data.token)
-
+            console.log(data)
             if (localStorage.getItem('jwt') != null) {
               this.$emit('loggedIn')
               if (this.$route.params.nextUrl != null) {
@@ -55,38 +82,9 @@ export default {
           })
       }
     }
-  }
-}
+  }*/
 
-/* login: (e) => {
-                e.preventDefault()
-                let email = e.target.elements.email.value
-                let password = e.target.elements.password.value
-
-                let login = () => {
-                    let data = {
-                        email: email,
-                        password: password,
-                        errorMessage: {
-                            type: String,
-                            default: ""
-                        }
-
-                    }
-                    axios.post("/api/login", data)
-                        .then((response) => {
-                            console.log("Logged in")
-                            router.push("/dashboard")
-                            alert("You are connected !")
-                        })
-                        .catch((errors) => {
-                            console.log("Cannot log in")
-                            alert("Error - Log in")
-
-                        })
-                }
-                login()
-            } */
+} 
 
 </script>
 
