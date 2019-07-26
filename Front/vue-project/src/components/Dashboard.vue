@@ -10,13 +10,15 @@
         <p>License driver: {{ user.license_driver }}</p>
         <p>Date of register: {{ user.register_date }}</p>
         <p><strong>Point: {{ user.point }}</strong></p>
-
     </div>
 </template>
+
 <script>
-import axios from 'axios'
-import router from '../router'
+import axios from 'axios';
+import router from '../router';
+
 export default {
+
   name: 'Login',
   data () {
     return {
@@ -36,7 +38,7 @@ export default {
         })
     },
      showUser: function () {
-      axios.get('/api/users/:id')
+      axios.get('/api/users/' + this.$route.params.id)
         .then(response => {
           this.user = response.data.data;
         })

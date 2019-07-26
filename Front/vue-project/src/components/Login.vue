@@ -5,14 +5,15 @@
         <b-form-input type="password" v-model="password" placeholder="Password" required />
         <b-button type="button" @click="handleSubmit">Login</b-button>-->
        <form>
-            <b-form-input type="email" id="email" v-model="email" required autofocus />
-            <b-form-input type="password" id="password" v-model="password" required />
+            <b-form-input type="email" id="email" v-model="email" placeholder="Email" required autofocus />
+            <b-form-input type="password" id="password" v-model="password" placeholder="Password" required />
             <b-button type="submit" @click="login" >Login</b-button>
         </form>
     </div>
 </template>
 
 <script>
+
 import axios from 'axios';
 import router from '../router';
 
@@ -32,14 +33,13 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            console.log(data)
             axios.post("http://localhost:3000/api/login", data)
             .then((response) => {
         
             let is_admin = response.data.user.is_admin
             localStorage.setItem('user', JSON.stringify(response.data.user))
             localStorage.setItem('jwt', response.data.token)
-            console.log(data)
+          
             if (localStorage.getItem('jwt') != null) {
               this.$emit('loggedIn')
                alert("You are connected !")
@@ -57,47 +57,11 @@ export default {
             .catch((errors) => {
                 console.log("Cannot log in")
                 alert("Error - Log in")
+                //console.error(error.response)
 
             })
-        }
-                
+        }          
   }
-  
-  /*
-  methods: {
-    handleSubmit (e) {
-        let data = {
-            email: this.email,
-            password: this.password
-        }
-        console.log(data)
-        e.preventDefault()
-        if (this.password.length > 0) {
-        axios.post('http://localhost:3000/api/login', data)
-        .then(response => {
-            let is_admin = response.data.user.is_admin
-            localStorage.setItem('user', JSON.stringify(response.data.user))
-            localStorage.setItem('jwt', response.data.token)
-            console.log(data)
-            if (localStorage.getItem('jwt') != null) {
-              this.$emit('loggedIn')
-              if (this.$route.params.nextUrl != null) {
-                this.$router.push(this.$route.params.nextUrl)
-              } else {
-                if (is_admin == 1) {
-                  router.push('/admin')
-                } else {
-                  router.push('/dashboard')
-                }
-              }
-            }
-        })
-        .catch(function (error) {
-            console.error(error.response)
-          })
-      }
-    }
-  }*/
 
 } 
 

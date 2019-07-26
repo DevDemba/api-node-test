@@ -27,7 +27,7 @@ dbConn.query(sql, (err, results) => {
     users.push(a);
   })
 
-  console.log(users)
+  //console.log(users)
 });
 
 router.use(passport.initialize());

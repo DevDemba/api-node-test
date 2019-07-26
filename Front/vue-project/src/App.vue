@@ -28,10 +28,10 @@ export default {
   methods: {
     logout: function (e) {
       axios
-        .get('/api/logout')
-        .then(() => {
-          /*localStorage.removeItem('user', response.data.user)
-          localStorage.removeItem('jwt', response.data.token) */
+        .get('http://localhost:3000/api/logout')
+        .then((response) => {
+          localStorage.removeItem('user', response.data.user)
+          localStorage.removeItem('jwt', response.data.token) 
           router.push('/')
         })
     }
