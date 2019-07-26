@@ -72,7 +72,7 @@
         },
 
         handleFileUpload() {
-        this.image = this.$refs.image.image[0];
+        this.image = this.$refs.image.files[0];
         }
     }
     };
