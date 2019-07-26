@@ -1,7 +1,16 @@
 <template>
     <div>
         <h2>Dashboard</h2>
-        <p>Name: {{ user.firstname }}</p>
+        <p>Lastame: {{ user.lastname }}</p>
+        <p>Fisrtname: {{ user.firstname }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Address: {{ user.address }}</p>
+        <p>Phone: {{ user.phone }}</p>
+        <p>Birthday: {{ user.birthday }}</p>
+        <p>License driver: {{ user.license_driver }}</p>
+        <p>Date of register: {{ user.register_date }}</p>
+        <p><strong>Point: {{ user.point }}</strong></p>
+
     </div>
 </template>
 <script>
@@ -9,32 +18,35 @@ import axios from 'axios'
 import router from '../router'
 export default {
   name: 'Login',
-  props: ['login'],
   data () {
     return {
-      user: {
-        firstname: []
-      }
+      user: []
     }
   },
   methods: {
-    getUserData: function () {
-      let self = this
+    getUsers: function () {
       axios.get('/api/users')
-        .then((response) => {
-          localStorage.setItem('user', JSON.stringify(response.data.user))
-          localStorage.setItem('jwt', response.data.token)
-          console.log(response)
-          self.$set(this, 'user', response.data.user)
+        .then(response => {
+          this.users = response.data.data;
+          console.log(this.users)
         })
-        .catch((errors) => {
-          console.log(errors)
-          router.push('/')
+        .catch(e => {
+          this.errors = e;
+          router.push('/');
+        })
+    },
+     showUser: function () {
+      axios.get('/api/users/:id')
+        .then(response => {
+          this.user = response.data.data;
+        })
+        .catch(e => {
+          this.errors = e;
         })
     }
   },
-  mounted () {
-    this.getUserData()
+  created () {
+    this.showUser()
   }
 }
 </script>

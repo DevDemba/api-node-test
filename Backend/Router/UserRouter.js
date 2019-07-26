@@ -139,7 +139,7 @@ router.get("/api/user", authMiddleware, (req, res) => {
 
 
 // Retrieve user with id 
-router.get('/api/user/:id', (req, res)=> {
+router.get('/api/users/:id', (req, res)=> {
   
     let user_id = req.params.id;
   
@@ -147,8 +147,9 @@ router.get('/api/user/:id', (req, res)=> {
         return res.status(400).send({ error: true, message: 'Please provide user_id' });
     }
   
-    dbConn.query('SELECT * FROM users where id = ?', user_id, function (error, results, fields) {
+    dbConn.query('SELECT * FROM users ', user_id, function (error, results, fields) {
         if (error) throw error;
+        console.log(results)
         return res.json({ error: false, data: results[0], message: 'users list.' });
     });
   
