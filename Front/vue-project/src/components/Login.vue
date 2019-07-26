@@ -19,6 +19,7 @@ import router from '../router';
 export default {
 
   name: 'Login',
+  props: ['login'],
   data () {
       return {
             email: '',
@@ -28,16 +29,31 @@ export default {
   methods: {
     login (e) {
         e.preventDefault()
-            axios.post("http://localhost:3000/api/login", {
+            let data = {
                 email: this.email,
                 password: this.password
-            })
+            }
+            console.log(data)
+            axios.post("http://localhost:3000/api/login", data)
             .then((response) => {
-                
-                localStorage.setItem('jwt', response.data.token)
-                console.log("Logged in")
-                router.push("/dashboard")
-                alert("You are connected !")
+        
+            let is_admin = response.data.user.is_admin
+            localStorage.setItem('user', JSON.stringify(response.data.user))
+            localStorage.setItem('jwt', response.data.token)
+            console.log(data)
+            if (localStorage.getItem('jwt') != null) {
+              this.$emit('loggedIn')
+               alert("You are connected !")
+              if (this.$route.params.nextUrl != null) {
+                this.$router.push(this.$route.params.nextUrl)
+              } else {
+                if (is_admin == 1) {
+                  router.push('/admin')
+                } else {
+                  router.push('/dashboard')
+                }
+              }
+            }
             })
             .catch((errors) => {
                 console.log("Cannot log in")

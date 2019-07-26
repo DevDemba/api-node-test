@@ -16,37 +16,19 @@ const authMiddleware = (req, res, next) => {
 
 const config = require('./config');
 
-let users = [
-  {
-    id: 1,
-    name: 'admin',
-    email: 'admin@gmail.com',
-    password: 'admin'
-  },
-  {
-    id: 2,
-    name: "emma",
-    email: "emma@gmail.com",
-    password: "password2"
-  }
-];
-
-/*let userData = [];
- let sql = `select id, name, email, password from users where id = ?`;
-const usercheck = (req,res)=> {
- 
-  dbConn.query(sql, (err, results) => {
-  if (err) throw err
-    return res.json(results);
-    
-    
-  });
-
-}
-*/
-
  // connect to database
- dbConn.connect(); 
+ dbConn.conn
+
+let users = [];
+let sql = `SELECT * FROM users`;
+dbConn.query(sql, (err, results) => {
+  if (err) throw err
+  results.forEach(a => {
+    users.push(a);
+  })
+
+  console.log(users)
+});
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -61,7 +43,7 @@ router.get('/api/users', (req, res) => {
 
 
 router.post('/api/login', (req, res, next) => {
-
+  /*
    passport.authenticate("local", (err, user, info) => {
         if (err) {
         return next(err);
@@ -74,20 +56,21 @@ router.post('/api/login', (req, res, next) => {
         req.login(user, err => {
         res.send("Logged in");
         });
-    })(req, res, next); 
-   /* user = [req.body.email, req.body.password];
+    })(req, res, next); */
+
+    user = [req.body.email, req.body.password];
 
     dbConn.query(`SELECT * FROM users WHERE email = ?`, user, 
-    
     (err, user) => {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
+        let passwordIsValid = bcrypt.compareSync(req.body.password, user[0].password);
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
         let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
         });
         res.status(200).send({ auth: true, token: token, user: user });
     });
-    */
+    
 });
 
 router.get("/api/logout", function(req, res) {
