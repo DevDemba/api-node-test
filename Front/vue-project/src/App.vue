@@ -11,8 +11,7 @@
       <router-link :to="{ name:'Login' }"><b-button variant="primary">Login</b-button></router-link>
       <router-link :to="{ name:'Register' }"><b-button variant="primary">Register</b-button></router-link>
       <router-link :to="{ name:'RegisterVehicle' }"><b-button variant="primary">Register Vehicle</b-button></router-link>
-
-      <b-button variant="danger"><a href="#" v-on:click="logout">Logout</a></b-button>
+      <b-button variant="danger" ><a href="#" v-on:click="logout">Logout</a></b-button>
       <router-view/>
     </div>
   </div>
@@ -25,6 +24,11 @@ import router from './router'
 export default {
 
   name: 'App',
+  data() {
+    return {
+      localStorage: []
+    }
+  },
   methods: {
     logout: function (e) {
       axios
@@ -34,6 +38,15 @@ export default {
           localStorage.removeItem('jwt', response.data.token) 
           router.push('/')
         })
+    },
+    mounted() {
+      if(localStorage.getItem('jwt') !== null){
+        this.localStorage = true;
+      }
+      else {
+        this.localStorage = false
+        return localStorage;
+      }
     }
   }
 }
