@@ -23,13 +23,13 @@
 import axios from 'axios';
 
 export default {
-    name: 'offer',
+    name: 'Offer',
     data() {
         return {
             vehicles: [],
         }
     },
-   beforeCreate() {
+    beforeCreate() {
       axios.get('/api/vehicle')
         .then(response => {
           this.vehicles = response.data.data;
@@ -39,18 +39,16 @@ export default {
         })
     },
     created() {
-      axios.get('localhost:3000/api/vehicle/:id')
+      axios.get('http://localhost:3000/api/vehicle/:id')
         .then(response => {
           this.vehicles = response.data.data;
         })
         .catch(e => {
           this.errors = e;
         })
-    }
-    
+    }   
 }
 </script>
-
 
 <style scoped>
 .card {
