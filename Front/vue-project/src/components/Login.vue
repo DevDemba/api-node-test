@@ -32,27 +32,28 @@ export default {
             let data = {
                 email: this.email,
                 password: this.password
-            }
-            axios.post("http://localhost:3000/api/login", data)
+            };
+            
+            axios.post("/api/login", data)
             .then((response) => {
         
-            let is_admin = response.data.user.is_admin
-            localStorage.setItem('user', JSON.stringify(response.data.user))
-            localStorage.setItem('jwt', response.data.token)
+            let is_admin = response.data.user.is_admin;
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('jwt', response.data.token);
           
-            if (localStorage.getItem('jwt') != null) {
-              this.$emit('loggedIn')
-               alert("You are connected !")
-              if (this.$route.params.nextUrl != null) {
-                this.$router.push(this.$route.params.nextUrl)
-              } else {
-                if (is_admin == 1) {
-                  router.push('/admin')
+              if (localStorage.getItem('jwt') != null) {
+                this.$emit('loggedIn')
+                alert("You are connected !")
+                if (this.$route.params.nextUrl != null) {
+                  this.$router.push(this.$route.params.nextUrl)
                 } else {
-                  router.push('/dashboard')
+                  if (is_admin == 1) {
+                    router.push('/admin')
+                  } else {
+                    router.push('/dashboard')
+                  }
                 }
               }
-            }
             })
             .catch((errors) => {
                 console.log("Cannot log in")
