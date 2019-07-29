@@ -45,7 +45,7 @@ export default {
       e.preventDefault()
 
       if (this.password === this.password_confirmation && this.password.length > 0) {
-        let url = 'http://localhost:3000/api/register'
+        let url = 'http://localhost:3000/api/register';
 
         let user = {
           gender: this.gender,
@@ -60,7 +60,7 @@ export default {
           is_admin: this.is_admin
         }
 
-        if (this.is_admin != null || this.is_admin === 1) url = 'http://localhost:3000/api/register-admin'
+        if (this.is_admin != null || this.is_admin === 1) url = 'http://localhost:3000/api/register-admin';
 
         axios.post(url, user)
           .then((response) => {

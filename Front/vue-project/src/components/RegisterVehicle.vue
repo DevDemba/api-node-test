@@ -55,10 +55,7 @@
         axios
             .post(url, vehicle)
             .then(response => {
-            localStorage.setItem(
-                "vehicle",
-                JSON.stringify(response.data.vehicle)
-            );
+            localStorage.setItem("vehicle", JSON.stringify(response.data.vehicle));
             localStorage.setItem("jwt", response.data.token);
             console.log(response.data.vehicle);
             if (localStorage.getItem("jwt") != null) {
