@@ -13,7 +13,8 @@ import RegisterVehicle from '@/components/RegisterVehicle'
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
+  mode: 'history', // le mode history ne recharge pas la page mais
+  // il peut y avoir des erreurs 404 si le serveur n'est pas configuré
   routes: [
     {
       path: '/',
@@ -68,17 +69,19 @@ const router = new Router({
       path: '/offer',
       name: 'Offer',
       component: Offer,
-      meta: {
-        guest: true
-      }
+      // meta: {
+      //   guest: true,
+      //   requiresAuth: true
+      // }
     },
     {
       path: '/offer-detail/:id',
       name: 'Offer-detail',
       component: OfferDetail,
-      meta: {
-        guest: true
-      }
+      // meta: {
+      //   guest: true,
+      //   requiresAuth: true
+      // }
     },
     {
       path: '/registerVehicle',
