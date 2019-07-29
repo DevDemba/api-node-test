@@ -2,7 +2,10 @@
     <div class="register">
         <h4>Register Vehicle</h4>
         <form>
-        <input type="file" id="image" ref="image" v-on:change="handleFileUpload()" />
+        <div>
+            <b-img thumbnail fluid v-bind:src="previewImage" v-show="showPreview" class="uploading-image"></b-img>
+            <input id="file" type="file" ref="file"  accept="image/*" @change=uploadImage />
+        </div>
         <b-form-input type="text" v-model="marque" placeholder="Marque" required />
         <b-form-input type="text" v-model="serial_number" placeholder="Serial Number" required />
         <b-form-input type="color" v-model="color" placeholder="Color" required />
@@ -16,7 +19,7 @@
     </div>
     </template>
 
-        <script>
+    <script>
     import axios from "axios";
     import router from "../router";
 
@@ -25,14 +28,16 @@
     props: ["nextUrl"],
     data() {
         return {
-        image: "",
+        file: '',
+        showPreview: false,
+        previewImage: null,
         marque: "",
         serial_number: "",
         color: "",
         nb_plate: "",
         nb_kilometer: "",
         purchase_date: "",
-        price: ""
+        price: "",
         };
     },
     methods: {
@@ -42,7 +47,6 @@
         let url = "http://localhost:3000/api/vehicle";
 
         let vehicle = {
-            image: this.image,
             marque: this.marque,
             serial_number: this.serial_number,
             color: this.color,
@@ -56,20 +60,27 @@
             .post(url, vehicle)
             .then(response => {
             localStorage.setItem("vehicle", JSON.stringify(response.data.vehicle));
-            localStorage.setItem("jwt", response.data.token);
             console.log(response.data.vehicle);
-            if (localStorage.getItem("jwt") != null) {
-                alert("Add vehicle");
-                this.$router.push("/offer");
-            }
+                if (localStorage.getItem("jwt") != null) {
+                    alert("Add vehicle");
+                    this.$router.push("/offer");
+                }
             })
             .catch(error => {
             console.error(error);
             });
         },
-
-        handleFileUpload() {
-        this.image = this.$refs.image.files[0];
+        uploadImage(e){
+            const image = this.$refs.file.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(image);
+            reader.onload = e =>{
+                this.showPreview = true;
+                this.previewImage = e.target.result;
+                    console.log(this.previewmage);
+            }
+        
+            //reader.readAsDataURL( this.image );
         }
     }
     };
@@ -97,4 +108,13 @@
   color: #2c3e50;
   margin-top: 60px;
 }
+.uploading-image{
+     display:flex;
+     justify-content: center;
+     align-items: center;
+     width: 300px;
+     height: 250px;
+     min-width: 250px;
+     min-height: 250px;
+   }
 </style>
