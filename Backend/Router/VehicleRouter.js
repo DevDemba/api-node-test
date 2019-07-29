@@ -12,6 +12,7 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
+const config = require('./config');
 
 // Retrieve all vehicles
 router.get('/api/vehicle', (req, res) => {
@@ -23,7 +24,6 @@ router.get('/api/vehicle', (req, res) => {
 
 router.post('/api/vehicle', (req, res) => {
       vehicle =  [
-          req.body.image,
           req.body.marque,
           req.body.serial_number,
           req.body.color,
@@ -32,11 +32,13 @@ router.post('/api/vehicle', (req, res) => {
           req.body.purchase_date,
           req.body.price
       ]; 
-    
-    dbConn.query('INSERT INTO vehicles (image, marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?,?)', vehicle,
+    console.log(vehicle)
+    dbConn.query('INSERT INTO vehicles (marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?)', vehicle,
 
     (err) => {
         if (err) return res.status(500).send("There was a problem registering the vehicles.")
+            let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
+            });
             res.status(200).send({ auth: true, token: token, user: user });
     }); 
 });
