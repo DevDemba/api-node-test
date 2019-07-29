@@ -2,7 +2,6 @@
   <div class="register">
       <h1>Register</h1>
         <form>
-
             <input type="radio" v-model="gender" value="Male" checked required/> Male
             <input type="radio" v-model="gender" value="Female" required/> Female
             <b-form-input type="text" v-model="lastname" placeholder="Lastname" required />
@@ -14,12 +13,6 @@
             <b-form-input type="email" v-model="email" placeholder="Email" required />
             <b-form-input type="password" v-model="password" placeholder="Password" required />
             <b-form-input type="password" v-model="password_confirmation" placeholder="Password confirmation" required />
-           <!-- <div>
-                <select v-model="is_admin">
-                    <option value=1>Yes</option>
-                    <option value=0>No</option>
-                </select>
-            </div> -->
             <b-button type="submit" @click="handleSubmit">Register</b-button>
         </form>
         </div>

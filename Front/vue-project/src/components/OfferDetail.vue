@@ -41,11 +41,6 @@
             <b-card-text>         
                 {{ vehicles.available }}
             </b-card-text>    
-                
-                
-                
-                
-            
             </b-card>
              <router-link :to="{ name:'Offer' }"><b-button variant="primary">Back To offer</b-button></router-link>
         </div>

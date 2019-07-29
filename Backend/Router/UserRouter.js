@@ -16,9 +16,10 @@ const authMiddleware = (req, res, next) => {
 
 const config = require('./config');
 
- // connect to database
- dbConn.conn
+// connect to database
+dbConn.connect();
 
+/* 
 let users = [];
 let sql = `SELECT * FROM users`;
 dbConn.query(sql, (err, results) => {
@@ -29,7 +30,7 @@ dbConn.query(sql, (err, results) => {
 
   //console.log(users)
 });
-
+ */
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -39,6 +40,23 @@ router.get('/api/users', (req, res) => {
         if (error) throw error;
         return res.json({ error: false, data: results, message: 'users list.'});
     });
+});
+
+// Retrieve user with id 
+router.get('/api/users/:id', (req, res) => {
+
+  let user_id = req.params.id;
+
+  if (!user_id) {
+    return res.status(400).send({ error: true, message: 'Please provide user_id' });
+  }
+
+  dbConn.query('SELECT * FROM users WHERE id = ?', user_id, function (error, results, fields) {
+    if (error) throw error;
+    //console.log(results[0])
+    return res.json({ error: false, data: results[0], message: 'user list.' });
+  });
+
 });
 
 
@@ -137,7 +155,7 @@ router.get("/api/user", authMiddleware, (req, res) => {
   res.send({ user: user })
 });
 
-
+/*
 // Retrieve user with id 
 router.get('/api/users/:id', (req, res)=> {
   
@@ -147,13 +165,16 @@ router.get('/api/users/:id', (req, res)=> {
         return res.status(400).send({ error: true, message: 'Please provide user_id' });
     }
   
-    dbConn.query('SELECT * FROM users ', user_id, function (error, results, fields) {
+    dbConn.query('SELECT * FROM users WHERE id = ?', user_id, function (error, results, fields) {
         if (error) throw error;
-        console.log(results)
-        return res.json({ error: false, data: results[0], message: 'users list.' });
+        let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
+            });
+            console.log(results[0])
+        res.status(200).send({ auth: true, token: token, user: user, data: results[0] });
+       // return res.json({ error: false, data: results[0], message: 'users list.' });
     });
   
-});
+});*/
 
 
 // Add a new user  

@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import Welcome from './Welcome'
+import Welcome from './Welcome';
+
 export default {
   name: 'HelloWorld',
   components: {

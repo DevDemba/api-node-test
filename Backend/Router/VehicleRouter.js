@@ -31,8 +31,6 @@ router.post('/api/vehicle', (req, res) => {
           req.body.nb_kilometer,
           req.body.purchase_date,
           req.body.price
-
-        
       ]; 
     
     dbConn.query('INSERT INTO vehicles (image, marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?,?)', vehicle,
