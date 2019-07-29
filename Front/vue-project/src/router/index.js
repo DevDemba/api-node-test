@@ -21,7 +21,6 @@ const router = new Router({
       component: HelloWorld,
       meta: {
         guest: true,
-        requiresAuth: true
       }
     },
     {
@@ -70,8 +69,7 @@ const router = new Router({
       name: 'Offer',
       component: Offer,
       meta: {
-        guest: true,
-        requiresAuth: true
+        guest: true
       }
     },
     {
@@ -79,8 +77,7 @@ const router = new Router({
       name: 'Offer-detail',
       component: OfferDetail,
       meta: {
-        guest: true,
-        requiresAuth: true
+        guest: true
       }
     },
     {
