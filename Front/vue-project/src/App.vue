@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import router from './router'
+import axios from 'axios';
+import router from './router';
 
 export default {
 
@@ -32,7 +32,7 @@ export default {
   methods: {
     logout: function (e) {
       axios
-        .get('http://localhost:3000/api/logout')
+        .get('/api/logout')
         .then((response) => {
           localStorage.removeItem('user', response.data.user)
           localStorage.removeItem('jwt', response.data.token) 
