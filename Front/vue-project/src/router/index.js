@@ -13,13 +13,15 @@ import RegisterVehicle from '@/components/RegisterVehicle'
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld,
       meta: {
-        guest: false
+        guest: true,
+        requiresAuth: true
       }
     },
     {
@@ -45,7 +47,6 @@ const router = new Router({
       meta: {
         guest: true
       },
-      props: true
     },
     {
       path: '/dashboard',
@@ -69,19 +70,21 @@ const router = new Router({
       name: 'Offer',
       component: Offer,
       meta: {
-        guest: false
+        guest: true,
+        requiresAuth: true
       }
     },
     {
-      path: '/Offer-detail/:id',
+      path: '/offer-detail/:id',
       name: 'Offer-detail',
       component: OfferDetail,
       meta: {
-        guest: false
+        guest: true,
+        requiresAuth: true
       }
     },
     {
-      path: '/RegisterVehicle',
+      path: '/registerVehicle',
       name: 'RegisterVehicle',
       component: RegisterVehicle,
       meta: {
