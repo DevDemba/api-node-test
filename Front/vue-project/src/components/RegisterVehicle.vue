@@ -1,21 +1,20 @@
     <template>
     <div class="register">
-        <h4>Register Vehicle</h4>
-        <form>
-        <div>
-            <b-img thumbnail fluid v-bind:src="previewImage" v-show="showPreview" class="uploading-image"></b-img>
-            <input id="file" type="file" ref="file"  accept="image/*" @change=uploadImage />
-        </div>
-        <b-form-input type="text" v-model="marque" placeholder="Marque" required />
-        <b-form-input type="text" v-model="serial_number" placeholder="Serial Number" required />
-        <b-form-input type="color" v-model="color" placeholder="Color" required />
-        <b-form-input type="text" v-model="nb_plate" placeholder="Number Plate" required />
-        <b-form-input type="text" v-model="nb_kilometer" placeholder="Number of kilometer" required />
-        <b-form-input type="date" v-model="purchase_date" placeholder="Purchase date " required />
-        <b-form-input type="price" v-model="price" placeholder="Price" required />
-
-        <b-button type="submit" @click="handleSubmit">Add Vehicle</b-button>
-        </form>
+        <h1>Register Vehicle</h1>
+        <b-form-group>
+            <div>
+                <b-img thumbnail fluid v-bind:src="previewImage" v-show="showPreview" class="uploading-image"></b-img>
+                <input id="file" type="file" ref="file"  accept="image/*" @change=uploadImage />
+            </div>
+            <b-form-input type="text" v-model="marque" placeholder="Marque" required />
+            <b-form-input type="text" v-model="serial_number" placeholder="Serial Number" required />
+            <b-form-input type="color" v-model="color" placeholder="Color" required />
+            <b-form-input type="text" v-model="nb_plate" placeholder="Number Plate" required />
+            <b-form-input type="text" v-model="nb_kilometer" placeholder="Number of kilometer" required />
+            <b-form-input type="date" v-model="purchase_date" placeholder="Purchase date " required />
+            <b-form-input type="price" v-model="price" placeholder="Price" required />
+            <b-button type="submit" @click="handleSubmit">Add Vehicle</b-button>
+        </b-form-group>
     </div>
     </template>
 
@@ -26,18 +25,26 @@
     export default {
     name: "RegisterVehicle",
     props: ["nextUrl"],
+    // {
+    //   file: {
+    //     type: String,
+    //     default: () => {
+    //       return '';
+    //     }
+    //   }
+    // }
     data() {
         return {
         file: '',
         showPreview: false,
         previewImage: null,
-        marque: "",
-        serial_number: "",
-        color: "",
-        nb_plate: "",
-        nb_kilometer: "",
-        purchase_date: "",
-        price: "",
+        marque: '',
+        serial_number: '',
+        color: '',
+        nb_plate: '',
+        nb_kilometer: '',
+        purchase_date: '',
+        price: '',
         };
     },
     methods: {
@@ -112,9 +119,9 @@
      display:flex;
      justify-content: center;
      align-items: center;
-     width: 300px;
-     height: 250px;
-     min-width: 250px;
-     min-height: 250px;
+     width: 280px;
+     height: 280px;
+     min-width: 280px;
+     min-height: 280px;
    }
 </style>

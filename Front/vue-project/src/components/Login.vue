@@ -1,14 +1,11 @@
 <template>
     <div class="login">
         <h1>Login</h1>
-        <!--<b-form-input type="email"  v-model="email" placeholder="Email"  required autofocus/>
-        <b-form-input type="password" v-model="password" placeholder="Password" required />
-        <b-button type="button" @click="handleSubmit">Login</b-button>-->
-       <form>
+       <b-form-group>
             <b-form-input type="email" id="email" v-model="email" placeholder="Email" required autofocus />
             <b-form-input type="password" id="password" v-model="password" placeholder="Password" required />
             <b-button type="submit" @click="login" >Login</b-button>
-        </form>
+        </b-form-group>
     </div>
 </template>
 
