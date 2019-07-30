@@ -31,7 +31,7 @@
             </b-card-text>
 
             <b-card-text>         
-                {{ vehicles.purchase_date }}
+                {{ vehicles.purchase_date | formatDate }}
             </b-card-text>
 
             <b-card-text>         
