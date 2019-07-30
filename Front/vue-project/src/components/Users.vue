@@ -2,7 +2,13 @@
   <div class="users">
     <b-button @click="getUsers">Get Users</b-button><br>
     <b-list-group v-for="user in users" :key="user.id">
-       <b-list-group-item  style="width: 300px;" variant="info"> {{ user.lastname }} - {{ user.firstname }} </b-list-group-item>
+       <b-list-group-item  style="width: 400px;display:flex; justify-content: space-between;" variant="info">
+          <span>{{ user.lastname }} - {{ user.firstname }}</span>
+          <div>
+            <b-button variant="primary" @click="updateUser">update</b-button>
+            <b-button variant="danger" @click="deleteUser">delete</b-button>
+          </div>
+        </b-list-group-item>
     </b-list-group>
   </div>
 </template>
@@ -29,8 +35,17 @@ export default {
           this.errors = e;
         })
     },
-    updateUsers: function () {
-      axios.post('/api/user:id')
+    updateUser: function () {
+      axios.put('/api/user')
+        .then(response => {
+          this.users = response.data.data;
+        })
+        .catch(e => {
+          this.errors = e;
+        })
+    },
+     deleteUser: function () {
+      axios.delete('http://localhost:3000/api/user')
         .then(response => {
           this.users = response.data.data;
         })
@@ -49,6 +64,9 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+b-button{
+  margin: 5px auto;
 }
 .error {
   color: red;
