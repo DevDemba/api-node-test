@@ -77,14 +77,13 @@ router.post('/api/login', (req, res, next) => {
     })(req, res, next); */
 
     user = [req.body.email, req.body.password];
-    //console.log(user)
 
     dbConn.query(`SELECT * FROM users WHERE email = ?`, user, 
     (err, user) => {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
         let passwordIsValid = bcrypt.compareSync(req.body.password, user[0].password);
-        console.log(req.body.password, user[0].password)
+        //console.log(req.body.password, user[0].password)
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
         let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
         });
@@ -159,7 +158,7 @@ router.get("/api/user", authMiddleware, (req, res) => {
 
 
 // Add a new user  
-router.post('/api/user', (req, res) => {
+router.post('/api/users', (req, res) => {
   
     let user = req.body.user;
   
