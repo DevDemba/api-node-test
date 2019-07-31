@@ -31,34 +31,42 @@ export default {
                 password: this.password
             };
             
+          if(this.password.length > 0 || this.email.length >0) {
             axios.post("/api/login", data)
-            .then((response) => {
+            .then(response => {
         
-            let is_admin = response.data.user.is_admin;
+            let is_admin = response.data.user[0].is_admin;
+        
             localStorage.setItem('user', JSON.stringify(response.data.user));
             localStorage.setItem('jwt', response.data.token);
           
               if (localStorage.getItem('jwt') != null) {
-                this.$emit('loggedIn')
-                alert("You are connected !")
+                this.$emit('loggedIn');
+                alert("You are connected !");
                 if (this.$route.params.nextUrl != null) {
                   this.$router.push(this.$route.params.nextUrl)
                 } else {
-                  if (is_admin == 1) {
-                    router.push('/admin')
+                  if (is_admin = 1) {
+                   this.$router.push('/admin');
                   } else {
-                    router.push('/dashboard')
+                    this.$router.push('/dashboard');
                   }
                 }
               }
             })
-            .catch((errors) => {
-                console.log("Cannot log in")
-                alert("Error - Log in")
-                //console.error(error.response)
+            .catch((error) => {
+                console.error(error.response);
+                alert("Error - Log in");
 
             })
-        }          
+          }else {
+            this.email = '';
+                this.password = '';
+
+          return alert('complete all fields !')
+        }    
+      }
+           
   }
 
 } 
