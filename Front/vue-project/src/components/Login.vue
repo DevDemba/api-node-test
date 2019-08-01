@@ -41,7 +41,8 @@ export default {
             localStorage.setItem('jwt', response.data.token);
           
               if (localStorage.getItem('jwt') != null) {
-                this.$emit('loggedIn');
+                //this.$emit('loggedIn');
+                this.$emit("authenticated", true);
                 alert("You are connected !");
                 if (this.$route.params.nextUrl != null) {
                   this.$router.push(this.$route.params.nextUrl)
