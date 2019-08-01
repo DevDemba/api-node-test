@@ -84,10 +84,11 @@
             reader.onload = e =>{
                 this.showPreview = true;
                 this.previewImage = e.target.result;
-                    console.log(this.previewmage);
+                console.log(this.previewmage);
             }
-        
-            //reader.readAsDataURL( this.image );
+            reader.readAsDataURL(this.image)
+            console.log('this is my image ==>', this.image)
+         
         }
     }
     };

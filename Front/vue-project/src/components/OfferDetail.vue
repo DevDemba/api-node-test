@@ -14,6 +14,10 @@
             tag="article"
             style="max-width: 20rem;"
             class="mb-2">
+            <b-card-img v-for="file in files" :key="file.id"> 
+                {{file.name}}
+                <img class="preview" v-bind:ref="'image'+parseInt( key )"/>
+            </b-card-img>
             <b-card-text>         
                 {{ vehicles.serial_number }}
             </b-card-text>
@@ -52,8 +56,10 @@ import axios from 'axios';
 
 export default {
     name: 'Offer-detail',
+    props: ['image'],
     data() {
         return {
+            files: [],
             vehicles: [],
         }
     },
@@ -66,7 +72,13 @@ export default {
         .catch(e => {
           this.errors = e;
         })
+    },
+    created(){
+        this.files = this.$refs.file;
+        console.log(this.files)
+
     }
+
     
 }
 </script>
