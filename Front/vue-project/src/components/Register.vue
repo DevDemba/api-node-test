@@ -82,9 +82,8 @@ export default {
             console.error(error)
           })
       } else {
-        this.password = ''
-        this.passwordConfirm = ''
-
+        this.password = '';
+        this.passwordConfirm = '';
         return alert('Passwords do not match')
       }
     }
