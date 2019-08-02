@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="container fluid">
         <h1>Offer</h1>
         <div class="parent">
-            <div class="card">
+          <div class="card">
             <b-card  v-for="vehicle in vehicles" :key="vehicle.id"
             :title="`${vehicle.marque}`"
             img-src="https://picsum.photos/600/300/?image=25"
@@ -11,12 +11,9 @@
             tag="article"
             style="max-width: 20rem;"
             class="mb-2 ">
-            <b-card-text>
-              
-            </b-card-text>
             <router-link :to="{ name:'Offer-detail', params: {id: vehicle.id_vehicle } }"><b-button variant="primary">View-detail</b-button></router-link>
             </b-card>
-        </div>
+          </div>
         </div>
     </div> 
 </template>
@@ -41,8 +38,9 @@ export default {
           this.errors = e;
         })
     },
-    created() {
-        // let uploadedFiles = this.$refs.file.files[0];
+    computed: () => {
+        //let uploadedFiles = this.$refs.files;
+        //console.log(uploadedFiles)
         // for( var i = 0; i < uploadedFiles.length; i++ ){
         //   this.files.push( uploadedFiles[i] );
         // }
