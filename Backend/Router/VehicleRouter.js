@@ -35,7 +35,7 @@ router.post('/api/vehicle', (req, res) => {
     console.log(vehicle)
     dbConn.query('INSERT INTO vehicles (marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?)', vehicle,
 
-    (err) => {
+    (err, user) => {
         if (err) return res.status(500).send("There was a problem registering the vehicles.")
             let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 // expires in 24 hours
             });
