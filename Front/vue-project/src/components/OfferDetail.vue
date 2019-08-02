@@ -31,7 +31,7 @@
             </b-card-text>
 
             <b-card-text>         
-                {{ vehicles.mb_kilometer }}
+                {{ vehicles.nb_kilometer }} km
             </b-card-text>
 
             <b-card-text>         
@@ -39,12 +39,15 @@
             </b-card-text>
 
             <b-card-text>         
-                {{ vehicles.price }}
+                {{ vehicles.price }} $
             </b-card-text>
 
             <b-card-text>         
-                {{ vehicles.available }}
-            </b-card-text>    
+                {{ vehicles.available }} available
+            </b-card-text> 
+            <b-button variant="success" @click="addToCart(vehicles)">
+                add to cart
+            </b-button>   
             </b-card>
              <router-link :to="{ name:'Offer' }"><b-button variant="primary">Back To offer</b-button></router-link>
         </div>
@@ -74,12 +77,27 @@ export default {
         })
     },
     created(){
-        this.files = this.$refs.file;
-        console.log(this.files)
+        // this.files = this.$refs.file;
+        // console.log(this.files)
 
+    },
+    addToCart(){
+        let found = false;
+
+      // Add the item or increase qty
+			let itemInCart = this.cartItems.filter(item => item.id===itemToAdd.id);
+			let isItemInCart = itemInCart.length > 0;
+
+      if (isItemInCart === false) {
+        this.cartItems.push(Vue.util.extend({}, itemToAdd));
+      }
+      else {
+        itemInCart[0].qty += itemToAdd.qty;
+      }
+			
+      itemToAdd.qty = 1;
     }
 
-    
 }
 </script>
 
