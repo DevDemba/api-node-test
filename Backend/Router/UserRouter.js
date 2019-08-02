@@ -146,7 +146,7 @@ router.post('/register-admin', function(req, res) {
 });
 
 
-router.get("/api/user", authMiddleware, (req, res) => {
+router.get("/api/user", (req, res) => {
   let user = users.find(user => {
     return user.id === req.session.passport.user
   });
@@ -178,6 +178,8 @@ router.put('/api/user', (req, res) => {
   
     let user_id = req.body.user_id;
     let user = req.body.user;
+
+    console.log(user_id, user)
   
     if (!user_id || !user) {
         return res.status(400).send({ error: user, message: 'Please provide user and user_id' });
