@@ -3,7 +3,7 @@
     <b-button @click="getUsers">Get Users</b-button><br>
     <b-list-group v-for="user in users" :key="user.id">
        <b-list-group-item  style="width: 400px;display:flex; justify-content: space-between;" variant="info">
-          <span>{{ user.lastname }} - {{ user.firstname }}</span>
+          <span>{{user.id}} - {{ user.lastname }}  {{ user.firstname }}</span>
           <div>
             <b-button variant="primary" @click="updateUser">update</b-button>
             <b-button variant="danger" @click="deleteUser">delete</b-button>
@@ -21,6 +21,7 @@ export default {
   name: 'Users',
   data () {
     return {
+      id: '',
       users: ''
     }
   },
@@ -45,7 +46,7 @@ export default {
         })
     },
      deleteUser: function () {
-      axios.delete('http://localhost:3000/api/user')
+      axios.delete('/api/user')
         .then(response => {
           this.users = response.data.data;
         })
