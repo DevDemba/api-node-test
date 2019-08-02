@@ -25,11 +25,11 @@ export default {
     name: 'Offer',
     data() {
         return {
-            files: [],
+            // files: [],
             vehicles: [],
         }
     },
-    beforeMount() {
+    created() {
       axios.get('/api/vehicle')
         .then(response => {
           this.vehicles = response.data.data;
@@ -38,7 +38,7 @@ export default {
           this.errors = e;
         })
     },
-    computed: () => {
+    beforeCreate() {
         //let uploadedFiles = this.$refs.files;
         //console.log(uploadedFiles)
         // for( var i = 0; i < uploadedFiles.length; i++ ){

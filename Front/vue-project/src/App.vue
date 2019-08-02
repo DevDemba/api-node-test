@@ -37,6 +37,7 @@ export default {
 .cart{
   display: flex; 
   justify-content: flex-end; 
+  margin: 15px;
 }
 
 </style>

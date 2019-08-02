@@ -64,7 +64,7 @@ export default {
             this.email = '';
                 this.password = '';
 
-          return alert('complete all fields !')
+          return alert('complete all fields')
         }    
       }
            

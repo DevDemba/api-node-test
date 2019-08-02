@@ -28,16 +28,16 @@ export default {
       this.user = JSON.parse(localStorage.getItem('user'));
       console.log(this.user)
 
-    /* axios.get('/api/users/:id')
-    .then(response => {
-      this.user = response.data.data;
-       console.log(response)
-    })
-    .catch(e => {
-      this.errors = e;
-      router.push('/');
-    }) */
-   // this.showProfile()
+    //  axios.get('/api/users/:id')
+    // .then(response => {
+    //   this.user = response.data.data;
+    //    console.log(response)
+    // })
+    // .catch(e => {
+    //   this.errors = e;
+    //   router.push('/');
+    // }) 
+
   }
 }
 </script>
