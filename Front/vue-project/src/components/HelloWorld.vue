@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="container fluid">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <welcome></welcome>
@@ -18,12 +18,19 @@ export default {
     return {
       msg: 'Welcome to Your Booking App'
     }
+  },
+  computed: {
+    
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.bloc {
+  margin: 10px auto;
+  margin-bottom: 50px;
+}
 h1, h2 {
   font-weight: normal;
 }

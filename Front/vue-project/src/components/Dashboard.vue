@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h2>Dashboard</h2>
+    <div class="container fluid">
+        <h2>Dashboard</h2><br>
         <p>Lastname: {{ user[0].lastname }}</p>
         <p>Fisrtname: {{ user[0].firstname }}</p>
         <p>Email: {{ user[0].email }}</p>

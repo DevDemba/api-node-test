@@ -9,6 +9,7 @@ import Admin from '@/components/Admin'
 import Offer from '@/components/Offer'
 import OfferDetail from '@/components/OfferDetail'
 import RegisterVehicle from '@/components/RegisterVehicle'
+import ShoppingCart from '@/components/ShoppingCart'
 
 Vue.use(Router)
 
@@ -21,7 +22,7 @@ const router = new Router({
       name: 'HelloWorld',
       component: HelloWorld,
       meta: {
-        guest: true,
+        guest: false,
       }
     },
     {
@@ -78,6 +79,7 @@ const router = new Router({
       path: '/offer-detail/:id',
       name: 'Offer-detail',
       component: OfferDetail,
+      props: true
       // meta: {
       //   guest: true,
       //   requiresAuth: true
@@ -90,6 +92,11 @@ const router = new Router({
       meta: {
        requiresAuth: true
       }
+    },
+    {
+      path: '/shoppingCart',
+      name: 'ShoppingCart',
+      component: ShoppingCart
     }
   ]
 })
