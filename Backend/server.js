@@ -8,10 +8,13 @@ const indexRoutes = require('./Router/IndexRouter');
 const userRoutes = require('./Router/UserRouter');
 const vehicleRoutes = require('./Router/VehicleRouter');
 const cors = require('cors');
-    
 const publicRoot = '../Front/vue-project/dist';
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+}
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static(publicRoot));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
