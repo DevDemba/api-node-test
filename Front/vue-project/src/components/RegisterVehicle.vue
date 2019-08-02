@@ -51,7 +51,7 @@
         handleSubmit(e) {
         e.preventDefault();
 
-        let url = "http://localhost:3000/api/vehicle";
+        let url = "/api/vehicle";
 
         let vehicle = {
             marque: this.marque,
@@ -67,7 +67,7 @@
             .post(url, vehicle)
             .then(response => {
             localStorage.setItem('vehicle', JSON.stringify(response.data.vehicle));
-            console.log(response.data.vehicle);
+            //console.log(response.data.vehicle);
                 if (localStorage.getItem("jwt") != null) {
                     alert("Add vehicle");
                     this.$router.push("/offer");
@@ -84,10 +84,9 @@
             reader.onload = e =>{
                 this.showPreview = true;
                 this.previewImage = e.target.result;
-                console.log(this.previewmage);
+                //console.log(this.previewmage);
             }
-            reader.readAsDataURL(this.image)
-            console.log('this is my image ==>', this.image)
+            console.log('this is my image ==>', image)
          
         }
     }
