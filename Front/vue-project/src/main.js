@@ -10,10 +10,12 @@ import Vuetify from 'vuetify'
 // index.js or main.js
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import moment from 'moment'
-
-Vue.use(BootstrapVue, Vuetify)
+import VueSweetalert2 from 'vue-sweetalert2'
+import store from './store/index.js'
 
 Vue.config.productionTip = false
+
+Vue.use(BootstrapVue, Vuetify, VueSweetalert2)
 
 Vue.filter('formatDate', function(value) {
   if (value) {
@@ -32,6 +34,7 @@ Vue.filter('birthday', function (value, format) {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
   // render: h => h(App),
