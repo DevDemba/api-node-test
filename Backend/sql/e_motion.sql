@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   PRIMARY KEY (`id_vehicle`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Export de données de la table e_motion.vehicles : ~4 rows (environ)
+-- Export de données de la table e_motion.vehicles : ~20 rows (environ)
 /*!40000 ALTER TABLE `vehicles` DISABLE KEYS */;
 INSERT INTO `vehicles` (`id_vehicle`, `image`, `marque`, `serial_number`, `color`, `nb_plate`, `nb_kilometer`, `purchase_date`, `price`, `available`, `total`) VALUES
 	(1, '', 'test', '0080080', '', '54008', 8048048, '2019-07-23', 100, 0, 0),
