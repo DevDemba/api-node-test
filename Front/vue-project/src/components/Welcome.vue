@@ -11,7 +11,7 @@
                 <div slot="footer"><small class="text-muted">Last updated 3 mins ago</small></div>
                 </b-card>
                 
-                <b-card title="Rent" img-src="https://i.ibb.co/JvZBj2V/shopping1.jpg" img-alt="Rent" img-top>
+                <b-card title="Rent" img-src="https://i.ibb.co/tMfxN07/shopping1.jpg" img-alt="Rent" img-top>
                 <b-card-text>
                     This card has supporting text below as a natural lead-in to additional content.
                 </b-card-text>
