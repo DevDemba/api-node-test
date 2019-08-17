@@ -3,7 +3,7 @@
         <h1>Offer</h1>
         <div class="parent">
           <div class="card">
-            <b-card  v-for="vehicle in vehicles" :key="vehicle.id"
+            <b-card  v-for="vehicle in vehicles" :key="vehicle.id" track-by="id"
             :title="`${vehicle.marque}`"
             img-src="https://picsum.photos/600/300/?image=25"
             img-alt="Image"
@@ -11,7 +11,11 @@
             tag="article"
             style="max-width: 20rem;"
             class="mb-2 ">
-            <router-link :to="{ name:'Offer-detail', params: {id: vehicle.id_vehicle } }"><b-button variant="primary">View-detail</b-button></router-link>
+           <p>{{vehicle.price}} €</p>
+            <router-link :to="{ name:'Offer-detail', params: {id: vehicle.id } }"><b-button variant="primary">View-detail</b-button></router-link>
+              <b-button variant="success" @click="addToCart(vehicle)">
+                add to cart
+            </b-button>   
             </b-card>
           </div>
         </div>
@@ -20,15 +24,23 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: 'Offer',
     data() {
         return {
-            // files: [],
-            vehicles: [],
+            files: [],
+           // vehicles: [],
         }
     },
+    computed: mapGetters({
+      vehicles: 'allVehicles',
+      length: 'getNumberOfVehicles'
+    }),
+    methods: mapActions([
+        'addToCart'
+    ]),
     created() {
       axios.get('/api/vehicle')
         .then(response => {
