@@ -45,7 +45,7 @@
             <b-card-text>         
                 {{ vehicles.available }} available
             </b-card-text> 
-            <b-button variant="success" @click="addToCart(vehicles)">
+            <b-button variant="success" @click="addToCart(vehicle)">
                 add to cart
             </b-button>   
             </b-card>
@@ -56,6 +56,7 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: 'Offer-detail',
@@ -81,7 +82,14 @@ export default {
         // console.log(this.files)
 
     },
-    addToCart(){
+    computed: mapGetters({
+      //cartitems: 'allVehicles',
+    }),
+    methods: mapActions([
+        'addToCart'
+    ])
+    
+    /*addToCart(){
         let found = false;
 
       // Add the item or increase qty
@@ -96,7 +104,7 @@ export default {
       }
 			
       itemToAdd.qty = 1;
-    }
+    }*/
 
 }
 </script>
