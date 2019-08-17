@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <div class="cart">
+      <router-link :to="{name: 'Fidelity'}">
+            <b-button variant="primary"><i class="material-icons white-text">favorite</i></b-button>
+      </router-link>
       <router-link :to="{name:'ShoppingCart'}">
-            <b-button variant="primary">ShoppingCart</b-button>
+            <b-button variant="primary"><i class="material-icons white-text">local_grocery_store ({{itemsInCart}})</i></b-button>
       </router-link>
     </div>
     <div>
@@ -15,6 +18,7 @@
 <script>
 
 import Navbar from '@/components/Navbar';
+import { mapGetters } from 'vuex';
 
 export default {
 
@@ -22,6 +26,12 @@ export default {
   components: {
     Navbar
   },
+  computed: {
+    itemsInCart(){
+      let cart = this.$store.getters.cartVehicles;
+      return cart.reduce((accum, item) => accum + item.quantity, 0)
+    }
+  }
 }
 </script>
 
@@ -39,5 +49,4 @@ export default {
   justify-content: flex-end; 
   margin: 15px;
 }
-
 </style>
