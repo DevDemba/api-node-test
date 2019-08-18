@@ -5,7 +5,7 @@
             <b-button variant="primary"><i class="material-icons white-text">favorite</i></b-button>
       </router-link>
       <router-link :to="{name:'ShoppingCart'}">
-            <b-button variant="primary"><i class="material-icons white-text">local_grocery_store ({{itemsInCart}})</i></b-button>
+            <b-button variant="primary"><i class="material-icons white-text">local_grocery_store</i>({{itemsInCart}})</b-button>
       </router-link>
     </div>
     <div>
