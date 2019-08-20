@@ -12,10 +12,11 @@ const publicRoot = '../Front/vue-project/dist';
 const corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200,
-}
+};
 
 app.use(cors(corsOptions));
 app.use(express.static(publicRoot));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
@@ -45,7 +46,7 @@ app.use((req, res, next)=>{
 });
 
 router.get("/", (req, res, next) => {
-    res.sendFile('index.html', { root: publicRoot })
+    res.sendFile('index.html', { root: publicRoot });
 });
 
 app.use('/', userRoutes, vehicleRoutes);
@@ -53,7 +54,7 @@ app.use('/', userRoutes, vehicleRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, ()=> {
-    console.log(`Node app is running on port: ${PORT}`)
+    console.log(`Node app is running on port: ${PORT}`);
 });
 
 module.exports = app;
