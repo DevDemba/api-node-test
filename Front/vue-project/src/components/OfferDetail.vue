@@ -8,8 +8,8 @@
        <div class="card">
             <b-card
             :title="`${vehicles.marque}`"
-            img-src="https://picsum.photos/600/300/?image=25"
-            img-alt="Image"
+            :img-src="'http://localhost:3000/uploads/'+`${vehicles.image}`"
+            :img-alt="`${vehicles.image}`"
             img-top
             tag="article"
             style="max-width: 20rem;"
@@ -45,6 +45,7 @@
             <b-card-text>         
                 {{ vehicles.available }} available
             </b-card-text> 
+            <b-button variant="danger" @click="remove(vehicles.id)"> delete</b-button>
             <b-button variant="success" @click="addToCart(vehicle)">
                 add to cart
             </b-button>   
@@ -63,6 +64,7 @@ export default {
     props: ['image'],
     data() {
         return {
+            id: 35,
             files: [],
             vehicles: [],
         }
@@ -87,7 +89,17 @@ export default {
     }),
     methods: mapActions([
         'addToCart'
-    ])
+    ]),
+    remove(){
+        axios.delete('/api/vehicle/'+ this.$route.params.id)
+        .then(response => {
+         console.log('delete')
+        })
+        .catch(e => {
+          this.errors = e;
+        })
+
+    }
     
     /*addToCart(){
         let found = false;
