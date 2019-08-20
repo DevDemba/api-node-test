@@ -5,17 +5,15 @@
           <div class="card">
             <b-card  v-for="vehicle in vehicles" :key="vehicle.id" track-by="id"
             :title="`${vehicle.marque}`"
-            img-src="https://picsum.photos/600/300/?image=25"
-            img-alt="Image"
+            :img-src="'http://localhost:3000/uploads/'+`${vehicle.image}`"
+            :img-alt="`${vehicle.image}`"
             img-top
             tag="article"
             style="max-width: 20rem;"
             class="mb-2 ">
            <p>{{vehicle.price}} €</p>
-            <router-link :to="{ name:'Offer-detail', params: {id: vehicle.id } }"><b-button variant="primary">View-detail</b-button></router-link>
-              <b-button variant="success" @click="addToCart(vehicle)">
-                add to cart
-            </b-button>   
+            <router-link :to="{ name:'Offer-detail', params: {id: vehicle.id_vehicle } }"><b-button variant="primary">View-detail</b-button></router-link>
+              <b-button variant="success" @click="addToCart(vehicle)">add to cart </b-button>   
             </b-card>
           </div>
         </div>
@@ -24,24 +22,32 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 
 export default {
     name: 'Offer',
     data() {
         return {
             files: [],
-           // vehicles: [],
+           //vehicles: []
         }
     },
+    mounted () {
+      this.$store.dispatch('getVehicles')
+      this.$store.dispatch('addToCart')
+    },
+ /*    computed: mapState([
+      'vehicles'
+    ]), */
     computed: mapGetters({
       vehicles: 'allVehicles',
       length: 'getNumberOfVehicles'
     }),
     methods: mapActions([
+        'getVehicles',
         'addToCart'
     ]),
-    created() {
+/*     created() {
       axios.get('/api/vehicle')
         .then(response => {
           this.vehicles = response.data.data;
@@ -49,15 +55,8 @@ export default {
         .catch(e => {
           this.errors = e;
         })
-    },
+    },  */
     beforeCreate() {
-        //let uploadedFiles = this.$refs.files;
-        //console.log(uploadedFiles)
-        // for( var i = 0; i < uploadedFiles.length; i++ ){
-        //   this.files.push( uploadedFiles[i] );
-        // }
-        // console.log(this.files)
-
       axios.get('/api/vehicle/:id')
         .then(response => {
           this.vehicles = response.data.data;
