@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 // getting the local authentication type
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const config = require('./config');
+
 const authMiddleware = (req, res, next) => {
   if (!req.isAuthenticated()) {
     res.status(401).send('You are not authenticated');
@@ -13,8 +15,6 @@ const authMiddleware = (req, res, next) => {
     return next();
   }
 };
-
-const config = require('./config');
 
 // connect to database
 dbConn.connect();
@@ -92,6 +92,7 @@ router.post('/api/login', (req, res, next) => {
     
 });
 
+
 router.get("/api/logout", function(req, res) {
   req.logout();
 
@@ -99,6 +100,7 @@ router.get("/api/logout", function(req, res) {
 
   return res.send();
 });
+
 
 router.post('/api/register', function(req, res) {
     user =  [
@@ -124,7 +126,7 @@ router.post('/api/register', function(req, res) {
             res.status(200).send({ auth: true, token: token, user: user });
         }); 
     });
-})
+});
 
 
 router.post('/register-admin', function(req, res) {
@@ -227,6 +229,7 @@ passport.use(
     }
   )
 );
+
 
 passport.serializeUser((user, done) => {
   done(null, user.id)
