@@ -3,6 +3,8 @@ const router = express.Router();
 const dbConn = require('../database/db').dbConn;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const multerConfig = require("./config/multer");
+const config = require('./config');
 
 const authMiddleware = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -12,7 +14,6 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
-const config = require('./config');
 
 // Retrieve all vehicles
 router.get('/api/vehicle', (req, res) => {
@@ -24,6 +25,7 @@ router.get('/api/vehicle', (req, res) => {
 
 router.post('/api/vehicle', (req, res) => {
       vehicle =  [
+          req.body.image,
           req.body.marque,
           req.body.serial_number,
           req.body.color,
@@ -33,7 +35,7 @@ router.post('/api/vehicle', (req, res) => {
           req.body.price
       ]; 
     console.log(vehicle)
-    dbConn.query('INSERT INTO vehicles (marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?)', vehicle,
+    dbConn.query('INSERT INTO vehicles (image, marque, serial_number, color, nb_plate, nb_kilometer, purchase_date, price) VALUES (?,?,?,?,?,?,?,?)', vehicle,
 
     (err, user) => {
         if (err) return res.status(500).send("There was a problem registering the vehicles.")
@@ -58,5 +60,9 @@ router.get('/api/vehicle/:id', (req, res) => {
     });
 
 });
+
+router.post('/api/upload', multerConfig.saveToUploads, (req, res) => {
+    return res.json("file uploaded successfully");
+})
 
 module.exports = router;
