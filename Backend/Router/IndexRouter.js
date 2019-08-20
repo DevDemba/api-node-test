@@ -5,6 +5,9 @@ router.get('/', (req, res, next) => {
     res.sendFile('index.html', { root: publicRoot })
 });
 
+
 router.get('/home', (req, res, next) => {
     return res.sendFile('index.html', { error: true, message: 'hello world', root: publicRoot })
 });
+
+//module.exports = router;
