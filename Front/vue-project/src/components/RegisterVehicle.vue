@@ -4,7 +4,8 @@
         <b-form-group>
             <div>
                 <b-img thumbnail fluid v-bind:src="previewImage" v-show="showPreview" class="uploading-image"></b-img>
-                <input id="file" type="file" ref="file"  accept="image/*" @change=uploadImage />
+                <input id="image" type="file" ref="image" accept="image/*" @change="uploadImage" />
+             <!--    <b-button v-on:click="uploadImage()">save</b-button> -->
             </div>
             <b-form-input type="text" v-model="marque" placeholder="Marque" required />
             <b-form-input type="text" v-model="serial_number" placeholder="Serial Number" required />
@@ -25,17 +26,17 @@
     export default {
     name: "RegisterVehicle",
     props: ["nextUrl"],
-    // {
-    //   file: {
-    //     type: String,
-    //     default: () => {
-    //       return '';
-    //     }
-    //   }
-    // }
+/*     props: {
+       image: {
+        type: String,
+         default: () => {
+           return '';
+         }
+       }
+    }, */
     data() {
         return {
-        file: '',
+        image: '',
         showPreview: false,
         previewImage: null,
         marque: '',
@@ -54,6 +55,7 @@
         let url = "/api/vehicle";
 
         let vehicle = {
+            image: this.$refs.image.files[0].name,
             marque: this.marque,
             serial_number: this.serial_number,
             color: this.color,
@@ -62,7 +64,7 @@
             purchase_date: this.purchase_date,
             price: this.price
         };
-
+      
         axios
             .post(url, vehicle)
             .then(response => {
@@ -77,19 +79,68 @@
             console.error(error);
             });
         },
-        uploadImage(e){
-            const image = this.$refs.file.files[0];
+        uploadImage(e) {
+            const image = this.$refs.image.files[0];
+             if (!image) {
+                console.error("no file selected");
+                return;
+            }
+
             const reader = new FileReader();
             reader.readAsDataURL(image);
             reader.onload = e =>{
                 this.showPreview = true;
                 this.previewImage = e.target.result;
                 //console.log(this.previewmage);
+            };
+
+           /*  const formData = new formData();
+            formData.append('image', image)
+
+          
+                axios.post('/api/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then( response => {
+                      console.info("file uploaded successfully")
+                      console.log('youuuuuupi', response)
+                })
+                .catch(err => 
+                console.log("file upload failed", err))
+                */
+
+          /*   const reader = new FileReader();
+            reader.readAsDataURL(image);
+            reader.onload = e =>{
+                this.showPreview = true;
+                this.previewImage = e.target.result;
+                //console.log(this.previewmage);
             }
-            console.log('this is my image ==>', image)
+            console.log('this is my image ==>', image) */
+            let formData = new FormData();
+
+            formData.append('image', image);
+
+            return axios.post(
+                `/api/upload`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            )
+            .then(response => {
+                console.info("file uploaded successfully");
+            })
+            .catch(error => {
+                console.error("file upload failed", error);
+            }); 
          
+            }
         }
-    }
     };
     </script>
 
