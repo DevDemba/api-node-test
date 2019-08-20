@@ -1,59 +1,41 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 Vue.use(Vuex)
+Vue.use(VueAxios, axios)
 
 const debug = process.env.NODE_ENV !== 'production'
 
 // initial state
 const state = {
     added: [],
-    all: [
-        {
-            id: 1,
-            marque: 'COBOL 101 vintage',
-            description: 'Learn COBOL with this vintage programming book',
-            price: 399
-        },
-        {
-            id: 2,
-            marque: 'Sharp C2719 curved TV',
-            description: 'Watch TV like never before with the brand new curved screen technology',
-            price: 1995
-        },
-        {
-            id: 3,
-            marque: 'Remmington X',
-            description: 'Excellent for gaming and typing, this Remmington X keyboard ' +
-                'features tactile, clicky switches for speed and accuracy',
-            price: 595
-        }
-    ]
+    vehicles: []
 }
 
 // getters
 const getters = {
-    allVehicles: state => state.all, // would need action/mutation if data fetched async
-    getNumberOfVehicles: state => (state.all) ? state.all.length : 0,
+    allVehicles: state => state.vehicles, // would need action/mutation if data fetched async
+    getNumberOfVehicles: state => (state.vehicles) ? state.vehicles.length : 0,
     cartVehicles: state => {
         return state.added.map(({ id, quantity }) => {
-            const vehicle = state.all.find(v => v.id === id)
+            const vehicle = state.vehicles.find(v => v.id === id)
+            console.log(vehicle)
 
             return {
                 marque: vehicle.marque,
+                serial_number: vehicle.serial_number,
+                nb_plate: vehicle.nb_plate,
+                color: vehicle.color,
+                nb_kilometer: vehicle.nb_kilometer,
+                purchase_date: vehicle.purchase_date,
                 price:  vehicle.price,
+                available: vehicle.available,
+                total: vehicle.total,
                 quantity
             }
-        })
-    }
-}
-
-// actions
-const actions = {
-    addToCart({ commit }, vehicle) {
-        commit(types.ADD_TO_CART, {
-            id: vehicle.id
         })
     }
 }
@@ -72,7 +54,10 @@ const mutations = {
         } else {
             record.quantity++
         }
-    }
+    },
+    SET_VEHICLES(state, vehicles) {
+        state.vehicles = vehicles
+    }   
 }
 
 // one store for entire application
@@ -80,6 +65,21 @@ export default new Vuex.Store({
     state,
     strict: debug,
     getters,
-    actions,
+    actions: {
+        getVehicles({ commit }) {
+            axios
+                .get('/api/vehicle')
+                .then(r => {
+                    this.vehicles = r.data.data;
+                    //console.log(this.vehicles)
+                    commit('SET_VEHICLES', this.vehicles)
+                })
+        },
+        addToCart({ commit }, vehicle) {
+            commit(types.ADD_TO_CART, {
+                id: vehicle.id
+            })
+        }
+    },
     mutations
 })
