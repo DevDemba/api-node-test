@@ -51,31 +51,35 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 
 export default {
     name: 'Offer-detail',
-    data() {
+ /*    data() {
         return {
-            id: '',
-            files: [],
             vehicles: [],
         }
-    },
+    }, */
     beforeCreate() {
-      axios.get('/api/vehicle/' + this.$route.params.id)
+      /* axios.get('/api/vehicle/' + this.$route.params.id)
         .then(response => {
           this.vehicles = response.data.data;
           //console.log(this.vehicles)
         })
         .catch(e => {
           this.errors = e;
-        })
+        }) */
     },
-    computed: mapGetters({
-      //cartitems: 'allVehicles',
+    mounted () {
+      this.$store.dispatch('getVehiclesById')
+      this.$store.dispatch('addToCart')
+    },
+     computed: mapGetters({
+      vehicles: 'allVehicles',
+      length: 'getNumberOfVehicles'
     }),
     methods: mapActions([
+        'getVehiclesById',
         'addToCart'
     ]),
 }
