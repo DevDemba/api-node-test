@@ -35,10 +35,11 @@ const getters = {
     getNumberOfVehicles: state => (state.vehicles) ? state.vehicles.length : 0,
     cartVehicles: state => {
         return state.added.map(({ id, quantity }) => {
-            const vehicle = state.vehicles.find(v => v.id === id)
+            const vehicle = state.vehicles.find(v => v.id_vehicle === id)
            // console.log(vehicle)
 
             return {
+                id_vehicle: vehicle.id_vehicle,
                 marque: vehicle.marque,
                 serial_number: vehicle.serial_number,
                 nb_plate: vehicle.nb_plate,
@@ -76,7 +77,7 @@ const actions = {
     },
     deleteVehicle({ commit }) {
         axios
-            .delete('/api/vehicle/' + router.currentRoute.params.id)
+            .delete('/api/vehicle/:id/' + 33)
             .then(resp => {
                 console.log(resp);
                 this.$swal({
@@ -101,11 +102,10 @@ const actions = {
             })
     },
     deleteUser({ commit }) {
-        let id = 16
         axios
-            .delete('http://localhost:3000/api/users/' + id)
+            .delete('http://localhost:3000/api/users/' + router.currentRoute.params.id)
             .then(resp => {
-                this.users.splice(id, 1)
+                this.users = r.data.data;
                 console.log(this.users);
             })
             .catch(e => {
@@ -113,16 +113,18 @@ const actions = {
             })
     },
     addToCart({ commit }, vehicle) {
+        return new Promise((resolve, reject) => {
         commit(types.ADD_TO_CART, {
-            id: vehicle.id
+            id: vehicle.id_vehicle
         })
-        Vue.$swal({
+      /*   this.$swal({
             position: 'center',
             type: 'success',
             title: 'Add to cart',
             showConfirmButton: false,
             timer: 2000
-        });
+        }) */
+        })
     },
     login({ commit }, user) {
         return new Promise((resolve, reject) => {
@@ -206,7 +208,7 @@ const mutations = {
         state.token = ''
     },
     [types.ADD_TO_CART](state, { id }) {
-        const record = state.added.find(v => v.id === id)
+        const record = state.added.find(v => v.id_vehicle === id)
 
         if (!record) {
             state.added.push({
