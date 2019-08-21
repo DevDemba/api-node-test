@@ -30,8 +30,33 @@ export default {
                 email: this.email,
                 password: this.password
             };
+            this.$store.dispatch('login', data)
+            .then( response => {
+              let is_admin = response.data.user[0].is_admin;
+              //console.log(is_admin)
+              if (localStorage.getItem('token') != null) {
+                //this.$emit('loggedIn');
+                this.$emit("authenticated", true);
+                this.$swal({
+                          position: 'center',
+                          type: 'success',
+                          title: 'You are authenticated',
+                          showConfirmButton: false,
+                          timer: 2000
+                });
+                if (this.$route.params.nextUrl != null) {
+                  this.$router.push(this.$route.params.nextUrl)
+                } else {
+                    if (is_admin == 1) {
+                      this.$router.push('/admin');
+                    } else {
+                      this.$router.push('/dashboard');
+                    }
+                }
+              }
+            })
             
-          if(this.password.length > 0 || this.email.length >0) {
+/*           if(this.password.length > 0 || this.email.length >0) {
             axios.post("/api/login", data)
             .then(response => {
         
@@ -65,7 +90,7 @@ export default {
                 this.password = '';
 
           return alert('complete all fields')
-        }    
+        }  */   
       }
            
   }
