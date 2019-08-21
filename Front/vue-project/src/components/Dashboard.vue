@@ -21,22 +21,22 @@ export default {
   name: 'Dashboard',
   data () {
     return {
+      id: this.$store.getters.user,
       user: []
     }
   },
   created() {
-      this.user = JSON.parse(localStorage.getItem('user'));
-      console.log(this.user)
+    this.user = JSON.parse(localStorage.getItem('user'));
 
-    //  axios.get('/api/users/:id')
-    // .then(response => {
-    //   this.user = response.data.data;
-    //    console.log(response)
-    // })
-    // .catch(e => {
-    //   this.errors = e;
-    //   router.push('/');
-    // }) 
+    /* axios.get('/api/users/:id', this.id)
+     .then(response => {
+      this.user = response.data.data;
+        console.log(response)
+     })
+     .catch(e => {
+       this.errors = e;
+       router.push('/');
+     })  */
 
   }
 }
