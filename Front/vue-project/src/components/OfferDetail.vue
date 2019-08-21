@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <div>
             <h1>Offer detail</h1>
@@ -14,10 +13,6 @@
             tag="article"
             style="max-width: 20rem;"
             class="mb-2">
-            <b-card-img v-for="file in files" :key="file.id"> 
-                {{file.name}}
-                <img class="preview" v-bind:ref="'image'+parseInt( key )"/>
-            </b-card-img>
             <b-card-text>         
                 {{ vehicles.serial_number }}
             </b-card-text>
@@ -45,7 +40,6 @@
             <b-card-text>         
                 {{ vehicles.available }} available
             </b-card-text> 
-            <b-button variant="danger" @click="remove(vehicles.id)"> delete</b-button>
             <b-button variant="success" @click="addToCart(vehicle)">
                 add to cart
             </b-button>   
@@ -61,10 +55,9 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: 'Offer-detail',
-    props: ['image'],
     data() {
         return {
-            id: 35,
+            id: '',
             files: [],
             vehicles: [],
         }
@@ -79,45 +72,12 @@ export default {
           this.errors = e;
         })
     },
-    created(){
-        // this.files = this.$refs.file;
-        // console.log(this.files)
-
-    },
     computed: mapGetters({
       //cartitems: 'allVehicles',
     }),
     methods: mapActions([
         'addToCart'
     ]),
-    remove(){
-        axios.delete('/api/vehicle/'+ this.$route.params.id)
-        .then(response => {
-         console.log('delete')
-        })
-        .catch(e => {
-          this.errors = e;
-        })
-
-    }
-    
-    /*addToCart(){
-        let found = false;
-
-      // Add the item or increase qty
-			let itemInCart = this.cartItems.filter(item => item.id===itemToAdd.id);
-			let isItemInCart = itemInCart.length > 0;
-
-      if (isItemInCart === false) {
-        this.cartItems.push(Vue.util.extend({}, itemToAdd));
-      }
-      else {
-        itemInCart[0].qty += itemToAdd.qty;
-      }
-			
-      itemToAdd.qty = 1;
-    }*/
-
 }
 </script>
 

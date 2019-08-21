@@ -70,7 +70,7 @@
             .then(response => {
             localStorage.setItem('vehicle', JSON.stringify(response.data.vehicle));
             //console.log(response.data.vehicle);
-                if (localStorage.getItem("jwt") != null) {
+                if (localStorage.getItem("token") != null) {
                     alert("Add vehicle");
                     this.$router.push("/offer");
                 }
@@ -93,32 +93,7 @@
                 this.previewImage = e.target.result;
                 //console.log(this.previewmage);
             };
-
-           /*  const formData = new formData();
-            formData.append('image', image)
-
-          
-                axios.post('/api/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                })
-                .then( response => {
-                      console.info("file uploaded successfully")
-                      console.log('youuuuuupi', response)
-                })
-                .catch(err => 
-                console.log("file upload failed", err))
-                */
-
-          /*   const reader = new FileReader();
-            reader.readAsDataURL(image);
-            reader.onload = e =>{
-                this.showPreview = true;
-                this.previewImage = e.target.result;
-                //console.log(this.previewmage);
-            }
-            console.log('this is my image ==>', image) */
+            
             let formData = new FormData();
 
             formData.append('image', image);

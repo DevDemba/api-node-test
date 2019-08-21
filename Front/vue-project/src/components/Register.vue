@@ -64,12 +64,12 @@ export default {
         
         url = 'http://localhost:3000/api/register-admin';
 
-        axios.post(url, user)
+        this.$store.dispatch('register', user)
           .then((response) => {
             localStorage.setItem('user', JSON.stringify(response.data.user))
-            localStorage.setItem('jwt', response.data.token)
+            localStorage.setItem('token', response.data.token)
             console.log(response.data.user)
-            if (localStorage.getItem('jwt') != null) {
+            if (localStorage.getItem('token') != null) {
               this.$emit('loggedIn')
               if (this.$route.params.nextUrl != null) {
                 this.$router.push(this.$route.params.nextUrl)

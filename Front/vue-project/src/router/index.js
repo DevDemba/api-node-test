@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './../store/index'
 import HelloWorld from '@/components/HelloWorld'
 import Users from '@/components/Users'
 import Register from '@/components/Register'
@@ -11,6 +12,7 @@ import OfferDetail from '@/components/OfferDetail'
 import RegisterVehicle from '@/components/RegisterVehicle'
 import ShoppingCart from '@/components/ShoppingCart'
 import Fidelity from '@/components/Fidelity'
+
 
 Vue.use(Router)
 
@@ -109,7 +111,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (localStorage.getItem('jwt') == null) {
+    if (localStorage.getItem('token') == null) {
       next({
         path: '/login',
         params: { nextUrl: to.fullPath }
@@ -117,7 +119,7 @@ router.beforeEach((to, from, next) => {
     } else {
       let user = JSON.parse(localStorage.getItem('user'))
       if (to.matched.some(record => record.meta.is_admin)) {
-        if (user.is_admin == 1) {
+        if (user.is_admin = 1) {
           next()
         }
         else {
@@ -128,7 +130,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else if (to.matched.some(record => record.meta.guest)) {
-    if (localStorage.getItem('jwt') == null) {
+    if (localStorage.getItem('token') == null) {
       next()
     }
     else {
