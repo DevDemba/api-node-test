@@ -87,7 +87,7 @@ export default {
     },
     methods: {
         checkout(){
-            alert('Pay us ' + this.total + ' € ') 
+            alert('Pay on stripe ' + this.total + ' € ') 
         },
        /* priceSum(){
              return this.cartitems.reduce((prev,cur) => prev + cur.total,0)
@@ -108,21 +108,23 @@ export default {
             return num.toString().replace(regexp, ',')
         },
         deleteCartitem(id) { 
-            
+            console.log(id)
             var result = confirm('Are you sure you want to remove it from your shopping list ?')
             if(result){
-            db.collection('cartitems').doc(id).delete() // This is removed from the database.
+            this.$store.state.added.doc(id).delete() // This is removed from the database.
+           // axios.delete('/api/vehicle/' + id)
             .then(() =>{
-            this.$swal({
-                position: 'center',
-                type: 'success',
-                title: 'Deletion completed',
-                showConfirmButton: false,
-                timer: 1000
-            })
-            this.cartitems = this.cartitems.filter(cartitem =>{
-                return cartitem.id !=id // deleteSmoothie If the sender and the ID do not match, leave them in the list.
-            })
+                this.cartitems = this.cartitems.filter(cartitem => {
+                    return cartitem.id !=id // deleteSmoothie If the sender and the ID do not match, leave them in the list.
+                });
+
+                this.$swal({
+                    position: 'center',
+                    type: 'success',
+                    title: 'Deletion completed',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
             })
             }     
         }
