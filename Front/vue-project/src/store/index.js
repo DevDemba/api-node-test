@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import * as types from './mutation-types'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import router from '@/router'
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -13,6 +14,7 @@ const debug = process.env.NODE_ENV !== 'production'
 const state = {
     added: [],
     vehicles: [],
+    vehicle: [],
     users: [],
     status: '',
     token: localStorage.getItem('token') || '',
@@ -27,6 +29,7 @@ const getters = {
     user: state => !!state.user,
     userId: state => !!state.user.id,
     authStatus: state => state.status,
+    vehicleById: state => state.vehicle,
     allVehicles: state => state.vehicles, // would need action/mutation if data fetched async
     allUsers: state => state.users,
     getNumberOfVehicles: state => (state.vehicles) ? state.vehicles.length : 0,
@@ -51,6 +54,7 @@ const getters = {
     }   
 }
 
+// actions
 const actions = {
     getVehicles({ commit }) {
         axios
@@ -61,12 +65,27 @@ const actions = {
                 commit('SET_VEHICLES', this.vehicles)
             })
     },
+    getVehiclesById({ commit }) {
+        axios
+            .get('/api/vehicle/'+ router.currentRoute.params.id)
+            .then(resp => {
+                this.vehicle = resp.data.data;
+                //console.log(this.vehicles)
+                commit('SET_VEHICLES', this.vehicle)
+            })
+    },
     deleteVehicle({ commit }) {
         axios
-            .delete('/api/vehicle/' + 16)
+            .delete('/api/vehicle/' + router.currentRoute.params.id)
             .then(resp => {
-                this.vehicle.splice(id, 16)
                 console.log(resp);
+                this.$swal({
+                    position: 'center',
+                    type: 'success',
+                    title: 'Deleted vehicle in database',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             })
             .catch(e => {
                 this.errors = e;
@@ -84,7 +103,7 @@ const actions = {
     deleteUser({ commit }) {
         let id = 16
         axios
-            .delete('htpp://localhost:3000/api/users/' + id)
+            .delete('http://localhost:3000/api/users/' + id)
             .then(resp => {
                 this.users.splice(id, 1)
                 console.log(this.users);
@@ -97,6 +116,13 @@ const actions = {
         commit(types.ADD_TO_CART, {
             id: vehicle.id
         })
+        Vue.$swal({
+            position: 'center',
+            type: 'success',
+            title: 'Add to cart',
+            showConfirmButton: false,
+            timer: 2000
+        });
     },
     login({ commit }, user) {
         return new Promise((resolve, reject) => {
