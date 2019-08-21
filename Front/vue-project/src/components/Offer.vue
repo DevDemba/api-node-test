@@ -3,7 +3,7 @@
         <h1>Offer</h1>
         <div class="parent">
           <div class="card">
-            <b-card  v-for="vehicle in vehicles" :key="vehicle.id" track-by="id"
+            <b-card  v-for="vehicle in vehicles" :key="vehicle.id_vehicle" track-by="id"
             :title="`${vehicle.marque}`"
             :img-src="'http://localhost:3000/uploads/'+`${vehicle.image}`"
             :img-alt="`${vehicle.image}`"
@@ -26,19 +26,10 @@ import { mapGetters, mapActions, mapState } from 'vuex';
 
 export default {
     name: 'Offer',
-    data() {
-        return {
-            files: [],
-           //vehicles: []
-        }
-    },
     mounted () {
       this.$store.dispatch('getVehicles')
       this.$store.dispatch('addToCart')
     },
- /*    computed: mapState([
-      'vehicles'
-    ]), */
     computed: mapGetters({
       vehicles: 'allVehicles',
       length: 'getNumberOfVehicles'
