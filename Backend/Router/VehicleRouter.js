@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const dbConn = require('../database/db').dbConn;
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const multerConfig = require("./config/multer");
 const config = require('./config');
@@ -60,6 +59,23 @@ router.get('/api/vehicle/:id', (req, res) => {
     });
 
 });
+
+//  Delete vehicle
+router.delete('/api/vehicle', (req, res) => {
+
+    let vehicle_id = req.body.vehicle_id
+
+    console.log(vehicle_id)
+
+    if (!vehicle_id) {
+        return res.status(400).send({ error: true, message: 'Please provide vehicle_id' });
+    }
+    dbConn.query('DELETE FROM vehicles WHERE id_vehicle = ?', [vehicle_id], function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'Delete has been updated successfully.' });
+    });
+}); 
+
 
 router.post('/api/upload', multerConfig.saveToUploads, (req, res) => {
     return res.json("file uploaded successfully");
