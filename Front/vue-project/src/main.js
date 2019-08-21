@@ -12,14 +12,31 @@ import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import moment from 'moment'
 import VueSweetalert2 from 'vue-sweetalert2'
 import store from './store/index.js'
+import axios from 'axios'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-Vue.use(BootstrapVue, Vuetify, VueSweetalert2)
+Vue.prototype.$axios = axios;
+
+const token = localStorage.getItem('token');
+
+if(token) {
+  Vue.prototype.$axios.defaults.headers.common['Authorization'] = token;
+}
+
+Vue.use(BootstrapVue, Vuetify);
+
+Vue.use(VueSweetalert2, options);
+
+const options = {
+  confirmButtonColor: '#41b882',
+  cancelButtonColor: '#ff7674'
+}
+
 
 Vue.filter('formatDate', function(value) {
   if (value) {
-    return moment(String(value)).format('MM/DD/YYYY hh:mm')
+    return moment(String(value)).format('MM/DD/YYYY hh:mm');
   }
 });
 
@@ -27,7 +44,7 @@ Vue.filter('birthday', function (value, format) {
   if (value) {
       return moment(String(value)).format(format || 'MM/DD/YYYY');
   }
-})
+});
 
 
 /* eslint-disable no-new */
