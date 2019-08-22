@@ -1,9 +1,10 @@
-.DS_Store
+Backend/node_modules
 Backend/node_modules/yallist/iterator.js
 Backend/node_modules/xdg-basedir/license
-Backend/.env
+*.env
 
 # Editor directories and files
+.DS_Store
 .idea
 .vscode
 *.suo
