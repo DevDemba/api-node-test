@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const dbConn = require('../database/db').dbConn;
 const jwt = require('jsonwebtoken');
-const multerConfig = require("./config/multer");
 const config = require('./config');
+const multerConfig = require("./config/multer");
+
 
 const authMiddleware = (req, res, next) => {
     if (!req.isAuthenticated()) {

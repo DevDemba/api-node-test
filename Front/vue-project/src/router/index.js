@@ -12,6 +12,7 @@ import OfferDetail from '@/components/OfferDetail'
 import RegisterVehicle from '@/components/RegisterVehicle'
 import ShoppingCart from '@/components/ShoppingCart'
 import Fidelity from '@/components/Fidelity'
+import Payment from '@/components/Payment'
 
 
 Vue.use(Router)
@@ -105,6 +106,11 @@ const router = new Router({
       path: '/fidelty',
       name: 'Fidelity',
       component: Fidelity
+    },
+    {
+      path: '/payment',
+      name: 'Payment',
+      component: Payment
     }
   ]
 })

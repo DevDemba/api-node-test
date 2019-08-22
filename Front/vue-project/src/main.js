@@ -12,7 +12,7 @@ import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import moment from 'moment'
 import VueSweetalert2 from 'vue-sweetalert2'
 import store from './store/index.js'
-import axios from 'axios'
+import axios from 'axios';
 
 Vue.config.productionTip = false;
 

@@ -7,6 +7,7 @@ const router = express.Router();
 const indexRoutes = require('./Router/IndexRouter');
 const userRoutes = require('./Router/UserRouter');
 const vehicleRoutes = require('./Router/VehicleRouter');
+const stripe = require('./Router/Stripe')
 const cors = require('cors');
 const publicRoot = '../Front/vue-project/dist';
 const corsOptions = {
@@ -49,7 +50,7 @@ router.get("/", (req, res, next) => {
     res.sendFile('index.html', { root: publicRoot });
 });
 
-app.use('/', userRoutes, vehicleRoutes);
+app.use('/', userRoutes, vehicleRoutes, stripe);
 
 const PORT = process.env.PORT || 3000;
 
