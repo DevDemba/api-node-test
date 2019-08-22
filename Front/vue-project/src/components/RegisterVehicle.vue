@@ -7,6 +7,9 @@
                 <input id="image" type="file" ref="image" accept="image/*" @change="uploadImage" />
              <!--    <b-button v-on:click="uploadImage()">save</b-button> -->
             </div>
+            <div>
+                <b-form-select v-model="type_vehicle" :options="options" required></b-form-select>
+            </div>
             <b-form-input type="text" v-model="marque" placeholder="Marque" required />
             <b-form-input type="text" v-model="serial_number" placeholder="Serial Number" required />
             <b-form-input type="color" v-model="color" placeholder="Color" required />
@@ -36,6 +39,12 @@
     }, */
     data() {
         return {
+        type_vehicle: null,
+        options: [
+            { value: null, text: 'Please select an option' },
+            { value: 1, text: 'This is a car' },
+            { value: 2, text: 'This is a moto' },
+        ],
         image: '',
         showPreview: false,
         previewImage: null,
@@ -55,6 +64,7 @@
         let url = "/api/vehicle";
 
         let vehicle = {
+            type_vehicle: this.type_vehicle,
             image: this.$refs.image.files[0].name,
             marque: this.marque,
             serial_number: this.serial_number,
@@ -71,7 +81,13 @@
             localStorage.setItem('vehicle', JSON.stringify(response.data.vehicle));
             //console.log(response.data.vehicle);
                 if (localStorage.getItem("token") != null) {
-                    alert("Add vehicle");
+                    this.$swal({
+                        position: 'center',
+                        type: 'success',
+                        title: 'Add vehicle in databse',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                     this.$router.push("/offer");
                 }
             })
