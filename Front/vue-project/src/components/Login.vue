@@ -55,42 +55,19 @@ export default {
                 }
               }
             })
-            
-/*           if(this.password.length > 0 || this.email.length >0) {
-            axios.post("/api/login", data)
-            .then(response => {
-        
-            let is_admin = response.data.user[0].is_admin;
-        
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            localStorage.setItem('jwt', response.data.token);
-          
-              if (localStorage.getItem('jwt') != null) {
-                //this.$emit('loggedIn');
-                this.$emit("authenticated", true);
-                alert("You are connected !");
-                if (this.$route.params.nextUrl != null) {
-                  this.$router.push(this.$route.params.nextUrl)
-                } else {
-                  if (is_admin = 1) {
-                   this.$router.push('/admin');
-                  } else {
-                    this.$router.push('/dashboard');
-                  }
-                }
-              }
-            })
             .catch((error) => {
                 console.error(error.response);
-                alert("Error - Log in");
-
-            })
-          }else {
-            this.email = '';
+                this.email = '';
                 this.password = '';
+                this.$swal({
+                    position: 'center',
+                    type: 'warning',
+                    title: 'login or password not matches',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
 
-          return alert('complete all fields')
-        }  */   
+            })  
       }
            
   }
