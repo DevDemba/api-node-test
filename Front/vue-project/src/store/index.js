@@ -39,6 +39,7 @@ const getters = {
            // console.log(vehicle)
 
             return {
+                id: 1,
                 id_vehicle: vehicle.id_vehicle,
                 marque: vehicle.marque,
                 serial_number: vehicle.serial_number,
