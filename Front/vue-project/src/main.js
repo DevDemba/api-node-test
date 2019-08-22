@@ -13,6 +13,9 @@ import moment from 'moment'
 import VueSweetalert2 from 'vue-sweetalert2'
 import store from './store/index.js'
 import axios from 'axios';
+import VueStripeCheckout from 'vue-stripe-checkout';
+
+Vue.use(VueStripeCheckout, 'pk_test_dlWvz6fw49uaAAZzMK5a7ZHC00PCKKs860')
 
 Vue.config.productionTip = false;
 
