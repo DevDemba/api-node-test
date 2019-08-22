@@ -1,23 +1,14 @@
--- --------------------------------------------------------
--- Hôte :                        127.0.0.1
--- Version du serveur:           10.3.12-MariaDB - mariadb.org binary distribution
--- SE du serveur:                Win32
--- HeidiSQL Version:             9.4.0.5125
--- --------------------------------------------------------
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
+SET SQL_MODE = "TRADITIONAL";
+SET AUTOCOMMIT = 0;
+SET time_zone = "+00:00";
 
 -- Export de la structure de la base pour e_motion
 CREATE DATABASE IF NOT EXISTS `e_motion` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `e_motion`;
 
 -- Export de la structure de la table e_motion. cart
-CREATE TABLE IF NOT EXISTS `cart` (
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `id_offer` int(11) NOT NULL
@@ -28,7 +19,8 @@ CREATE TABLE IF NOT EXISTS `cart` (
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 
 -- Export de la structure de la table e_motion. offer
-CREATE TABLE IF NOT EXISTS `offer` (
+DROP TABLE IF EXISTS `offer`;
+CREATE TABLE `offer` (
   `id_offer` int(11) NOT NULL AUTO_INCREMENT,
   `id_vehicle` int(11) NOT NULL,
   `date_online_offer` date NOT NULL,
@@ -43,7 +35,8 @@ CREATE TABLE IF NOT EXISTS `offer` (
 /*!40000 ALTER TABLE `offer` ENABLE KEYS */;
 
 -- Export de la structure de la table e_motion. rental
-CREATE TABLE IF NOT EXISTS `rental` (
+DROP TABLE IF EXISTS `rental`;
+CREATE TABLE `rental` (
   `id_rental` int(11) NOT NULL AUTO_INCREMENT,
   `id_users` int(11) NOT NULL,
   `id_offer` int(11) NOT NULL,
@@ -58,7 +51,8 @@ CREATE TABLE IF NOT EXISTS `rental` (
 /*!40000 ALTER TABLE `rental` ENABLE KEYS */;
 
 -- Export de la structure de la table e_motion. users
-CREATE TABLE IF NOT EXISTS `users` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -90,7 +84,8 @@ INSERT INTO `users` (`id`, `lastname`, `firstname`, `birthday`, `address`, `phon
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Export de la structure de la table e_motion. vehicles
-CREATE TABLE IF NOT EXISTS `vehicles` (
+DROP TABLE IF EXISTS `vehicules`;
+CREATE TABLE `vehicles` (
   `id_vehicle` int(11) NOT NULL AUTO_INCREMENT,
   `type_vehicle` tinyint(2) NOT NULL DEFAULT 0,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
