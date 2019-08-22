@@ -23,7 +23,7 @@
     "vue-axios": "^2.1.4",
     "vue-cookies": "^1.5.13",
     "vue-router": "^3.0.1",
-    "vue-stripe-checkout": "^3.0.0-beta",
+    "vue-stripe-checkout": "^1.2.6",
     "vue-stripe-elements-plus": "^0.2.10",
     "vue-sweetalert2": "^2.1.1",
     "vuetify": "^1.5.16",
