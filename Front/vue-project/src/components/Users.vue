@@ -4,10 +4,6 @@
     <b-list-group v-for="user in users" :key="user.id">
        <b-list-group-item  style="width: 400px;display:flex; justify-content: space-between;" variant="info">
           <span>{{user.id}} - {{ user.lastname }}  {{ user.firstname }}</span>
-          <div>
-            <b-button variant="primary" @click="updateUser">update</b-button>
-            <b-button variant="danger" @click="deleteUser">delete</b-button>
-          </div>
         </b-list-group-item>
     </b-list-group>
   </div>
