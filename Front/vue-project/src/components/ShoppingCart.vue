@@ -32,7 +32,6 @@
                 <td><i class="material-icons delete_btn"  @click="deleteCartitem(cartitem.id)">clear</i></td>
                 </tr>
             </table>
-
       <!--       <div class="result">
                 <table>
                     <tr>
