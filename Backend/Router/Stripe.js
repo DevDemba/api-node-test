@@ -16,23 +16,26 @@ router.get('/stripe', (req, res) => {
 
 
 router.post('/api/charge', (req, res) => {
-        let amount = 500;
-
+        let amount = req.body.amount * 100;
         stripe.customers.create({
-            email: req.body.stripeEmail,
-            source: req.body.stripeToken
+            email: req.body.email,
         })
         .then(customer => {
-            stripe.charges.create({
-                amount,
-                description: "charge",
-                currency: "euros",
-                customer: customer.id
+            return stripe.customers.createSource(customer.id, {
+                source: req.body.token,
+    
             })
-            .then(charge => res.render('charge'))
+            .then(source => {
+                return stripe.charges.create({
+                    amount: amount,
+                    description: "charge",
+                    currency: "eur",
+                    customer: source.customer,
+                })
+            })
         })
    
- /*    dbConn.query('INSERT INTO payments () VALUES (?,?,?,?,?,?,?,?)', cart,
+ /*    dbConn.query('INSERT INTO cart () VALUES (?,?,?,?,?,?,?,?)', cart,
 
         (err, user) => {
             if (err) return res.status(500).send("There was a problem payment of your cart.")
