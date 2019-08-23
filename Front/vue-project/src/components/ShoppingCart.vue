@@ -54,11 +54,27 @@
                 </table>
             </div>
         </div><br>
-        <p><b-button v-show="cartitems.length" variant="primary" @click='checkout'>Checkout</b-button></p>
+        <div>
+            <vue-stripe-checkout
+            ref="checkoutRef"
+            :image="image"
+            :name="name"
+            :description="description"
+            :currency="currency"
+            :amount="total * 100"
+            :allow-remember-me="false"
+            @done="done"
+            @opened="opened"
+            @closed="closed"
+            @canceled="canceled"
+            ></vue-stripe-checkout>
+            <b-button variant="primary" v-show="cartitems.length" @click='checkout'>Checkout</b-button>
+        </div>
     </div>
 </template>
 
 <script>
+
 import axios from 'axios';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
@@ -71,7 +87,12 @@ export default {
             columns: ['No', 'User', 'Vehicle Id', 'Serial Number', 'Marque', 'Color', 'Nb Plate', 'Nb Kilometer','Date', 'Price', 'Available', 'Total'],
             //cartitems: [],
             user: null,
-            matchitems:[]
+            matchitems:[],
+            image: 'https://i.imgur.com/1PHlmFF.jpg',
+            name: 'Blips and Chitz!',
+            description: 'An entire afternoon at Blips and Chitz!',
+            currency: 'eur',
+            amount: this.total
         }
     },
     computed: {
@@ -80,15 +101,45 @@ export default {
         }),
         total () {
             return this.cartitems.reduce((total, v) => {
-                return total + v.price * v.quantity
+                
+                return (total + v.price * v.quantity)
             }, 0)
         }
     },
     methods: {
-        checkout(){
-            alert('Pay on stripe ' + this.total + ' € ') 
+        async checkout () {
+        // token - is the token object
+        // args - is an object containing the billing and shipping address if enabled
+        const { token, args } = await this.$refs.checkoutRef.open();
         },
-       /* priceSum(){
+        done ({token, args}) {
+        // token - is the token object
+        // args - is an object containing the billing and shipping address if enabled
+        // do stuff...
+        const data = {
+            email: localStorage.user.email,
+            amount: this.total,
+            token: token.id,
+
+            
+        }
+
+        console.log(data)
+
+        axios.post('/api/charge', data).then(
+            resp => console.log(resp)
+        )
+        },
+        opened () {
+        // do stuff 
+        },
+        closed () {
+        // do stuff 
+        },
+        canceled () {
+        // do stuff 
+        },
+        /* priceSum(){
              return this.cartitems.reduce((prev,cur) => prev + cur.total,0)
         },
         quantitySum(){
