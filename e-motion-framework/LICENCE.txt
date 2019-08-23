@@ -1,0 +1,13 @@
+E-motion 2019
+
+Copyright (c) 2019
+Licence author: Dylan <dylanfj700@gmail.com>
+Private Licence
+This is a private project.
+Redistribution is PROHIBITED !
+
+MODIFICATIONS :
+- Modifications are limited under "web_src" directory
+- Adding a component in "components" dir is allowed
+- Any modification under "public" dir is allowed (deleting,adding,editing)
+- For others modifications please ask me.

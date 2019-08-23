@@ -1,0 +1,221 @@
+<html lang="en">
+<head>
+    <title>An exception has occured !</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=yes">
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        html, body {
+            position: relative;
+            background: #D4DFE6;
+            min-height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden auto;
+        }
+
+        #head {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 2px 0;
+            width: 100%;
+            padding-left: 10px;
+        }
+
+        #header {
+            text-align: center;
+            margin-top: 0;
+            width: 100%;
+            top: 0;
+            background-color: #CA2017;
+            color: #ffffff;
+            padding: 15px 0 10px;
+        }
+
+        #main {
+            width: 100%;
+            padding: 0 15px;
+        }
+
+        #tabControl {
+            width: 98%;
+        }
+
+        #tab-body {
+            background-color: #ffffff;
+        }
+
+        #tab-header ul {
+            list-style-type: none;
+            display: flex;
+            padding: 0;
+        }
+
+        #tab-header ul li{
+            line-height: 38px;
+            padding: 0;
+            border-radius: 0;
+            height: 40px;
+            max-height: 40px;
+            text-align: center;
+            border:solid 1px;
+            overflow: hidden;
+            background-color: #ffffff;
+            font-size: 18px;
+        }
+
+        #tab-header ul li a {
+            color: black;
+            font-weight: 500;
+            display: block;
+            letter-spacing: 0;
+            outline: none;
+            padding: 0 20px;
+            text-decoration: none;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        #tab-header .tab-header-btn.current {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        #tab-body {
+            border: solid 1px blanchedalmond;
+        }
+
+        .tab-page {
+            padding-left: 4px;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            margin-left:auto;
+            margin-right: auto;
+            list-style-type: none;
+            margin-bottom: 20px;
+        }
+
+       .show {
+           display: block;
+       }
+
+        #exception_title {
+            display: block;
+            font-size: 2rem;
+            font-weight: lighter;
+            text-align: center;
+        }
+
+        #exception_caught {
+            max-width: 50%;
+            font-size: 1.2rem;
+            font-weight: lighter;
+        }
+
+        .MainGraphic {
+            position: relative;
+        }
+
+        .Cog {
+            width: 10rem;
+            height: 10rem;
+            fill: #ffffff;
+            transition: all ease-in-out;
+            animation: CogAnimation 5s infinite;
+        }
+
+        @keyframes CogAnimation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="head">
+    <h3>e-motion &copy; 2019</h3>
+</div>
+<header id="header">
+    <div class="MainGraphic">
+        <svg class="Cog" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+            <path d="M29.18 19.07c-1.678-2.908-.668-6.634 2.256-8.328L28.29 5.295c-.897.527-1.942.83-3.057.83-3.36 0-6.085-2.743-6.085-6.126h-6.29c.01 1.043-.25 2.102-.81 3.07-1.68 2.907-5.41 3.896-8.34 2.21L.566 10.727c.905.515 1.69 1.268 2.246 2.234 1.677 2.904.673 6.624-2.24 8.32l3.145 5.447c.895-.522 1.935-.82 3.044-.82 3.35 0 6.066 2.725 6.083 6.092h6.29c-.004-1.035.258-2.08.81-3.04 1.676-2.902 5.4-3.893 8.325-2.218l3.145-5.447c-.9-.515-1.678-1.266-2.232-2.226zM16 22.48c-3.578 0-6.48-2.902-6.48-6.48S12.423 9.52 16 9.52c3.578 0 6.48 2.902 6.48 6.48s-2.902 6.48-6.48 6.48z"></path>
+        </svg>
+    </div>
+    <h1 id="exception_title">An exception has occured !</h1>
+    <h2>Environment mode : {{ env_mode }}</h2>
+</header>
+<div id="main">
+    <div id="tabControl">
+        <div id="tab-header">
+            <ul>
+                <li><a class="tab-header-btn">Current</a></li>
+                <li><a class="tab-header-btn">Exception</a></li>
+                <li><a class="tab-header-btn">Stack Traces</a></li>
+            </ul>
+        </div>
+        <div id="tab-body">
+            <div class="tab-page">
+                <h3 id="exception_caught">{{ exception_class }}</h3>
+                <h4>{{ exception_message }}</h4>
+                <h4>{{ file }} on line {{ line }}</h4>
+            </div>
+            <div class="tab-page">
+                {{ previous }}
+            </div>
+            <div class="tab-page">
+                <pre>{{ traces }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const tabControl = {
+        btns: [],
+        tabPages: [],
+
+        init: function() {
+            console.log('init');
+            this.btns = document.getElementsByClassName('tab-header-btn');
+            this.tabPages = document.getElementsByClassName('tab-page');
+            console.log(this.btns);
+            console.log(this.tabPages);
+            this.btns.item(0).classList.add('current');
+            this.tabPages.item(0).classList.add('show');
+            this.getClick();
+        },
+
+        getClick: function (){
+            //var me = this;
+            for(var i = 0; i<this.btns.length; i++) {
+                this.btns[i].addEventListener('click', this.showTabPage.bind(this,i));
+            }
+        },
+
+        showTabPage: function (i) {
+            console.log('show',i);
+            console.log(this.tabPages.item(i).innerHTML);
+            console.log(this.tabPages.item(i).classList);
+            if(i !== null) {
+                for(var j=0; j<this.tabPages.length; j++) {
+                    this.btns.item(j).classList.remove('current');
+                    this.tabPages.item(j).classList.remove('show');
+                }
+                this.btns.item(i).classList.add('current');
+                this.tabPages.item(i).classList.toggle('show');
+            }
+        }
+    };
+    tabControl.init();
+
+</script>
+</body>
+</html>

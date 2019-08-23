@@ -1,0 +1,46 @@
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+    }
+    .alert {
+        border: 1px solid #000000;
+        border-radius: 2px;
+        width: 100%;
+        margin: 0 0 10px;
+    }
+
+    .alert-title {
+        color: #ffffff;
+        padding: 10px 0;
+        padding-left: 5px;
+    }
+
+    .alert-warning {
+        background-color: #FFEEBA;
+        color: #856404;
+    }
+
+    .alert-danger , .alert-error{
+        background-color: #CA2017;
+    }
+
+    .alert-notice {
+        background-color: #004085;
+    }
+
+    .alert-container {
+        padding: .75rem 1.25rem;
+    }
+</style>
+
+<div class="alert">
+    <div class="alert-title alert-{{ alert-type }}">
+        <h3>{{ error_type }}</h3>
+    </div>
+    <div class="alert-container">
+        <h3>Environment mode: {{ env_mode }}</h3>
+        <h4>{{ error_message }} on {{ file }} at line {{ line }} ! </h4>
+    </div>
+</div>

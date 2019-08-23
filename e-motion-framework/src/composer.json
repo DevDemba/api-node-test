@@ -1,0 +1,31 @@
+{
+    "name": "e-motion/",
+    "description": "Private project",
+    "type": "project",
+    "license": "Private",
+    "authors": [
+        {
+            "name": "Dylan",
+            "email": "dylanfj700@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "E_motion\\Core\\": "_core_/",
+            "E_motion\\Core\\InputOutput\\": "_core_/_io_/",
+            "E_motion\\Component\\Bundle\\": "components/_bundle_/",
+            "E_motion\\Component\\Console\\": "components/console/",
+            "E_motion\\Component\\Caching\\": "components/caching/",
+            "E_motion\\Component\\HttpIce\\": "components/http_ice/",
+            "E_motion\\Component\\Logger\\": "components/logger/",
+            "E_motion\\Component\\Routing\\": "components/routing/",
+            "App\\": "web_src/"
+        }
+    },
+    "require": {
+        "twig/twig": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}

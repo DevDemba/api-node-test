@@ -1,0 +1,17 @@
+example:
+  url: /
+  controller: MyNamespace\MyController
+  controller_action: index
+
+example2:
+  url: /hello
+  controller: MyController
+  controller_action: index
+
+test:
+  url: /test/{myparam}/{param2}
+  param:
+    myparam:  integer
+    param2:  string
+  controller: TestController
+  controller_action: test
