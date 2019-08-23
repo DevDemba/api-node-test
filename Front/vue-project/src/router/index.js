@@ -83,11 +83,11 @@ const router = new Router({
       path: '/offer-detail/:id',
       name: 'Offer-detail',
       component: OfferDetail,
-      props: true
-      // meta: {
-      //   guest: true,
-      //   requiresAuth: true
-      // }
+      props: true,
+  /*     meta: {
+         guest: true,
+         requiresAuth: true
+       } */
     },
     {
       path: '/registerVehicle',
@@ -100,7 +100,10 @@ const router = new Router({
     {
       path: '/shoppingCart',
       name: 'ShoppingCart',
-      component: ShoppingCart
+      component: ShoppingCart,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/fidelty',
@@ -110,8 +113,12 @@ const router = new Router({
     {
       path: '/payment',
       name: 'Payment',
-      component: Payment
+      component: Payment,
+      meta: {
+        requiresAuth: true
+      }
     }
+    
   ]
 })
 
