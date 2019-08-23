@@ -117,11 +117,9 @@ export default {
         // args - is an object containing the billing and shipping address if enabled
         // do stuff...
         const data = {
-            email: localStorage.user.email,
+            email: this.email,
             amount: this.total,
             token: token.id,
-
-            
         }
 
         console.log(data)
