@@ -22,12 +22,18 @@ Désormais vous pouvez lancer le projet de deux manières
 
 # Lancement en BackEnd
 
-Se mettre sur le dossier BackEnd et lancer cette commande 
+Se mettre sur le dossier BackEnd et lancer cette commande:
 ```shell
 npm install 
 ```
 
-Pour pouvor lancer le projet, faites:
+Se mettre ensuite sur le dossier FrontEnd/vue-project et lancer cette commande:
+```shell
+npm install chalk
+npm run build
+```
+
+Pour pouvor lancer le projet, retourner sur le dossier BackEnd et faites:
 ```shell
 npm start
 ```
