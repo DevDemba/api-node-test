@@ -1,4 +1,4 @@
-## Windows
+## Windows ou Linux
 
 Commencer d'abord par cloner le projet en utilisant la commande : 
 
@@ -59,4 +59,3 @@ Vous pouvez désormais vous rendre sur:
 ```shell
 http://localhost:8080/
 ```
-## Linux
