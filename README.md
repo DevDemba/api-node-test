@@ -33,7 +33,7 @@ npm install chalk
 npm run build
 ```
 
-Pour pouvor lancer le projet, retourner sur le dossier BackEnd et faites:
+Pour pouvoir lancer le projet, retourner sur le dossier BackEnd et faites:
 ```shell
 npm start
 ```
