@@ -50,7 +50,7 @@ Se mettre sur le dossier Front/vue-project et lancer cette commande
 npm install 
 ```
 
-Pour pouvor lancer le projet, faites:
+Pour pouvoir lancer le projet, faites:
 ```shell
 npm run dev
 ```
