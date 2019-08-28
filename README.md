@@ -33,7 +33,7 @@ npm install chalk
 npm run build
 ```
 
-Pour pouvor lancer le projet, retourner sur le dossier BackEnd et faites:
+Pour pouvoir lancer le projet, retourner sur le dossier BackEnd et faites:
 ```shell
 npm start
 ```
@@ -50,7 +50,7 @@ Se mettre sur le dossier Front/vue-project et lancer cette commande
 npm install 
 ```
 
-Pour pouvor lancer le projet, faites:
+Pour pouvoir lancer le projet, faites:
 ```shell
 npm run dev
 ```
