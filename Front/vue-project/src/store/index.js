@@ -13,6 +13,7 @@ const debug = process.env.NODE_ENV !== 'production'
 // initial state
 const state = {
     added: [],
+    cartCount: 0,
     vehicles: [],
     vehicle: [],
     users: [],
@@ -36,10 +37,11 @@ const getters = {
     cartVehicles: state => {
         return state.added.map(({ id, quantity }) => {
             const vehicle = state.vehicles.find(v => v.id_vehicle === id)
-           // console.log(vehicle)
+            const user = JSON.parse(localStorage.getItem('user', [0]))
+            console.log(user)
 
             return {
-                id: 1,
+                id: user.firstname,
                 id_vehicle: vehicle.id_vehicle,
                 marque: vehicle.marque,
                 serial_number: vehicle.serial_number,
@@ -116,7 +118,7 @@ const actions = {
     addToCart({ commit }, vehicle) {
         return new Promise((resolve, reject) => {
         commit(types.ADD_TO_CART, {
-            id: vehicle.id_vehicle
+            id: vehicle.id_vehicle,
         })
       /*   this.$swal({
             position: 'center',
@@ -226,6 +228,18 @@ const mutations = {
     },
     SET_USERS(state, users) {
         state.users = users
+    },
+    removeFromCart(state, cartitem) {
+        //var result = confirm('Are you sure you want to remove it from your shopping list ?')
+        let index = state.added.indexOf(cartitem);
+        console.log(index)
+    
+        if (index > -1) {
+            let produit = state.added[index];
+            state.cartCount -= produit.quantity;
+    
+            state.added.splice(index, 1);
+        }
     }
 
 }

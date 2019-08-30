@@ -13,9 +13,9 @@
                     <th>　　</th>
                 </tr>
 
-                <tr v-for="cartitem in cartitems" :key="cartitem.id"  class="table_value">
+                <tr v-for="cartitem in $store.state.added" :key="cartitem.id"  class="table_value">
                 <td>{{cartitem.id}}</td>
-                <td>{{cartitem.user}}</td>
+                <td>{{cartitem.firstname}}</td>
                 <td>{{cartitem.id_vehicle}}</td>
                 <td>{{cartitem.serial_number}}</td>
                 <td>{{cartitem.marque}}</td>
@@ -29,21 +29,9 @@
                 <td>{{ cartitem.quantity }}</td>
             <!--     <td>{{addComma(cartitem.total)}}</td> -->
                 <td>{{ cartitem.total }}</td>
-                <td><i class="material-icons delete_btn"  @click="deleteCartitem(cartitem.id)">clear</i></td>
+                <td><i class="material-icons delete_btn"  @click="removeFromCart(cartitem)">clear</i></td>
                 </tr>
             </table>
-      <!--       <div class="result">
-                <table>
-                    <tr>
-                    <th>Quantité totale</th>
-                    <td> {{quantitySum()}}</td>
-                    </tr>
-                    <tr>
-                    <th>Montant total</th>
-                    <td>{{addComma(priceSum())}}</td>
-                    </tr>
-                </table>
-            </div> -->
             <div class="result">
                 <table>
                      <tr>
@@ -151,9 +139,8 @@ export default {
                 }
             }
         },*/
-        addComma(num) {
-            var regexp = /\B(?=(\d{3})+(?!\d))/g
-            return num.toString().replace(regexp, ',')
+        removeFromCart(cartitem) {
+            this.$store.commit('removeFromCart', cartitem);
         },
         deleteCartitem(id) { 
             console.log(id)
